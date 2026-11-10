@@ -105,6 +105,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .search:focus-within{border-color:var(--gold)}
 select.f{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 10px;min-width:0;max-width:200px}
 select.f:focus{outline:2px solid var(--gold);outline-offset:0}
+.period{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px 8px;font-size:13px;color:var(--ink-2)}
+.period input.f{border:0;background:transparent;padding:6px 2px;color:var(--ink);font:inherit;font-size:14px;max-width:150px}
+.period input.f:focus{outline:2px solid var(--gold);outline-offset:0;border-radius:6px}
+.period .x.sm{width:26px;height:26px}.period .x.sm svg{width:16px;height:16px}
+.period-note{font-size:13px;color:var(--gold-ink);font-weight:700;margin:-6px 0 12px}
 .btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:9px;font-weight:700;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);white-space:nowrap}
 .btn:hover{border-color:var(--gold)}.btn:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 .btn.primary{background:var(--gold);border-color:var(--gold);color:#1B1A17}.btn.primary:hover{filter:brightness(1.05)}
@@ -225,7 +230,7 @@ const T = {
   readOnly:'لديك صلاحية عرض فقط. اطلب من صاحب الملف صلاحية التعديل.',
   activeCount:'مشاريع جارية',contractValue:'إجمالي قيمة العقود',invoiced:'المستخلصات المرفوعة',collected:'المبالغ المحصلة',uncollected:'المبالغ غير المحصلة',remaining:'باقي قيمة المشاريع',collRate:'نسبة التحصيل',ofInvoiced:'من المستخلصات المرفوعة',sar:'ريال سعودي',projects:'مشروع',
   open:'فتح القائمة ←',byWork:'المشاريع الجارية حسب نوع العمل',byWorkS:'قيمة العقود والمحصل لكل نوع عمل',topOut:'أعلى المبالغ غير المحصلة',topOutS:'المشاريع الجارية التي تحتاج متابعة تحصيل',byYear:'المشاريع المنتهية حسب سنة الانتهاء',byYearS:'عدد المشاريع المنجزة في كل سنة',
-  value:'قيمة المشروع',change:'أمر التغيير',totalValue:'القيمة بعد أمر التغيير',changeHint:'المبلغ الإضافي للأعمال المستحدثة، بيتجمع على قيمة المشروع.',xlBuilding:'جاري تجهيز ملف Excel…',search:'ابحث باسم المشروع أو العميل أو رقم العقد',allWork:'كل أنواع العمل',allStatus:'كل الحالات',allSector:'كل القطاعات',allLoc:'كل المدن',add:'إضافة مشروع',export:'Excel',exportPdf:'PDF',pdfBuilding:'جاري تجهيز ملف PDF… صفحة',pdfFail:'تعذّر تجهيز ملف PDF، حاول مرة أخرى.',page:'صفحة',reportDate:'تاريخ التقرير',
+  value:'قيمة المشروع',change:'أمر التغيير',totalValue:'القيمة بعد أمر التغيير',changeHint:'المبلغ الإضافي للأعمال المستحدثة، بيتجمع على قيمة المشروع.',xlBuilding:'جاري تجهيز ملف Excel…',period:'الفترة',from:'من',to:'إلى',byStart:'حسب تاريخ البداية',byEnd:'حسب تاريخ النهاية',clearDate:'مسح التاريخ',search:'ابحث باسم المشروع أو العميل أو رقم العقد',allWork:'كل أنواع العمل',allStatus:'كل الحالات',allSector:'كل القطاعات',allLoc:'كل المدن',add:'إضافة مشروع',export:'Excel',exportPdf:'PDF',pdfBuilding:'جاري تجهيز ملف PDF… صفحة',pdfFail:'تعذّر تجهيز ملف PDF، حاول مرة أخرى.',page:'صفحة',reportDate:'تاريخ التقرير',
   no:'م',contract:'رقم العقد',name:'اسم المشروع',client:'العميل',work:'نوع العمل',status:'الحالة',sector:'القطاع',location:'المدينة',start:'تاريخ البداية',end:'تاريخ النهاية',notes:'ملاحظات',stage:'القسم',
   progress:'الإنجاز',total:'الإجمالي',shown:'المعروض',of:'من',showMore:'عرض المزيد',noResults:'لا توجد مشاريع مطابقة للبحث.',emptyDb:'لا توجد بيانات بعد. أضف أول مشروع بزر «إضافة مشروع».',
   edit:'تعديل',del:'حذف',save:'حفظ',cancel:'إلغاء',close:'إغلاق',newProject:'مشروع جديد',editProject:'تعديل مشروع',
@@ -262,7 +267,7 @@ const T = {
   readOnly:'You have view-only access. Ask the owner for edit access.',
   activeCount:'Current projects',contractValue:'Total contract value',invoiced:'Invoiced to date',collected:'Collected',uncollected:'Uncollected',remaining:'Remaining contract value',collRate:'Collection rate',ofInvoiced:'of invoiced amounts',sar:'SAR',projects:'projects',
   open:'Open list →',byWork:'Current projects by work type',byWorkS:'Contract value and collected amount per work type',topOut:'Largest uncollected amounts',topOutS:'Current projects that need collection follow-up',byYear:'Completed projects by year',byYearS:'Number of projects finished each year',
-  value:'Project value',change:'Change order',totalValue:'Value incl. change orders',changeHint:'Extra amount for added works; it is added to the project value.',xlBuilding:'Preparing Excel file…',search:'Search by project, client or contract no.',allWork:'All work types',allStatus:'All statuses',allSector:'All sectors',allLoc:'All cities',add:'Add project',export:'Excel',exportPdf:'PDF',pdfBuilding:'Preparing PDF… page',pdfFail:'The PDF could not be prepared. Try again.',page:'Page',reportDate:'Report date',
+  value:'Project value',change:'Change order',totalValue:'Value incl. change orders',changeHint:'Extra amount for added works; it is added to the project value.',xlBuilding:'Preparing Excel file…',period:'Period',from:'From',to:'To',byStart:'by start date',byEnd:'by end date',clearDate:'Clear dates',search:'Search by project, client or contract no.',allWork:'All work types',allStatus:'All statuses',allSector:'All sectors',allLoc:'All cities',add:'Add project',export:'Excel',exportPdf:'PDF',pdfBuilding:'Preparing PDF… page',pdfFail:'The PDF could not be prepared. Try again.',page:'Page',reportDate:'Report date',
   no:'#',contract:'Contract no.',name:'Project',client:'Client',work:'Work type',status:'Status',sector:'Sector',location:'City',start:'Start date',end:'End date',notes:'Notes',stage:'Section',
   progress:'Progress',total:'Total',shown:'Showing',of:'of',showMore:'Show more',noResults:'No projects match your search.',emptyDb:'No data yet. Add the first project with “Add project”.',
   edit:'Edit',del:'Delete',save:'Save',cancel:'Cancel',close:'Close',newProject:'New project',editProject:'Edit project',
@@ -304,7 +309,7 @@ const ICON = {
 const DEFAULT_LISTS = {work:[],status:[{k:'not_started',ar:'فى البداية',en:'Starting'},{k:'ongoing',ar:'جارى',en:'Ongoing'},{k:'completed',ar:'منتهى',en:'Completed',moves:true},{k:'stopped',ar:'متوقف',en:'Stopped',moves:true}],sector:[],location:[]};
 
 const S = { lang:'ar', view:'dash', items:new Map(), bucketOf:new Map(), lists:DEFAULT_LISTS, db:null, user:null, canWrite:true, sync:'wait',
-  q:'', fWork:'', fStatus:'', fSector:'', fLoc:'', sort:{key:'order',dir:1}, limit:60, drawer:null, names:{} };
+  q:'', fWork:'', fStatus:'', fSector:'', fLoc:'', fFrom:'', fTo:'', sort:{key:'order',dir:1}, limit:60, drawer:null, names:{} };
 try { const l = localStorage.getItem('cg_lang'); if (l==='en'||l==='ar') S.lang=l; } catch(e) {}
 const VIEWS = ['dash','current','finished','future','settings','backup'];
 const h = location.hash.replace('#',''); if (VIEWS.includes(h)) S.view = h;
@@ -400,9 +405,16 @@ function columns(st){
 function sortVal(p,k){ if(k==='name'||k==='client') return loc(p,k).toLowerCase(); if(k==='unc') return unc(p)??-Infinity; if(k==='rem') return rem(p)??-Infinity; if(k==='total') return tot(p)??-Infinity;
   if(k==='work') return lab('work',p.work); if(k==='status') return lab('status',p.status); if(k==='sector') return lab('sector',p.sector); if(k==='location') return lab('location',p.location);
   const v=p[k]; return v==null?'':v; }
+// period filter: finished projects by end date, current/future by start date
+const dateKey = st => st==='finished' ? 'end' : 'start';
+const ymd = v => /^\d{4}-\d{2}-\d{2}/.test(v||'') ? v.slice(0,10) : '';
+const inPeriod = (p,st) => { if(!S.fFrom && !S.fTo) return true; const d=ymd(p[dateKey(st)]); if(!d) return false; return (!S.fFrom||d>=S.fFrom)&&(!S.fTo||d<=S.fTo); };
+const slash = d => d ? d.replace(/-/g,'/') : '';
+function periodText(st){ if(!S.fFrom && !S.fTo) return '';
+  return `${t('period')} (${t(dateKey(st)==='end'?'byEnd':'byStart')}): ${S.fFrom?`${t('from')} ${slash(S.fFrom)}`:''}${S.fFrom&&S.fTo?' ':''}${S.fTo?`${t('to')} ${slash(S.fTo)}`:''}`; }
 function filtered(st){
   const q=S.q.trim().toLowerCase();
-  let a=stageItems(st).filter(p=>(!S.fWork||p.work===S.fWork)&&(!S.fStatus||p.status===S.fStatus)&&(!S.fSector||p.sector===S.fSector)&&(!S.fLoc||p.location===S.fLoc)
+  let a=stageItems(st).filter(p=>(!S.fWork||p.work===S.fWork)&&(!S.fStatus||p.status===S.fStatus)&&(!S.fSector||p.sector===S.fSector)&&(!S.fLoc||p.location===S.fLoc)&&inPeriod(p,st)
     &&(!q||[p.name_ar,p.name_en,p.client_ar,p.client_en,p.contract,p.no].some(x=>String(x||'').toLowerCase().includes(q))));
   const {key,dir}=S.sort; a.sort((x,y)=>{const A=sortVal(x,key),B=sortVal(y,key); return (A>B?1:A<B?-1:0)*dir || (num(x.order)-num(y.order));});
   return a;
@@ -418,7 +430,9 @@ function viewList(st){
     ${st!=='finished'?`<select class="f" id="fStatus" aria-label="${t('status')}">${opts('status',S.fStatus,'allStatus')}</select>`:''}
     <select class="f" id="fSector" aria-label="${t('sector')}">${opts('sector',S.fSector,'allSector')}</select>
     ${st==='finished'?`<select class="f" id="fLoc" aria-label="${t('location')}">${opts('location',S.fLoc,'allLoc')}</select>`:''}
+    <div class="period" title="${t(dateKey(st)==='end'?'byEnd':'byStart')}"><span>${t('from')}</span><input type="date" class="f" id="fFrom" value="${esc(S.fFrom)}" aria-label="${t('period')} ${t('from')}"><span>${t('to')}</span><input type="date" class="f" id="fTo" value="${esc(S.fTo)}" aria-label="${t('period')} ${t('to')}">${S.fFrom||S.fTo?`<button type="button" class="x sm" data-act="clrdate" aria-label="${t('clearDate')}" title="${t('clearDate')}">${ICON.x}</button>`:''}</div>
     <button type="button" class="btn" data-act="export">⬇ ${t('export')}</button><button type="button" class="btn" data-act="pdf">⬇ ${t('exportPdf')}</button></div>`;
+  if (periodText(st)) html += `<div class="period-note">${esc(periodText(st))}</div>`;
   html += `<div class="totals"><div><span>${t('shown')}</span><b>${rows.length} ${t('of')} ${all.length}</b></div><div><span>${t('value')}</span><b>${money0(sum('value'))}</b></div>`
     + (cols.some(c=>c.k==='change')?`<div><span>${t('change')}</span><b>${money0(sum('change'))}</b></div><div><span>${t('totalValue')}</span><b>${money0(sum(tot))}</b></div>`:'')
     + (st!=='finished'?`<div><span>${t('invoiced')}</span><b>${money0(sum('invoiced'))}</b></div><div><span>${t('collected')}</span><b>${money0(sum('collected'))}</b></div><div><span>${t('uncollected')}</span><b>${money0(sum(unc))}</b></div><div><span>${t('remaining')}</span><b>${money0(sum(rem))}</b></div>`:'')+`</div>`;
@@ -520,7 +534,7 @@ function render(){
   if (active==='q'){ const q=document.getElementById('q'); if(q){ q.focus(); try{q.setSelectionRange(pos,pos);}catch(e){} } }
 }
 function toast(msg){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=msg; document.body.appendChild(el); setTimeout(()=>el.remove(),2600); }
-function go(v){ if(!VIEWS.includes(v)) return; S.view=v; S.q=''; S.fWork=S.fStatus=S.fSector=S.fLoc=''; S.sort={key:'order',dir:1}; S.limit=60; if(v!=='settings') draftLists=null; try{ if(location.hash!=='#'+v) location.hash=v; }catch(e){} render(); window.scrollTo(0,0); }
+function go(v){ if(!VIEWS.includes(v)) return; S.view=v; S.q=''; S.fWork=S.fStatus=S.fSector=S.fLoc=S.fFrom=S.fTo=''; S.sort={key:'order',dir:1}; S.limit=60; if(v!=='settings') draftLists=null; try{ if(location.hash!=='#'+v) location.hash=v; }catch(e){} render(); window.scrollTo(0,0); }
 
 /* ---------- data writes ---------- */
 async function writeProject(id, data){
@@ -571,6 +585,7 @@ const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.she
 function loadScript(src){ return new Promise((res,rej)=>{ const old=document.querySelector(`script[src="${src}"]`); if(old && old.dataset.ok) return res(); if(old) old.remove();
   const s=document.createElement('script'); s.src=src; s.onload=()=>{ s.dataset.ok='1'; res(); }; s.onerror=()=>{ s.remove(); rej(new Error('load '+src)); }; document.head.appendChild(s); }); }
 const stageFile = st => S.lang==='ar' ? {current:'المشاريع الجارية',finished:'المشاريع المنتهية',future:'المشاريع المستقبلية'}[st] : {current:'Current Projects',finished:'Completed Projects',future:'Future Projects'}[st];
+const fileRange = () => (S.fFrom||S.fTo) ? ` (${S.fFrom||'…'} - ${S.fTo||'…'})` : '';
 const slashDate = () => todayStr().replace(/-/g,'/');
 function busyNote(txt){ const n=document.createElement('div'); n.className='toast'; n.setAttribute('role','status'); n.textContent=txt; document.body.appendChild(n); return n; }
 function cellText(p,c){ switch(c.k){ case 'order':return p.no||''; case 'name':return loc(p,'name'); case 'client':return loc(p,'client'); case 'work':return lab('work',p.work); case 'status':return lab('status',p.status);
@@ -585,7 +600,7 @@ const isMoney = c => c.num && c.k!=='order';
    gold header row, striped rows, status colours, totals row with live SUM formulas. */
 const XL_STATUS={ongoing:['E6EDF6','3D5A80'],not_started:['FFF1D6','B26A00'],completed:['E5F3EA','2E7D4F'],stopped:['FBE4E2','B3261E'],other:['F1EBDB','55524B']};
 const XL_W={order:6,contract:15,name:46,client:30,work:17,status:13,sector:16,location:14,start:13,end:13,notes:40,notes_ar:40,notes_en:40,name_en:40,client_en:28};
-function xlSheet(wb,{name,title,desc,rtl,cols,rows,count}){
+function xlSheet(wb,{name,title,desc,rtl,cols,rows,count,period=''}){
   const n=cols.length, HR=8, first=HR+1, last=HR+rows.length;
   const ws=wb.addWorksheet(name.replace(/[\[\]:*?\/\\]/g,' ').slice(0,31),{
     views:[{rightToLeft:rtl,showGridLines:false,state:'frozen',ySplit:HR,zoomScale:100}],
@@ -599,7 +614,7 @@ function xlSheet(wb,{name,title,desc,rtl,cols,rows,count}){
   // title block, logo on the far side
   // brand guide (p.12, 52): logo at the top on the reading-start side (right in Arabic), title right beside it
   const c0=n>=4?3:1, span=n;
-  [[1,title,F({size:12,bold:true}),24],[2,desc,F({size:10,color:{argb:'FF8A8B8C'}}),18],[3,`${t('reportDate')}: ${slashDate()}`,F({size:10,bold:true,color:{argb:'FF94700F'}}),18]].forEach(([r,v,f,h])=>{
+  [[1,title,F({size:12,bold:true}),24],[2,desc,F({size:10,color:{argb:'FF8A8B8C'}}),18],[3,`${t('reportDate')}: ${slashDate()}${period?'     |     '+period:''}`,F({size:10,bold:true,color:{argb:'FF94700F'}}),18]].forEach(([r,v,f,h])=>{
     if(span>c0) ws.mergeCells(r,c0,r,span); const c=ws.getCell(r,c0); c.value=v; c.font=f; c.alignment={vertical:'middle',indent:c0>1?3:0,...rd}; ws.getRow(r).height=h; });
   for(let i=1;i<=n;i++) ws.getCell(3,i).border={bottom:{style:'medium',color:{argb:'FFD9AA28'}}};
   try{ const src=document.getElementById('logo')?.src||''; if(src.startsWith('data:image/png')){ const id=wb.addImage({base64:src.split(',')[1],extension:'png'}); ws.addImage(id,{tl:{col:0.1,row:0.3},ext:{width:172,height:47},editAs:'oneCell'}); } }catch(e){}
@@ -650,9 +665,9 @@ async function exportXlsx(){
   try{
     await loadScript(LIB_XL);
     const wb=xlBook();
-    xlSheet(wb,{name:t(st),title:t(st),desc:t(st+'D'),rtl:S.lang==='ar',cols,rows,count:`${rows.length} ${t('of')} ${stageItems(st).length}`});
+    xlSheet(wb,{name:t(st),title:t(st),desc:t(st+'D'),rtl:S.lang==='ar',cols,rows,count:`${rows.length} ${t('of')} ${stageItems(st).length}`,period:periodText(st)});
     const buf=await wb.xlsx.writeBuffer();
-    saveBlob(new Blob([buf],{type:XLSX_MIME}), `${stageFile(st)} ${todayStr()}.xlsx`); toast(t('exported'));
+    saveBlob(new Blob([buf],{type:XLSX_MIME}), `${stageFile(st)}${fileRange()} ${todayStr()}.xlsx`); toast(t('exported'));
   }catch(e){ console.error('excel export',e); toast(t('exportFail')); }
   finally{ note.remove(); xlBusy=false; }
 }
@@ -689,7 +704,7 @@ async function exportPdf(){
       .eb{font-size:10.5px;color:#94700F;font-weight:700}
       table.fx{table-layout:fixed}table.fx td{overflow-wrap:break-word}table.fx th{white-space:normal}td.nw{white-space:nowrap}
       .hd h1{margin:0;font-size:17px;font-weight:800;line-height:1.3}.hd p{margin:2px 0 0;color:#8A8B8C;font-size:10.5px}
-      .hd .l{display:flex;align-items:center;gap:18px}.hd .tt{border-inline-start:1px solid #E8E0CB;padding-inline-start:18px}.hd img{height:58px;display:block}.dt{font-size:11px;color:#55524B;white-space:nowrap}
+      .hd .l{display:flex;align-items:center;gap:18px}.hd .tt{border-inline-start:1px solid #E8E0CB;padding-inline-start:18px}.hd img{height:58px;display:block}.dt{font-size:11px;color:#55524B;white-space:nowrap;text-align:end}.dt .pd{margin-top:3px;color:#94700F;font-weight:700}
       .sum{display:flex;flex-wrap:wrap;gap:6px 24px;background:#FBF8F1;border:1px solid #E8E0CB;border-radius:8px;padding:7px 14px;margin-bottom:10px;font-size:10px;color:#8A8B8C}
       .sum div{display:flex;flex-direction:column}.sum b{color:#94700F;font-size:13.5px;font-weight:800}
       table{border-collapse:collapse;width:100%}
@@ -727,7 +742,7 @@ async function exportPdf(){
     }
     const logo=document.getElementById('logo').src;
     // brand guide (p.12, 52): logo at the top on the reading-start side (right in Arabic), title beside it, date on the far side
-    const hdr=`<div class="hd"><div class="l"><img src="${logo}" alt=""><div class="tt"><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div></div><span class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span></span></div>`;
+    const hdr=`<div class="hd"><div class="l"><img src="${logo}" alt=""><div class="tt"><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div></div><div class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span>${periodText(st)?`<div class="pd">${esc(periodText(st))}</div>`:''}</div></div>`;
     const sumF=f=>rows.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
     const sumC=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
     const summary=`<div class="sum"><div>${t('shown')}<b>${rows.length} ${t('of')} ${stageItems(st).length}</b></div>`
@@ -767,7 +782,7 @@ async function exportPdf(){
       if(pi>0) pdf.addPage('a4','landscape');
       pdf.addImage(canvas.toDataURL('image/jpeg',0.86),'JPEG',0,0,297,210,undefined,'FAST');
     }
-    saveBlob(pdf.output('blob'), `${stageFile(st)} ${todayStr()}.pdf`);
+    saveBlob(pdf.output('blob'), `${stageFile(st)}${fileRange()} ${todayStr()}.pdf`);
     toast(t('exported'));
   }catch(e){ console.error('pdf export',e); toast(t('pdfFail')); }
   finally{ fr.remove(); pStyle?.remove(); pRoot?.remove(); note.remove(); pdfBusy=false; }
@@ -944,7 +959,7 @@ document.addEventListener('click', e=>{
   const a=e.target.closest('[data-act]'); if(!a) return;
   ({ add:()=>openDrawer('new'), close:closeDrawer, edit:()=>{S.drawer.mode='edit';renderDrawer();}, back:()=>{S.drawer.mode='view';renderDrawer();},
      save, askdel:()=>{S.drawer.confirmDel=true;renderDrawer();}, nodel:()=>{S.drawer.confirmDel=false;renderDrawer();}, dodel:del, translate,
-     export:exportXlsx, pdf:exportPdf, more:()=>{S.limit+=100;render();}, savelists:saveLists,
+     export:exportXlsx, pdf:exportPdf, clrdate:()=>{S.fFrom=S.fTo='';S.limit=60;render();}, more:()=>{S.limit+=100;render();}, savelists:saveLists,
      bknow:()=>bkSave({interactive:true}), bkpick:async()=>{ if(await bkPickDir()) await bkSave({interactive:true}); render(); },
      bkauto:()=>{ lsSet('cg_bk_auto', bkAutoOn()?'0':'1'); render(); }, bkchoose:()=>document.getElementById('bk-file')?.click(),
      bkcancel:()=>{ BK.restore=null; render(); }, bkdorestore:bkDoRestore }[a.dataset.act]||(()=>{}))();
@@ -959,6 +974,7 @@ let qTimer; document.addEventListener('input', e=>{
 });
 document.addEventListener('change', e=>{
   const id=e.target.id; if(['fWork','fStatus','fSector','fLoc'].includes(id)){ S[id]=e.target.value; S.limit=60; render(); }
+  if(id==='fFrom'||id==='fTo'){ S[id]=ymd(e.target.value); if(S.fFrom&&S.fTo&&S.fFrom>S.fTo){ const x=S.fFrom; S.fFrom=S.fTo; S.fTo=x; } S.limit=60; render(); }
   if(id==='bk-file' && e.target.files && e.target.files[0]) bkReadFile(e.target.files[0]);
 });
 window.addEventListener('hashchange',()=>{ const v=location.hash.replace('#',''); if(VIEWS.includes(v) && v!==S.view) go(v); });
