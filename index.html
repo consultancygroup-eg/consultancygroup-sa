@@ -16,18 +16,18 @@
   --good:#2E7D4F; --good-bg:#E5F3EA; --warn:#B26A00; --warn-bg:#FFF1D6; --bad:#B3261E; --bad-bg:#FBE4E2; --info:#3D5A80; --info-bg:#E6EDF6;
   --rail:#1F1D19; --rail-ink:#F4EFE3; --rail-muted:#A8A396; --rail-line:#34312A;
   --font:"Tajawal",system-ui,"Segoe UI",Tahoma,Arial,sans-serif;
-  --r:10px;
+  --r:10px; --row-alt:rgba(254,242,206,.45);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --gold:#DDB03A; --gold-ink:#E8C35E; --gold-soft:#3A3020; --cream:#2B2519; --paper:#14130F; --surface:#1C1A15;
   --ink:#F1ECDF; --ink-2:#C9C3B4; --muted:#9A968C; --line:#35302A; --line-2:#29261F;
   --good:#6FCB94; --good-bg:#1D3326; --warn:#F0B35A; --warn-bg:#3A2C14; --bad:#F08A80; --bad-bg:#3D1C19; --info:#9DB8DE; --info-bg:#1E2A3A;
-  --rail:#0F0E0B; --rail-ink:#F1ECDF; --rail-muted:#8F8A7E; --rail-line:#2A2722; color-scheme:dark }}
+  --rail:#0F0E0B; --rail-ink:#F1ECDF; --rail-muted:#8F8A7E; --rail-line:#2A2722; --row-alt:rgba(43,37,25,.45); color-scheme:dark }}
 :root[data-theme="dark"]{
   --gold:#DDB03A; --gold-ink:#E8C35E; --gold-soft:#3A3020; --cream:#2B2519; --paper:#14130F; --surface:#1C1A15;
   --ink:#F1ECDF; --ink-2:#C9C3B4; --muted:#9A968C; --line:#35302A; --line-2:#29261F;
   --good:#6FCB94; --good-bg:#1D3326; --warn:#F0B35A; --warn-bg:#3A2C14; --bad:#F08A80; --bad-bg:#3D1C19; --info:#9DB8DE; --info-bg:#1E2A3A;
-  --rail:#0F0E0B; --rail-ink:#F1ECDF; --rail-muted:#8F8A7E; --rail-line:#2A2722; color-scheme:dark }
+  --rail:#0F0E0B; --rail-ink:#F1ECDF; --rail-muted:#8F8A7E; --rail-line:#2A2722; --row-alt:rgba(43,37,25,.45); color-scheme:dark }
 html,body{height:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -120,7 +120,7 @@ th.num,td.num{text-align:end;font-variant-numeric:tabular-nums}
 th .arr{opacity:.55;font-size:11px;margin-inline-start:4px}
 td{padding:10px;border-bottom:1px solid var(--line-2);vertical-align:top}
 tbody tr{cursor:pointer}
-tbody tr:nth-child(even){background:color-mix(in srgb,var(--cream) 45%,transparent)}
+tbody tr:nth-child(even){background:var(--row-alt)}
 tbody tr:hover{background:var(--gold-soft)}
 tbody tr:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 td .nm{font-weight:500;min-width:240px;max-width:420px}
@@ -225,7 +225,7 @@ const T = {
   readOnly:'لديك صلاحية عرض فقط. اطلب من صاحب الملف صلاحية التعديل.',
   activeCount:'مشاريع جارية',contractValue:'إجمالي قيمة العقود',invoiced:'المستخلصات المرفوعة',collected:'المبالغ المحصلة',uncollected:'المبالغ غير المحصلة',remaining:'باقي قيمة المشاريع',collRate:'نسبة التحصيل',ofInvoiced:'من المستخلصات المرفوعة',sar:'ريال سعودي',projects:'مشروع',
   open:'فتح القائمة ←',byWork:'المشاريع الجارية حسب نوع العمل',byWorkS:'قيمة العقود والمحصل لكل نوع عمل',topOut:'أعلى المبالغ غير المحصلة',topOutS:'المشاريع الجارية التي تحتاج متابعة تحصيل',byYear:'المشاريع المنتهية حسب سنة الانتهاء',byYearS:'عدد المشاريع المنجزة في كل سنة',
-  value:'قيمة المشروع',search:'ابحث باسم المشروع أو العميل أو رقم العقد',allWork:'كل أنواع العمل',allStatus:'كل الحالات',allSector:'كل القطاعات',allLoc:'كل المدن',add:'إضافة مشروع',export:'Excel',exportPdf:'PDF',pdfBuilding:'جاري تجهيز ملف PDF… صفحة',pdfFail:'تعذّر تجهيز ملف PDF، حاول مرة أخرى.',page:'صفحة',reportDate:'تاريخ التقرير',
+  value:'قيمة المشروع',change:'أمر التغيير',totalValue:'القيمة بعد أمر التغيير',changeHint:'المبلغ الإضافي للأعمال المستحدثة، بيتجمع على قيمة المشروع.',xlBuilding:'جاري تجهيز ملف Excel…',search:'ابحث باسم المشروع أو العميل أو رقم العقد',allWork:'كل أنواع العمل',allStatus:'كل الحالات',allSector:'كل القطاعات',allLoc:'كل المدن',add:'إضافة مشروع',export:'Excel',exportPdf:'PDF',pdfBuilding:'جاري تجهيز ملف PDF… صفحة',pdfFail:'تعذّر تجهيز ملف PDF، حاول مرة أخرى.',page:'صفحة',reportDate:'تاريخ التقرير',
   no:'م',contract:'رقم العقد',name:'اسم المشروع',client:'العميل',work:'نوع العمل',status:'الحالة',sector:'القطاع',location:'المدينة',start:'تاريخ البداية',end:'تاريخ النهاية',notes:'ملاحظات',stage:'القسم',
   progress:'الإنجاز',total:'الإجمالي',shown:'المعروض',of:'من',showMore:'عرض المزيد',noResults:'لا توجد مشاريع مطابقة للبحث.',emptyDb:'لا توجد بيانات بعد. أضف أول مشروع بزر «إضافة مشروع».',
   edit:'تعديل',del:'حذف',save:'حفظ',cancel:'إلغاء',close:'إغلاق',newProject:'مشروع جديد',editProject:'تعديل مشروع',
@@ -262,7 +262,7 @@ const T = {
   readOnly:'You have view-only access. Ask the owner for edit access.',
   activeCount:'Current projects',contractValue:'Total contract value',invoiced:'Invoiced to date',collected:'Collected',uncollected:'Uncollected',remaining:'Remaining contract value',collRate:'Collection rate',ofInvoiced:'of invoiced amounts',sar:'SAR',projects:'projects',
   open:'Open list →',byWork:'Current projects by work type',byWorkS:'Contract value and collected amount per work type',topOut:'Largest uncollected amounts',topOutS:'Current projects that need collection follow-up',byYear:'Completed projects by year',byYearS:'Number of projects finished each year',
-  value:'Project value',search:'Search by project, client or contract no.',allWork:'All work types',allStatus:'All statuses',allSector:'All sectors',allLoc:'All cities',add:'Add project',export:'Excel',exportPdf:'PDF',pdfBuilding:'Preparing PDF… page',pdfFail:'The PDF could not be prepared. Try again.',page:'Page',reportDate:'Report date',
+  value:'Project value',change:'Change order',totalValue:'Value incl. change orders',changeHint:'Extra amount for added works; it is added to the project value.',xlBuilding:'Preparing Excel file…',search:'Search by project, client or contract no.',allWork:'All work types',allStatus:'All statuses',allSector:'All sectors',allLoc:'All cities',add:'Add project',export:'Excel',exportPdf:'PDF',pdfBuilding:'Preparing PDF… page',pdfFail:'The PDF could not be prepared. Try again.',page:'Page',reportDate:'Report date',
   no:'#',contract:'Contract no.',name:'Project',client:'Client',work:'Work type',status:'Status',sector:'Sector',location:'City',start:'Start date',end:'End date',notes:'Notes',stage:'Section',
   progress:'Progress',total:'Total',shown:'Showing',of:'of',showMore:'Show more',noResults:'No projects match your search.',emptyDb:'No data yet. Add the first project with “Add project”.',
   edit:'Edit',del:'Delete',save:'Save',cancel:'Cancel',close:'Close',newProject:'New project',editProject:'Edit project',
@@ -321,7 +321,10 @@ const lab = (list,k) => { const it=(S.lists[list]||[]).find(x=>x.k===k); return 
 const loc = (p,f) => S.lang==='en' ? (p[f+'_en']||p[f+'_ar']||'') : (p[f+'_ar']||p[f+'_en']||'');
 const noFin = p => p.stage==='finished' && p.invoiced==null && p.collected==null;
 const unc = p => noFin(p) ? null : num(p.invoiced)-num(p.collected);
-const rem = p => (noFin(p) || p.value==null) ? null : num(p.value)-num(p.invoiced);
+// project value including change orders (أمر التغيير)
+const tot = p => (p.value==null && p.change==null) ? null : num(p.value)+num(p.change);
+const rem = p => (noFin(p) || tot(p)==null) ? null : num(tot(p))-num(p.invoiced);
+const hasChange = arr => arr.some(p=>num(p.change)!==0);
 const statusClass = k => ['ongoing','not_started','completed','stopped'].includes(k) ? k : 'other';
 const moves = k => !!(S.lists.status||[]).find(s=>s.k===k && s.moves);
 const stageItems = st => [...S.items.values()].filter(p=>!p.deleted && p.stage===st);
@@ -348,7 +351,7 @@ function head(v, right=''){
 function viewDash(){
   const cur=stageItems('current'), fin=stageItems('finished'), fut=stageItems('future');
   const sum=(a,f)=>a.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
-  const V=sum(cur,'value'), I=sum(cur,'invoiced'), C=sum(cur,'collected'), U=sum(cur,unc), R=sum(cur,rem);
+  const V=sum(cur,tot), I=sum(cur,'invoiced'), C=sum(cur,'collected'), U=sum(cur,unc), R=sum(cur,rem);
   const rate = I ? Math.round(C/I*100) : 0;
   let html = head('dash');
   if (!S.items.size && S.sync==='ok') html += `<div class="notice">${t('emptyDb')}</div>`;
@@ -361,10 +364,10 @@ function viewDash(){
     <div class="kpi"><span class="l">${t('remaining')}</span><span class="v">${money0(R)}</span><span class="s">${t('sar')}</span></div>
     <div class="kpi"><span class="l">${t('collRate')}</span><span class="v" style="color:var(--gold-ink)">${rate}%</span><span class="s">${t('ofInvoiced')}</span></div>
   </section>`;
-  const stage=(v,arr)=>`<button type="button" class="stage" data-view="${v}"><span class="n">${arr.length}</span><span class="t">${t(v)}</span><span class="d">${money0(sum(arr,'value'))} ${t('sar')}</span><span class="go">${t('open')}</span></button>`;
+  const stage=(v,arr)=>`<button type="button" class="stage" data-view="${v}"><span class="n">${arr.length}</span><span class="t">${t(v)}</span><span class="d">${money0(sum(arr,tot))} ${t('sar')}</span><span class="go">${t('open')}</span></button>`;
   html += `<section class="stages">${stage('current',cur)}${stage('finished',fin)}${stage('future',fut)}</section>`;
   // by work type
-  const groups={}; cur.forEach(p=>{const k=p.work||'_'; (groups[k] ||= {n:0,v:0,c:0}); groups[k].n++; groups[k].v+=num(p.value); groups[k].c+=num(p.collected);});
+  const groups={}; cur.forEach(p=>{const k=p.work||'_'; (groups[k] ||= {n:0,v:0,c:0}); groups[k].n++; groups[k].v+=num(tot(p)); groups[k].c+=num(p.collected);});
   const gArr=Object.entries(groups).sort((a,b)=>b[1].v-a[1].v); const gMax=Math.max(1,...gArr.map(g=>g[1].v));
   const bars = gArr.length ? gArr.map(([k,g])=>`<div class="bar-row"><div class="name">${esc(k==='_'?t('none'):lab('work',k))}<div class="sm" style="font-size:12px;color:var(--muted)">${g.n} ${t('projects')}</div></div><div class="bar-track">
      <div class="bar"><i style="width:${g.v/gMax*100}%;background:var(--ink)"></i></div><div class="bar"><i style="width:${g.c/gMax*100}%;background:var(--gold)"></i></div>
@@ -388,10 +391,13 @@ function viewDash(){
 /* ---------- lists ---------- */
 function columns(st){
   const base=[{k:'order',l:'no',num:true,v:p=>p.no||''},{k:'contract',l:'contract',v:p=>p.contract||''},{k:'name',l:'name'},{k:'client',l:'client'},{k:'work',l:'work'}];
-  if(st==='finished') return [...base,{k:'sector',l:'sector'},{k:'location',l:'location'},{k:'value',l:'value',num:true},{k:'start',l:'start'},{k:'end',l:'end'}];
-  return [...base,{k:'status',l:'status'},{k:'start',l:'start'},{k:'value',l:'value',num:true},{k:'invoiced',l:'invoiced',num:true},{k:'collected',l:'collected',num:true},{k:'unc',l:'uncollected',num:true},{k:'rem',l:'remaining',num:true}];
+  // change order + value after it: always in current projects; elsewhere only when some project has one
+  const chg = st==='current' || hasChange(stageItems(st));
+  const val=[{k:'value',l:'value',num:true},...(chg?[{k:'change',l:'change',num:true},{k:'total',l:'totalValue',num:true}]:[])];
+  if(st==='finished') return [...base,{k:'sector',l:'sector'},{k:'location',l:'location'},...val,{k:'start',l:'start'},{k:'end',l:'end'}];
+  return [...base,{k:'status',l:'status'},{k:'start',l:'start'},...val,{k:'invoiced',l:'invoiced',num:true},{k:'collected',l:'collected',num:true},{k:'unc',l:'uncollected',num:true},{k:'rem',l:'remaining',num:true}];
 }
-function sortVal(p,k){ if(k==='name'||k==='client') return loc(p,k).toLowerCase(); if(k==='unc') return unc(p)??-Infinity; if(k==='rem') return rem(p)??-Infinity;
+function sortVal(p,k){ if(k==='name'||k==='client') return loc(p,k).toLowerCase(); if(k==='unc') return unc(p)??-Infinity; if(k==='rem') return rem(p)??-Infinity; if(k==='total') return tot(p)??-Infinity;
   if(k==='work') return lab('work',p.work); if(k==='status') return lab('status',p.status); if(k==='sector') return lab('sector',p.sector); if(k==='location') return lab('location',p.location);
   const v=p[k]; return v==null?'':v; }
 function filtered(st){
@@ -414,6 +420,7 @@ function viewList(st){
     ${st==='finished'?`<select class="f" id="fLoc" aria-label="${t('location')}">${opts('location',S.fLoc,'allLoc')}</select>`:''}
     <button type="button" class="btn" data-act="export">⬇ ${t('export')}</button><button type="button" class="btn" data-act="pdf">⬇ ${t('exportPdf')}</button></div>`;
   html += `<div class="totals"><div><span>${t('shown')}</span><b>${rows.length} ${t('of')} ${all.length}</b></div><div><span>${t('value')}</span><b>${money0(sum('value'))}</b></div>`
+    + (cols.some(c=>c.k==='change')?`<div><span>${t('change')}</span><b>${money0(sum('change'))}</b></div><div><span>${t('totalValue')}</span><b>${money0(sum(tot))}</b></div>`:'')
     + (st!=='finished'?`<div><span>${t('invoiced')}</span><b>${money0(sum('invoiced'))}</b></div><div><span>${t('collected')}</span><b>${money0(sum('collected'))}</b></div><div><span>${t('uncollected')}</span><b>${money0(sum(unc))}</b></div><div><span>${t('remaining')}</span><b>${money0(sum(rem))}</b></div>`:'')+`</div>`;
   const th=cols.map(c=>`<th scope="col" class="${c.num?'num':''}" data-sort="${c.k}">${t(c.l)}${S.sort.key===c.k?`<span class="arr">${S.sort.dir>0?'▲':'▼'}</span>`:''}</th>`).join('');
   const cell=(p,c)=>{ switch(c.k){
@@ -426,7 +433,8 @@ function viewList(st){
     case 'location': return `<td>${esc(lab('location',p.location))}</td>`;
     case 'status': return `<td><span class="pill ${statusClass(p.status)}">${esc(lab('status',p.status))}</span></td>`;
     case 'start': case 'end': return `<td class="num" dir="ltr">${esc(p[c.k]||'')}</td>`;
-    case 'invoiced': { const pc = p.value ? Math.min(100,Math.max(0,num(p.invoiced)/p.value*100)) : 0; return `<td class="num">${money(p.invoiced)}<div class="progress" title="${Math.round(pc)}%"><i style="width:${pc}%"></i></div></td>`; }
+    case 'total': return `<td class="num">${money(tot(p))}</td>`;
+    case 'invoiced': { const tv=num(tot(p)); const pc = tv ? Math.min(100,Math.max(0,num(p.invoiced)/tv*100)) : 0; return `<td class="num">${money(p.invoiced)}<div class="progress" title="${Math.round(pc)}%"><i style="width:${pc}%"></i></div></td>`; }
     case 'unc': { const v=unc(p); return `<td class="num ${v<0?'neg':''}">${money(v)}</td>`; }
     case 'rem': { const v=rem(p); return `<td class="num ${v<0?'neg':''}">${money(v)}</td>`; }
     default: return `<td class="num">${money(p[c.k])}</td>`; } };
@@ -463,7 +471,7 @@ function renderDrawer(){
     const fin = p.stage!=='finished' || p.invoiced!=null;
     body=`<div class="inline" style="margin-bottom:14px;flex-wrap:wrap"><span class="pill ${statusClass(p.status)}">${esc(lab('status',p.status))}</span><span class="pill other">${t(p.stage)}</span></div>
       <dl class="kv">${row('client',esc(loc(p,'client')))}${row('contract',p.contract?`<span dir="ltr">${esc(p.contract)}</span>`:'')}${row('no',esc(p.no))}${row('work',esc(lab('work',p.work)))}${row('sector',esc(lab('sector',p.sector)))}${p.location?row('location',esc(lab('location',p.location))):''}${row('start',p.start?`<span dir="ltr">${esc(p.start)}</span>`:'')}${p.end?row('end',`<span dir="ltr">${esc(p.end)}</span>`):''}</dl>
-      <div class="money"><div><span>${t('value')}</span><b>${money(p.value)}</b></div>${fin?`<div><span>${t('invoiced')}</span><b>${money(p.invoiced)}</b></div><div><span>${t('collected')}</span><b>${money(p.collected)}</b></div><div><span>${t('uncollected')}</span><b class="${num(unc(p))<0?'neg':''}">${money(unc(p))}</b></div><div><span>${t('remaining')}</span><b class="${num(rem(p))<0?'neg':''}">${money(rem(p))}</b></div>`:''}</div>
+      <div class="money"><div><span>${t('value')}</span><b>${money(p.value)}</b></div>${(p.stage==='current'||num(p.change)!==0)?`<div><span>${t('change')}</span><b>${money(p.change)}</b></div><div><span>${t('totalValue')}</span><b>${money(tot(p))}</b></div>`:''}${fin?`<div><span>${t('invoiced')}</span><b>${money(p.invoiced)}</b></div><div><span>${t('collected')}</span><b>${money(p.collected)}</b></div><div><span>${t('uncollected')}</span><b class="${num(unc(p))<0?'neg':''}">${money(unc(p))}</b></div><div><span>${t('remaining')}</span><b class="${num(rem(p))<0?'neg':''}">${money(rem(p))}</b></div>`:''}</div>
       ${loc(p,'notes')?`<dl class="kv">${row('notes',esc(loc(p,'notes')))}</dl>`:''}
       ${p.updatedAt?`<p class="sub" style="margin-top:16px;font-size:12px;color:var(--muted)">${t('lastEdit')}: <span dir="ltr">${esc(new Date(p.updatedAt).toLocaleString('en-GB'))}</span>${p.updatedBy&&S.names[p.updatedBy]?` ${t('by')} ${esc(S.names[p.updatedBy])}`:''}</p>`:''}
       ${S.drawer.confirmDel?`<div class="confirm"><b>${t('delQ')}</b><div class="inline"><button type="button" class="btn danger" data-act="dodel">${t('yesDel')}</button><button type="button" class="btn" data-act="nodel">${t('cancel')}</button></div></div>`:''}`;
@@ -485,8 +493,9 @@ function renderDrawer(){
       ${f('work','work',sel('work','work'))}${f('sector','sector',sel('sector','sector'))}
       ${f('location','location',sel('location','location'))}<span></span>
       ${f('start','start',inp('start','date'))}${f('end','end',inp('end','date'))}
-      ${f('value','value',inp('value','number','ltr'))}${f('invoiced','invoiced',inp('invoiced','number','ltr'))}
-      ${f('collected','collected',inp('collected','number','ltr'))}<span></span>
+      ${f('value','value',inp('value','number','ltr'))}${f('change','change',inp('change','number','ltr'))}
+      <div class="full" style="font-size:12.5px;color:var(--muted);margin-top:-6px">${t('changeHint')} <span id="e-totv"></span></div>
+      ${f('invoiced','invoiced',inp('invoiced','number','ltr'))}${f('collected','collected',inp('collected','number','ltr'))}
       ${f('notes_ar','notesAr',`<textarea id="e-notes_ar" name="notes_ar" dir="rtl">${esc(d.notes_ar||'')}</textarea>`)}${f('notes_en','notesEn',`<textarea id="e-notes_en" name="notes_en" dir="ltr">${esc(d.notes_en||'')}</textarea>`)}
     </form>`;
     foot=`<button type="button" class="btn" data-act="${p?'back':'close'}">${t('cancel')}</button><button type="button" class="btn primary" data-act="save">${t('save')}</button>`;
@@ -494,6 +503,10 @@ function renderDrawer(){
   L.innerHTML=`<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-modal="true" aria-label="${title}"><header><div><div class="eyebrow">${mode==='view'?t('details'):(p?t('editProject'):t('newProject'))}</div><h2>${title}</h2></div><button type="button" class="x" data-act="close" aria-label="${t('close')}">${ICON.x}</button></header><div class="body">${body}</div><footer>${foot}</footer></aside>`;
   const st=document.getElementById('e-status'), sg=document.getElementById('e-stage');
   if (st) { const upd=()=>{ document.getElementById('movehint').hidden = !(moves(st.value) && sg.value!=='finished'); }; st.addEventListener('change',upd); sg.addEventListener('change',upd); }
+  const ev=document.getElementById('e-value'), ec=document.getElementById('e-change'), tv=document.getElementById('e-totv');
+  if (ev && ec && tv) { const n=x=>{ const v=Number(String(x.value).replace(/,/g,'')); return isFinite(v)?v:0; };
+    const upd=()=>{ tv.innerHTML = (ev.value||ec.value) ? `— ${t('totalValue')}: <b dir="ltr" style="color:var(--ink)">${nf2.format(n(ev)+n(ec))}</b>` : ''; };
+    ev.addEventListener('input',upd); ec.addEventListener('input',upd); upd(); }
   L.querySelector('.x')?.focus();
 }
 
@@ -523,7 +536,7 @@ function readForm(){
   const F=document.getElementById('pform'); const g=k=>F.elements[k]?.value?.trim() ?? '';
   const n=k=>{ const v=g(k); if(v==='') return null; const x=Number(v.replace(/,/g,'')); return isFinite(x)?x:null; };
   return { name_ar:g('name_ar'), name_en:g('name_en'), client_ar:g('client_ar'), client_en:g('client_en'), stage:g('stage'), status:g('status'), contract:g('contract'), no:g('no'),
-    work:g('work'), sector:g('sector'), location:g('location'), start:g('start'), end:g('end'), value:n('value'), invoiced:n('invoiced'), collected:n('collected'), notes_ar:g('notes_ar'), notes_en:g('notes_en') };
+    work:g('work'), sector:g('sector'), location:g('location'), start:g('start'), end:g('end'), value:n('value'), change:n('change'), invoiced:n('invoiced'), collected:n('collected'), notes_ar:g('notes_ar'), notes_en:g('notes_en') };
 }
 async function save(){
   const d=readForm(); if(!d.name_ar && !d.name_en){ toast(t('needName')); return; }
@@ -550,83 +563,213 @@ async function translate(){
   }catch(e){ toast(t('transFail')); }
   b.disabled=false; b.textContent=t('translate');
 }
-async function exportCsv(){
-  const st=S.view, rows=filtered(st), cols=columns(st);
-  const val=(p,c)=>{ switch(c.k){ case 'order':return p.no||''; case 'name':return loc(p,'name'); case 'client':return loc(p,'client'); case 'work':return lab('work',p.work); case 'status':return lab('status',p.status);
-    case 'sector':return lab('sector',p.sector); case 'location':return lab('location',p.location); case 'unc':return unc(p)??''; case 'rem':return rem(p)??''; default: return p[c.k]??''; } };
-  const q=v=>{ const s=String(v); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
-  const csv='﻿'+[cols.map(c=>q(t(c.l))).join(','),...rows.map(p=>cols.map(c=>q(val(p,c))).join(','))].join('\r\n');
-  try{
-    const d=new Date(); saveBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}), `${S.lang==='ar'?{current:'المشاريع الجارية',finished:'المشاريع المنتهية',future:'المشاريع المستقبلية'}[st]:{current:'Current Projects',finished:'Completed Projects',future:'Future Projects'}[st]} ${d.toISOString().slice(0,10)}.csv`); toast(t('exported')); }
-  catch(e){ toast(t('exportFail')); }
+/* ---------- exports: Excel (.xlsx, formatted like the screen) and PDF ---------- */
+const LIB_XL='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
+const LIB_H2C='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+const LIB_PDF='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+function loadScript(src){ return new Promise((res,rej)=>{ const old=document.querySelector(`script[src="${src}"]`); if(old && old.dataset.ok) return res(); if(old) old.remove();
+  const s=document.createElement('script'); s.src=src; s.onload=()=>{ s.dataset.ok='1'; res(); }; s.onerror=()=>{ s.remove(); rej(new Error('load '+src)); }; document.head.appendChild(s); }); }
+const stageFile = st => S.lang==='ar' ? {current:'المشاريع الجارية',finished:'المشاريع المنتهية',future:'المشاريع المستقبلية'}[st] : {current:'Current Projects',finished:'Completed Projects',future:'Future Projects'}[st];
+const slashDate = () => todayStr().replace(/-/g,'/');
+function busyNote(txt){ const n=document.createElement('div'); n.className='toast'; n.setAttribute('role','status'); n.textContent=txt; document.body.appendChild(n); return n; }
+function cellText(p,c){ switch(c.k){ case 'order':return p.no||''; case 'name':return loc(p,'name'); case 'client':return loc(p,'client'); case 'work':return lab('work',p.work); case 'status':return lab('status',p.status);
+  case 'sector':return lab('sector',p.sector); case 'location':return lab('location',p.location); case 'notes':return loc(p,'notes');
+  case 'unc':{const v=unc(p);return v==null?'':v;} case 'rem':{const v=rem(p);return v==null?'':v;} case 'total':{const v=tot(p);return v==null?'':v;} default: return p[c.k]??''; } }
+const colVal = (p,c) => c.k==='unc'?unc(p):c.k==='rem'?rem(p):c.k==='total'?tot(p):p[c.k];
+const isNeg = (p,c) => (c.k==='unc'&&num(unc(p))<0)||(c.k==='rem'&&num(rem(p))<0);
+const colHead = c => c.h || t(c.l);
+const isMoney = c => c.num && c.k!=='order';
+
+/* One worksheet that looks like the list in the program: logo and title, totals strip,
+   gold header row, striped rows, status colours, totals row with live SUM formulas. */
+const XL_STATUS={ongoing:['E6EDF6','3D5A80'],not_started:['FFF1D6','B26A00'],completed:['E5F3EA','2E7D4F'],stopped:['FBE4E2','B3261E'],other:['F1EBDB','55524B']};
+const XL_W={order:6,contract:15,name:46,client:30,work:17,status:13,sector:16,location:14,start:13,end:13,notes:40,notes_ar:40,notes_en:40,name_en:40,client_en:28};
+function xlSheet(wb,{name,title,desc,rtl,cols,rows,count}){
+  const n=cols.length, HR=8, first=HR+1, last=HR+rows.length;
+  const ws=wb.addWorksheet(name.replace(/[\[\]:*?\/\\]/g,' ').slice(0,31),{
+    views:[{rightToLeft:rtl,showGridLines:false,state:'frozen',ySplit:HR,zoomScale:100}],
+    pageSetup:{paperSize:9,orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,horizontalCentered:true,printTitlesRow:`${HR}:${HR}`,
+      margins:{left:0.3,right:0.3,top:0.4,bottom:0.5,header:0.2,footer:0.25}},
+    headerFooter:{oddFooter:'&C&"Tajawal"&9&K8A8B8C&P / &N'}});
+  const F=(o={})=>({name:'Tajawal',size:11,color:{argb:'FF252525'},...o});
+  const fill=hex=>({type:'pattern',pattern:'solid',fgColor:{argb:'FF'+hex}});
+  const rd={readingOrder:rtl?'rtl':'ltr'};
+  ws.columns=cols.map(c=>({width:XL_W[c.k]??(c.num?17:15)}));
+  // title block, logo on the far side
+  const span=Math.max(1,n-2);
+  [[1,title,F({size:18,bold:true}),30],[2,desc,F({size:10,color:{argb:'FF8A8B8C'}}),18],[3,`${t('reportDate')}: ${slashDate()}`,F({size:10,bold:true,color:{argb:'FF94700F'}}),18]].forEach(([r,v,f,h])=>{
+    if(span>1) ws.mergeCells(r,1,r,span); const c=ws.getCell(r,1); c.value=v; c.font=f; c.alignment={vertical:'middle',...rd}; ws.getRow(r).height=h; });
+  for(let i=1;i<=n;i++) ws.getCell(3,i).border={bottom:{style:'medium',color:{argb:'FFD9AA28'}}};
+  try{ const src=document.getElementById('logo')?.src||''; if(src.startsWith('data:image/png')){ const id=wb.addImage({base64:src.split(',')[1],extension:'png'}); ws.addImage(id,{tl:{col:Math.max(0,n-2)+0.15,row:0.2},ext:{width:150,height:41},editAs:'oneCell'}); } }catch(e){}
+  ws.getRow(4).height=8; ws.getRow(7).height=8;
+  // totals strip (like the band above the table)
+  const sumOf=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
+  const cntCol=Math.max(1,cols.findIndex(c=>c.k==='name')+1);
+  for(let i=1;i<=n;i++){ const c=cols[i-1], a=ws.getCell(5,i), b=ws.getCell(6,i);
+    a.fill=b.fill=fill('FBF8F1');
+    a.border={top:{style:'thin',color:{argb:'FFE8E0CB'}}}; b.border={bottom:{style:'thin',color:{argb:'FFE8E0CB'}}};
+    if(i===cntCol){ a.value=t('shown'); b.value=count; }
+    else if(isMoney(c) && c.sum!==false){ a.value=colHead(c); b.value=Math.round(sumOf(c)); b.numFmt='#,##0'; }
+    a.font=F({size:9,color:{argb:'FF8A8B8C'}}); b.font=F({size:12.5,bold:true,color:{argb:'FF94700F'}});
+    a.alignment={vertical:'bottom',horizontal:'center',wrapText:true,...rd}; b.alignment={vertical:'middle',horizontal:'center',...rd}; }
+  ws.getRow(5).height=18; ws.getRow(6).height=22;
+  // header row
+  const hr=ws.getRow(HR); hr.height=40;
+  cols.forEach((c,i)=>{ const x=hr.getCell(i+1); x.value=colHead(c); x.fill=fill('D9AA28'); x.font=F({bold:true,color:{argb:'FF1B1A17'}});
+    x.alignment={vertical:'middle',horizontal:c.num||['start','end','status','contract'].includes(c.k)?'center':undefined,wrapText:true,...rd};
+    x.border={bottom:{style:'thin',color:{argb:'FFC99A1E'}}}; });
+  // data rows
+  rows.forEach((p,ri)=>{ const r=ws.getRow(first+ri);
+    cols.forEach((c,ci)=>{ const x=r.getCell(ci+1); let v=cellText(p,c); const al={vertical:'top'}; // reading order follows each cell's own text (Arabic or English)
+      if(c.k==='order'){ x.value=(v!==''&&isFinite(+v))?+v:v; al.horizontal='center'; }
+      else if(isMoney(c)){ if(v===''||v==null){ x.value=t('none'); al.horizontal='center'; } else { x.value=+v; x.numFmt='#,##0.00'; } }
+      else if(c.k==='start'||c.k==='end'){ const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||''); if(m){ x.value=new Date(Date.UTC(+m[1],+m[2]-1,+m[3])); x.numFmt='yyyy/mm/dd'; } else x.value=v||null; al.horizontal='center'; }
+      else { x.value=v===''?null:String(v); if(c.k==='contract'){ al.horizontal='center'; al.readingOrder='ltr'; } else al.wrapText=true; }
+      x.alignment=al;
+      x.font=F(isNeg(p,c)?{color:{argb:'FFB3261E'}}:c.k==='name'?{bold:false}:{});
+      x.border={bottom:{style:'thin',color:{argb:'FFF1EBDB'}}};
+      if(ri%2) x.fill=fill('FFF9E9');
+      if(c.k==='status' && v){ const [bg,fg]=XL_STATUS[statusClass(p.status)]; x.fill=fill(bg); x.font=F({bold:true,size:10,color:{argb:'FF'+fg}}); x.alignment={vertical:'top',horizontal:'center',...rd}; }
+    }); });
+  // totals row with live formulas
+  const tr=ws.getRow(last+1); tr.height=24;
+  cols.forEach((c,i)=>{ const x=tr.getCell(i+1); x.fill=fill('F6E7BC'); x.font=F({bold:true});
+    x.border={top:{style:'medium',color:{argb:'FFD9AA28'}},bottom:{style:'thin',color:{argb:'FFE8E0CB'}}}; x.alignment={vertical:'middle',...rd};
+    if(i===0){ x.value=t('total'); }
+    else if(isMoney(c) && rows.length){ const L=ws.getColumn(i+1).letter, s=sumOf(c); x.value={formula:`SUM(${L}${first}:${L}${last})`,result:s}; x.numFmt='#,##0.00'; if(s<0) x.font=F({bold:true,color:{argb:'FFB3261E'}}); } });
+  if(rows.length) ws.autoFilter={from:{row:HR,column:1},to:{row:HR,column:n}};
+  return ws;
 }
-/* ---------- PDF report (A4 landscape, brand styling, drawn page by page) ---------- */
-function loadScript(src){ return new Promise((res,rej)=>{ if(document.querySelector(`script[src="${src}"]`)) return res(); const s=document.createElement('script'); s.src=src; s.onload=()=>res(); s.onerror=rej; document.head.appendChild(s); }); }
+function xlBook(){ const wb=new window.ExcelJS.Workbook(); wb.creator='Consultancy Group'; wb.company='Consultancy Group'; wb.created=new Date(); return wb; }
+let xlBusy=false;
+async function exportXlsx(){
+  if(xlBusy) return; xlBusy=true;
+  const st=S.view, rows=filtered(st), cols=columns(st), note=busyNote(t('xlBuilding'));
+  try{
+    await loadScript(LIB_XL);
+    const wb=xlBook();
+    xlSheet(wb,{name:t(st),title:t(st),desc:t(st+'D'),rtl:S.lang==='ar',cols,rows,count:`${rows.length} ${t('of')} ${stageItems(st).length}`});
+    const buf=await wb.xlsx.writeBuffer();
+    saveBlob(new Blob([buf],{type:XLSX_MIME}), `${stageFile(st)} ${todayStr()}.xlsx`); toast(t('exported'));
+  }catch(e){ console.error('excel export',e); toast(t('exportFail')); }
+  finally{ note.remove(); xlBusy=false; }
+}
+// Backup workbook: one formatted sheet per section (Arabic), plus English names and notes.
+async function bkXlsx(){
+  await loadScript(LIB_XL);
+  const keep=S.lang; let wb;
+  try{
+    S.lang='ar'; wb=xlBook();
+    ['current','future','finished'].forEach(st=>{
+      const rows=stageItems(st).sort((a,b)=>num(a.order)-num(b.order));
+      const cols=[...columns(st),{k:'name_en',h:'Project'},{k:'client_en',h:'Client'},{k:'notes_ar',l:'notes'},{k:'notes_en',h:'Notes'}];
+      xlSheet(wb,{name:t(st),title:t(st),desc:t(st+'D'),rtl:true,cols,rows,count:`${rows.length} ${t('projects')}`});
+    });
+  } finally { S.lang=keep; }
+  return new Blob([await wb.xlsx.writeBuffer()],{type:XLSX_MIME});
+}
+
+/* ---------- PDF report (A4 landscape), drawn page by page inside a separate
+   clean frame so the program's own styles can't break it ---------- */
 let pdfBusy=false;
 async function exportPdf(){
   if (pdfBusy) return; pdfBusy=true;
-  const st=S.view, rows=filtered(st), cols=columns(st);
-  const note=document.createElement('div'); note.className='toast'; note.setAttribute('role','status'); note.textContent=t('pdfBuilding')+' …'; document.body.appendChild(note);
-  const box=document.createElement('div');
+  const st=S.view, rows=filtered(st), cols=columns(st), rtl=S.lang==='ar';
+  const note=busyNote(t('pdfBuilding')+' …');
+  const fr=document.createElement('iframe'); let pStyle=null, pRoot=null;
   try{
-    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-    try{ await document.fonts.ready; }catch(e){}
-    const W=1123, H=794, PAD=30;
-    box.setAttribute('dir',T[S.lang].dir);
-    box.style.cssText=`position:fixed;top:0;left:-20000px;width:${W}px;background:#fff;color:#252525;font-family:${getComputedStyle(document.body).fontFamily};font-size:11px;line-height:1.45`;
-    document.body.appendChild(box);
-    const css=`<style>
-      .pg{width:${W}px;height:${H}px;box-sizing:border-box;padding:${PAD}px;display:flex;flex-direction:column;background:#fff}
-      .hd{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:10px;border-bottom:3px solid #D9AA28;margin-bottom:12px}
-      .hd img{height:46px}.hd h1{margin:0;font-size:22px;font-weight:800;color:#252525}.hd p{margin:2px 0 0;color:#8A8B8C;font-size:11px}
-      .hd .dt{font-size:11px;color:#94700F;font-weight:700;white-space:nowrap}
-      .sum{display:flex;gap:22px;background:#252525;color:#F4EFE3;border-radius:6px;padding:7px 12px;margin-bottom:10px;font-size:10.5px}
-      .sum b{color:#D9AA28;font-size:13px;display:block}
-      table{border-collapse:collapse;width:100%;table-layout:auto}
-      th{background:#D9AA28;color:#1B1A17;font-weight:700;padding:6px 6px;text-align:start;font-size:10.5px;border:1px solid #C99A1E;white-space:nowrap}
-      td{padding:5px 6px;border:1px solid #E8E0CB;vertical-align:top;font-size:10.5px}
-      tr:nth-child(even) td{background:#FEF8E6}
-      .n{text-align:end;white-space:nowrap}.neg{color:#B3261E}
-      tr.tot td{background:#252525!important;color:#D9AA28;font-weight:700;border-color:#252525}
-      .ft{margin-top:auto;display:flex;justify-content:space-between;color:#8A8B8C;font-size:10px;border-top:1px solid #E8E0CB;padding-top:6px}
-    </style>`;
-    const d=new Date(); const ds=d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
+    await loadScript(LIB_PDF);
+    const W=1123, H=794, PAD=28, many=cols.length>12, fs=many?9.5:10.5;
+    const css=`*{box-sizing:border-box}html,body{margin:0;background:#fff}
+      body{font-family:Tajawal,"Segoe UI",Tahoma,Arial,sans-serif;color:#252525;font-size:${fs}px;line-height:1.45}
+      .pg{width:${W}px;height:${H}px;padding:${PAD}px;display:flex;flex-direction:column;background:#fff;overflow:hidden}
+      .hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:10px;border-bottom:2px solid #D9AA28;margin-bottom:12px}
+      .eb{font-size:10.5px;color:#94700F;font-weight:700}
+      table.fx{table-layout:fixed}table.fx td{overflow-wrap:break-word}table.fx th{white-space:normal}td.nw{white-space:nowrap}
+      .hd h1{margin:2px 0 0;font-size:22px;font-weight:800;line-height:1.3}.hd p{margin:2px 0 0;color:#8A8B8C;font-size:11px}
+      .hd .r{display:flex;align-items:center;gap:16px}.hd img{height:44px;display:block}.dt{font-size:11px;color:#55524B;white-space:nowrap}
+      .sum{display:flex;flex-wrap:wrap;gap:6px 24px;background:#FBF8F1;border:1px solid #E8E0CB;border-radius:8px;padding:7px 14px;margin-bottom:10px;font-size:10px;color:#8A8B8C}
+      .sum div{display:flex;flex-direction:column}.sum b{color:#94700F;font-size:13.5px;font-weight:800}
+      table{border-collapse:collapse;width:100%}
+      th{background:#D9AA28;color:#1B1A17;font-weight:700;padding:6px 6px;text-align:start;white-space:nowrap;font-size:${fs}px}
+      th.n,td.n{text-align:end;white-space:nowrap}td.c,th.c{text-align:center}
+      td{padding:5px 6px;border-bottom:1px solid #F1EBDB;vertical-align:top}
+      tbody tr:nth-child(even) td{background:#FFF9E9}
+      .pn{font-weight:500}.neg{color:#B3261E}
+      .pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:${fs-1}px;font-weight:700;white-space:nowrap}
+      .pill.ongoing{background:#E6EDF6;color:#3D5A80}.pill.not_started{background:#FFF1D6;color:#B26A00}.pill.completed{background:#E5F3EA;color:#2E7D4F}.pill.stopped{background:#FBE4E2;color:#B3261E}.pill.other{background:#F1EBDB;color:#55524B}
+      .pr{height:4px;background:#F1EBDB;border-radius:2px;overflow:hidden;margin-top:3px;min-width:50px}.pr i{display:block;height:100%;background:#D9AA28}
+      tr.tot td{background:#F6E7BC!important;font-weight:800;border-top:1.5px solid #D9AA28;border-bottom:0}
+      .ft{margin-top:auto;display:flex;justify-content:space-between;color:#8A8B8C;font-size:9.5px;border-top:1px solid #E8E0CB;padding-top:6px}`;
+    let fd, fw, root;
+    try{
+      fr.setAttribute('aria-hidden','true'); fr.tabIndex=-1;
+      fr.style.cssText=`position:fixed;top:0;left:-30000px;width:${W}px;height:${H}px;border:0`;
+      await new Promise((res,rej)=>{ fr.onload=()=>res(); fr.onerror=rej;
+        fr.srcdoc=`<!doctype html><html dir="${rtl?'rtl':'ltr'}" lang="${S.lang}"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"><style>${css}</style></head><body><div id="root"></div></body></html>`;
+        document.body.appendChild(fr); });
+      fd=fr.contentDocument; fw=fr.contentWindow; if(!fd || !fd.getElementById('root')) throw new Error('frame');
+      await new Promise((res,rej)=>{ const s=fd.createElement('script'); s.src=LIB_H2C; s.onload=()=>res(); s.onerror=()=>rej(new Error('load html2canvas')); fd.head.appendChild(s); });
+      try{ await Promise.all(['400','500','700','800'].map(w=>fd.fonts.load(`${w} 12px Tajawal`,'المشاريع 123'))); await fd.fonts.ready; }catch(e){}
+      root=fd.getElementById('root');
+    }catch(e){
+      // fallback (for example if the desktop copy blocks the frame): draw inside the page,
+      // with the report styles limited to one hidden box
+      fr.remove(); await loadScript(LIB_H2C); fd=document; fw=window;
+      const scoped=css.replace(/(^|\})\s*([^{}]+)\{/g,(m,b,sel)=>b+sel.split(',').map(x=>{ x=x.trim(); return (x==='html'||x==='body')?'#cgpdf':x==='*'?'#cgpdf *':'#cgpdf '+x; }).join(',')+'{')
+        +'#cgpdf th{position:static;cursor:default}#cgpdf table{min-width:0;font-size:inherit}#cgpdf td{font-size:inherit}#cgpdf tbody tr{background:none}';
+      pStyle=document.createElement('style'); pStyle.textContent=scoped; document.head.appendChild(pStyle);
+      root=pRoot=document.createElement('div'); root.id='cgpdf'; root.setAttribute('dir',rtl?'rtl':'ltr');
+      root.style.cssText=`position:fixed;top:0;left:-30000px;width:${W}px;background:#fff`; document.body.appendChild(root);
+      try{ await document.fonts.ready; }catch(e){}
+    }
     const logo=document.getElementById('logo').src;
-    const head=`<div class="hd"><div><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div><div style="display:flex;align-items:center;gap:16px"><span class="dt">${t('reportDate')}: <span dir="ltr">${ds}</span></span><img src="${logo}" alt=""></div></div>`;
+    const hdr=`<div class="hd"><div><div class="eb">${rtl?'المجموعة الاستشارية':'Consultancy Group'}</div><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div><div class="r"><span class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span></span><img src="${logo}" alt=""></div></div>`;
     const sumF=f=>rows.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
-    const summary=`<div class="sum"><div>${t('projects')}<b>${rows.length}</b></div><div>${t('value')}<b>${money0(sumF('value'))}</b></div>`+(st!=='finished'?`<div>${t('invoiced')}<b>${money0(sumF('invoiced'))}</b></div><div>${t('collected')}<b>${money0(sumF('collected'))}</b></div><div>${t('uncollected')}<b>${money0(sumF(unc))}</b></div><div>${t('remaining')}<b>${money0(sumF(rem))}</b></div>`:'')+`</div>`;
-    const thead=`<thead><tr>${cols.map(c=>`<th class="${c.num?'n':''}">${esc(t(c.l))}</th>`).join('')}</tr></thead>`;
-    const td=(p,c)=>{ const v=cellText(p,c); const isNum=c.num; const neg=(c.k==='unc'&&num(unc(p))<0)||(c.k==='rem'&&num(rem(p))<0);
-      const shown = isNum && c.k!=='order' ? (v===''?'—':nf2.format(v)) : esc(v);
-      return `<td class="${isNum?'n':''} ${neg?'neg':''}" ${['start','end','contract'].includes(c.k)?'dir="ltr"':''} ${c.k==='name'?'style="min-width:230px"':''}>${shown}</td>`; };
-    const totRow=`<tr class="tot">${cols.map((c,i)=>{ if(i===0) return `<td colspan="1">${t('total')}</td>`; if(!c.num||c.k==='order') return '<td></td>'; const f=c.k==='unc'?unc:c.k==='rem'?rem:c.k; return `<td class="n">${nf2.format(sumF(f))}</td>`; }).join('')}</tr>`;
-    // measure row heights once with the full table at page width
-    box.innerHTML=css+`<div class="pg" style="height:auto">${head}${summary}<table>${thead}<tbody>${rows.map(p=>`<tr>${cols.map(c=>td(p,c)).join('')}</tr>`).join('')}${totRow}</tbody></table></div>`;
-    const trs=[...box.querySelectorAll('tbody tr')]; const hs=trs.map(r=>r.getBoundingClientRect().height);
-    const thH=box.querySelector('thead').getBoundingClientRect().height, hdH=box.querySelector('.hd').getBoundingClientRect().height+12, smH=box.querySelector('.sum').getBoundingClientRect().height+10;
-    const avail1=H-2*PAD-hdH-smH-thH-34, availN=H-2*PAD-hdH-thH-34;
+    const sumC=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
+    const summary=`<div class="sum"><div>${t('shown')}<b>${rows.length} ${t('of')} ${stageItems(st).length}</b></div>`
+      + cols.filter(isMoney).map(c=>`<div>${esc(t(c.l))}<b dir="ltr">${money0(sumC(c))}</b></div>`).join('') + `</div>`;
+    const thead=`<thead><tr>${cols.map(c=>`<th class="${isMoney(c)?'n':['order','start','end','status'].includes(c.k)?'c':''}">${esc(t(c.l))}</th>`).join('')}</tr></thead>`;
+    const td=p=>cols.map(c=>{ const v=cellText(p,c);
+      switch(c.k){
+        case 'order': return `<td class="c">${esc(v)}</td>`;
+        case 'name': return `<td style="min-width:${many?170:230}px"><div class="pn" dir="auto">${esc(v)}</div></td>`;
+        case 'client': return `<td style="min-width:${many?105:130}px"><div dir="auto">${esc(v)}</div></td>`;
+        case 'contract': return `<td style="white-space:nowrap"><span dir="ltr">${esc(v)}</span></td>`;
+        case 'status': return `<td class="c">${v?`<span class="pill ${statusClass(p.status)}">${esc(v)}</span>`:''}</td>`;
+        case 'start': case 'end': return `<td class="c" dir="ltr" style="white-space:nowrap">${esc(v)}</td>`;
+        case 'invoiced': { const tv=num(tot(p)); const pc=tv?Math.min(100,Math.max(0,num(p.invoiced)/tv*100)):0; return `<td class="n">${money(p.invoiced)}${p.invoiced!=null?`<div class="pr"><i style="width:${pc}%"></i></div>`:''}</td>`; }
+        default: return isMoney(c) ? `<td class="n ${isNeg(p,c)?'neg':''}">${v===''?t('none'):`<span dir="ltr">${nf2.format(v)}</span>`}</td>` : `<td class="${['work','sector','location'].includes(c.k)?'nw':''}"><div dir="auto">${esc(v)}</div></td>`; } }).join('');
+    const lead=Math.max(1,cols.findIndex(isMoney)); // label spans the text columns before the first amount
+    const totRow=`<tr class="tot">${cols.map((c,i)=> i===0?`<td colspan="${lead}" style="white-space:nowrap">${t('total')}</td>` : i<lead ? '' : isMoney(c)?`<td class="n ${sumC(c)<0?'neg':''}"><span dir="ltr">${nf2.format(sumC(c))}</span></td>`:'<td></td>').join('')}</tr>`;
+    // lay the full table out once, then freeze those column widths for every page
+    // (so all pages line up) and measure row heights to split into pages
+    root.innerHTML=`<div class="pg" style="height:auto">${hdr}${summary}<table>${thead}<tbody>${rows.map(p=>`<tr>${td(p)}</tr>`).join('')}${totRow}</tbody></table></div>`;
+    const cw=[...root.querySelectorAll('thead th')].map(th=>th.getBoundingClientRect().width), cwT=cw.reduce((a,b)=>a+b,0)||1;
+    const colg=`<colgroup>${cw.map(w=>`<col style="width:${(w/cwT*100).toFixed(3)}%">`).join('')}</colgroup>`;
+    root.querySelector('table').className='fx'; root.querySelector('table').insertAdjacentHTML('afterbegin',colg);
+    const hs=[...root.querySelectorAll('tbody tr')].map(r=>r.getBoundingClientRect().height);
+    const thH=root.querySelector('thead').getBoundingClientRect().height, hdH=root.querySelector('.hd').getBoundingClientRect().height+12, smH=root.querySelector('.sum').getBoundingClientRect().height+10;
+    const avail1=H-2*PAD-hdH-smH-thH-30, availN=H-2*PAD-hdH-thH-30;
     const pages=[]; let cur=[], used=0, cap=avail1;
     hs.forEach((h,i)=>{ if(cur.length && used+h>cap){ pages.push(cur); cur=[]; used=0; cap=availN; } cur.push(i); used+=h; });
     if(cur.length) pages.push(cur); if(!pages.length) pages.push([]);
     const { jsPDF } = window.jspdf; const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
-    const company = S.lang==='ar' ? 'المجموعة الاستشارية | Consultancy Group' : 'Consultancy Group | المجموعة الاستشارية';
+    const company = rtl ? 'المجموعة الاستشارية | Consultancy Group' : 'Consultancy Group | المجموعة الاستشارية';
     for(let pi=0; pi<pages.length; pi++){
       note.textContent=`${t('pdfBuilding')} ${pi+1} / ${pages.length}`;
-      const body=pages[pi].map(i=> i<rows.length ? `<tr>${cols.map(c=>td(rows[i],c)).join('')}</tr>` : totRow).join('');
-      box.innerHTML=css+`<div class="pg">${head}${pi===0?summary:''}<table>${thead}<tbody>${body}</tbody></table><div class="ft"><span>${company}</span><span>${t('page')} ${pi+1} / ${pages.length}</span></div></div>`;
-      const canvas=await window.html2canvas(box.firstElementChild.nextElementSibling||box.querySelector('.pg'),{scale:2,backgroundColor:'#ffffff',logging:false,useCORS:true,width:W,height:H,windowWidth:W});
+      const body=pages[pi].map(i=> i<rows.length ? `<tr>${td(rows[i])}</tr>` : totRow).join('');
+      root.innerHTML=`<div class="pg">${hdr}${pi===0?summary:''}<table class="fx">${colg}${thead}<tbody>${body}</tbody></table><div class="ft"><span>${company}</span><span>${t('page')} ${pi+1} / ${pages.length}</span></div></div>`;
+      const canvas=await fw.html2canvas(root.firstElementChild,{scale:2,backgroundColor:'#ffffff',logging:false,width:W,height:H,windowWidth:W,windowHeight:H,scrollX:0,scrollY:0});
       if(pi>0) pdf.addPage('a4','landscape');
-      pdf.addImage(canvas.toDataURL('image/jpeg',0.9),'JPEG',0,0,297,210,undefined,'FAST');
+      pdf.addImage(canvas.toDataURL('image/jpeg',0.86),'JPEG',0,0,297,210,undefined,'FAST');
     }
-    const nm=S.lang==='ar'?{current:'المشاريع الجارية',finished:'المشاريع المنتهية',future:'المشاريع المستقبلية'}[st]:{current:'Current Projects',finished:'Completed Projects',future:'Future Projects'}[st];
-    saveBlob(pdf.output('blob'), `${nm} ${d.toISOString().slice(0,10)}.pdf`);
+    saveBlob(pdf.output('blob'), `${stageFile(st)} ${todayStr()}.pdf`);
     toast(t('exported'));
-  }catch(e){ toast(t('pdfFail')); }
-  finally{ box.remove(); note.remove(); pdfBusy=false; }
+  }catch(e){ console.error('pdf export',e); toast(t('pdfFail')); }
+  finally{ fr.remove(); pStyle?.remove(); pRoot?.remove(); note.remove(); pdfBusy=false; }
 }
-function cellText(p,c){ switch(c.k){ case 'order':return p.no||''; case 'name':return loc(p,'name'); case 'client':return loc(p,'client'); case 'work':return lab('work',p.work); case 'status':return lab('status',p.status);
-  case 'sector':return lab('sector',p.sector); case 'location':return lab('location',p.location); case 'unc':{const v=unc(p);return v==null?'':v;} case 'rem':{const v=rem(p);return v==null?'':v;} default: return p[c.k]??''; } }
 async function saveLists(){
   document.querySelectorAll('[data-l]').forEach(el=>{ const o=draftLists[el.dataset.l][+el.dataset.i]; if(!o) return; if(el.dataset.f==='moves') o.moves=el.checked; else o[el.dataset.f]=el.value.trim(); });
   for (const k of Object.keys(draftLists)) draftLists[k]=draftLists[k].filter(o=>o.ar||o.en);
@@ -670,7 +813,7 @@ function bkCsv(data){
   const stage={current:'جارية',finished:'منتهية',future:'مستقبلية'};
   const cols=[['القسم',p=>stage[p.stage]||p.stage],['م',p=>p.no],['رقم العقد',p=>p.contract],['اسم المشروع',p=>p.name_ar],['Project',p=>p.name_en],['العميل',p=>p.client_ar],['Client',p=>p.client_en],
     ['نوع العمل',p=>L('work',p.work)],['الحالة',p=>L('status',p.status)],['القطاع',p=>L('sector',p.sector)],['المدينة',p=>L('location',p.location)],['تاريخ البداية',p=>p.start],['تاريخ النهاية',p=>p.end],
-    ['قيمة المشروع',p=>p.value],['المستخلصات المرفوعة',p=>p.invoiced],['المبالغ المحصلة',p=>p.collected],['غير المحصل',p=>unc(p)],['الباقي',p=>rem(p)],['ملاحظات',p=>p.notes_ar],['Notes',p=>p.notes_en]];
+    ['قيمة المشروع',p=>p.value],['أمر التغيير',p=>p.change],['القيمة بعد أمر التغيير',p=>tot(p)],['المستخلصات المرفوعة',p=>p.invoiced],['المبالغ المحصلة',p=>p.collected],['غير المحصل',p=>unc(p)],['الباقي',p=>rem(p)],['ملاحظات',p=>p.notes_ar],['Notes',p=>p.notes_en]];
   const q=v=>{ const s=String(v??''); return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
   const order={current:0,future:1,finished:2};
   const rows=data.projects.filter(p=>!p.deleted).sort((a,b)=>(order[a.stage]??9)-(order[b.stage]??9)||num(a.order)-num(b.order));
@@ -698,18 +841,21 @@ async function bkSave({interactive=false, tag=''}={}){
   if(S.sync!=='ok'){ if(interactive) toast(t('bkWait')); return false; }
   if(BK.busy) return false; BK.busy=true;
   try{
-    const data=bkData(); const json=JSON.stringify(data,null,1); const csv=bkCsv(data);
+    const data=bkData(); const json=JSON.stringify(data,null,1);
+    // readable copy: formatted Excel workbook; plain CSV only if the Excel tool can't load (no internet)
+    let xl=null; try{ xl=await bkXlsx(); }catch(e){ xl=null; }
+    const xlName = xl ? ' (Excel).xlsx' : ' (Excel).csv', xlBody = xl || new Blob([bkCsv(data)],{type:'text/csv;charset=utf-8'});
     const d=new Date(); const stamp = tag ? todayStr()+' '+String(d.getHours()).padStart(2,'0')+'-'+String(d.getMinutes()).padStart(2,'0')+' '+tag : todayStr();
     const base='حالة المشاريع - نسخة احتياطية '+stamp;
     if(bkFs){
       if(!BK.dir){ if(!interactive || !(await bkPickDir())) return false; }
       if(!(await bkEnsurePerm(interactive))){ if(interactive) toast(t('bkFail')); return false; }
       await writeFile(BK.dir, base+'.json', json);
-      await writeFile(BK.dir, base+' (Excel).csv', csv);
+      await writeFile(BK.dir, base+xlName, xlBody);
     } else {
       if(!interactive) return false;
       saveBlob(new Blob([json],{type:'application/json'}), base+'.json');
-      saveBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}), base+' (Excel).csv');
+      saveBlob(xlBody, base+xlName);
     }
     lsSet('cg_bk_last', data.savedAt);
     if(interactive && !tag) toast(t('bkSaved'));
@@ -796,7 +942,7 @@ document.addEventListener('click', e=>{
   const a=e.target.closest('[data-act]'); if(!a) return;
   ({ add:()=>openDrawer('new'), close:closeDrawer, edit:()=>{S.drawer.mode='edit';renderDrawer();}, back:()=>{S.drawer.mode='view';renderDrawer();},
      save, askdel:()=>{S.drawer.confirmDel=true;renderDrawer();}, nodel:()=>{S.drawer.confirmDel=false;renderDrawer();}, dodel:del, translate,
-     export:exportCsv, pdf:exportPdf, more:()=>{S.limit+=100;render();}, savelists:saveLists,
+     export:exportXlsx, pdf:exportPdf, more:()=>{S.limit+=100;render();}, savelists:saveLists,
      bknow:()=>bkSave({interactive:true}), bkpick:async()=>{ if(await bkPickDir()) await bkSave({interactive:true}); render(); },
      bkauto:()=>{ lsSet('cg_bk_auto', bkAutoOn()?'0':'1'); render(); }, bkchoose:()=>document.getElementById('bk-file')?.click(),
      bkcancel:()=>{ BK.restore=null; render(); }, bkdorestore:bkDoRestore }[a.dataset.act]||(()=>{}))();
