@@ -597,12 +597,12 @@ function xlSheet(wb,{name,title,desc,rtl,cols,rows,count}){
   const rd={readingOrder:rtl?'rtl':'ltr'};
   ws.columns=cols.map(c=>({width:XL_W[c.k]??(c.num?17:15)}));
   // title block, logo on the far side
-  // title on the reading-start side, logo on the far side (user's choice)
-  const c0=1, span=Math.max(1,n-2);
+  // brand guide (p.12, 52): logo at the top on the reading-start side (right in Arabic), title right beside it
+  const c0=n>=4?3:1, span=n;
   [[1,title,F({size:18,bold:true}),30],[2,desc,F({size:10,color:{argb:'FF8A8B8C'}}),18],[3,`${t('reportDate')}: ${slashDate()}`,F({size:10,bold:true,color:{argb:'FF94700F'}}),18]].forEach(([r,v,f,h])=>{
     if(span>c0) ws.mergeCells(r,c0,r,span); const c=ws.getCell(r,c0); c.value=v; c.font=f; c.alignment={vertical:'middle',...rd}; ws.getRow(r).height=h; });
   for(let i=1;i<=n;i++) ws.getCell(3,i).border={bottom:{style:'medium',color:{argb:'FFD9AA28'}}};
-  try{ const src=document.getElementById('logo')?.src||''; if(src.startsWith('data:image/png')){ const id=wb.addImage({base64:src.split(',')[1],extension:'png'}); ws.addImage(id,{tl:{col:Math.max(0,n-2)+0.15,row:0.6},ext:{width:140,height:38},editAs:'oneCell'}); } }catch(e){}
+  try{ const src=document.getElementById('logo')?.src||''; if(src.startsWith('data:image/png')){ const id=wb.addImage({base64:src.split(',')[1],extension:'png'}); ws.addImage(id,{tl:{col:0.1,row:0.6},ext:{width:140,height:38},editAs:'oneCell'}); } }catch(e){}
   ws.getRow(4).height=8; ws.getRow(7).height=8;
   // totals strip (like the band above the table)
   const sumOf=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
@@ -726,8 +726,8 @@ async function exportPdf(){
       try{ await document.fonts.ready; }catch(e){}
     }
     const logo=document.getElementById('logo').src;
-    // title on the reading-start side; date and logo on the far side (user's choice)
-    const hdr=`<div class="hd"><div><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div><div class="l"><span class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span></span><img src="${logo}" alt=""></div></div>`;
+    // brand guide (p.12, 52): logo at the top on the reading-start side (right in Arabic), title beside it, date on the far side
+    const hdr=`<div class="hd"><div class="l"><img src="${logo}" alt=""><div class="tt"><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div></div><span class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span></span></div>`;
     const sumF=f=>rows.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
     const sumC=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
     const summary=`<div class="sum"><div>${t('shown')}<b>${rows.length} ${t('of')} ${stageItems(st).length}</b></div>`
