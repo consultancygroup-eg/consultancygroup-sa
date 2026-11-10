@@ -597,11 +597,12 @@ function xlSheet(wb,{name,title,desc,rtl,cols,rows,count}){
   const rd={readingOrder:rtl?'rtl':'ltr'};
   ws.columns=cols.map(c=>({width:XL_W[c.k]??(c.num?17:15)}));
   // title block, logo on the far side
-  const span=Math.max(1,n-2);
+  // brand: logo at the top on the reading-start side (right in Arabic), title right beside it
+  const c0=n>=4?3:1, span=n;
   [[1,title,F({size:18,bold:true}),30],[2,desc,F({size:10,color:{argb:'FF8A8B8C'}}),18],[3,`${t('reportDate')}: ${slashDate()}`,F({size:10,bold:true,color:{argb:'FF94700F'}}),18]].forEach(([r,v,f,h])=>{
-    if(span>1) ws.mergeCells(r,1,r,span); const c=ws.getCell(r,1); c.value=v; c.font=f; c.alignment={vertical:'middle',...rd}; ws.getRow(r).height=h; });
+    if(span>c0) ws.mergeCells(r,c0,r,span); const c=ws.getCell(r,c0); c.value=v; c.font=f; c.alignment={vertical:'middle',...rd}; ws.getRow(r).height=h; });
   for(let i=1;i<=n;i++) ws.getCell(3,i).border={bottom:{style:'medium',color:{argb:'FFD9AA28'}}};
-  try{ const src=document.getElementById('logo')?.src||''; if(src.startsWith('data:image/png')){ const id=wb.addImage({base64:src.split(',')[1],extension:'png'}); ws.addImage(id,{tl:{col:Math.max(0,n-2)+0.15,row:0.2},ext:{width:150,height:41},editAs:'oneCell'}); } }catch(e){}
+  try{ const src=document.getElementById('logo')?.src||''; if(src.startsWith('data:image/png')){ const id=wb.addImage({base64:src.split(',')[1],extension:'png'}); ws.addImage(id,{tl:{col:0.1,row:0.6},ext:{width:140,height:38},editAs:'oneCell'}); } }catch(e){}
   ws.getRow(4).height=8; ws.getRow(7).height=8;
   // totals strip (like the band above the table)
   const sumOf=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
@@ -688,7 +689,7 @@ async function exportPdf(){
       .eb{font-size:10.5px;color:#94700F;font-weight:700}
       table.fx{table-layout:fixed}table.fx td{overflow-wrap:break-word}table.fx th{white-space:normal}td.nw{white-space:nowrap}
       .hd h1{margin:2px 0 0;font-size:22px;font-weight:800;line-height:1.3}.hd p{margin:2px 0 0;color:#8A8B8C;font-size:11px}
-      .hd .r{display:flex;align-items:center;gap:16px}.hd img{height:44px;display:block}.dt{font-size:11px;color:#55524B;white-space:nowrap}
+      .hd .l{display:flex;align-items:center;gap:18px}.hd .tt{border-inline-start:1px solid #E8E0CB;padding-inline-start:18px}.hd img{height:46px;display:block}.dt{font-size:11px;color:#55524B;white-space:nowrap}
       .sum{display:flex;flex-wrap:wrap;gap:6px 24px;background:#FBF8F1;border:1px solid #E8E0CB;border-radius:8px;padding:7px 14px;margin-bottom:10px;font-size:10px;color:#8A8B8C}
       .sum div{display:flex;flex-direction:column}.sum b{color:#94700F;font-size:13.5px;font-weight:800}
       table{border-collapse:collapse;width:100%}
@@ -725,7 +726,8 @@ async function exportPdf(){
       try{ await document.fonts.ready; }catch(e){}
     }
     const logo=document.getElementById('logo').src;
-    const hdr=`<div class="hd"><div><div class="eb">${rtl?'المجموعة الاستشارية':'Consultancy Group'}</div><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div><div class="r"><span class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span></span><img src="${logo}" alt=""></div></div>`;
+    // brand: logo at the top on the reading-start side (right in Arabic), title beside it, date on the far side
+    const hdr=`<div class="hd"><div class="l"><img src="${logo}" alt=""><div class="tt"><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div></div><span class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span></span></div>`;
     const sumF=f=>rows.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
     const sumC=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
     const summary=`<div class="sum"><div>${t('shown')}<b>${rows.length} ${t('of')} ${stageItems(st).length}</b></div>`
