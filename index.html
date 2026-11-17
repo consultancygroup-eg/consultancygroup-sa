@@ -133,6 +133,15 @@ tbody tr:nth-child(even){background:var(--row-alt)}
 tbody tr:hover{background:var(--gold-soft)}
 tbody tr:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 td .nm{font-weight:500;min-width:240px;max-width:420px}
+/* project lists: the whole table fits the screen width (like the PDF); headers wrap, amounts stay on one line */
+table.list{min-width:0;font-size:12.5px}
+table.list th{white-space:normal;padding:9px 6px;font-size:12px;line-height:1.35;vertical-align:bottom}
+table.list td{padding:8px 6px}
+table.list td.num,table.list td.c{white-space:nowrap}
+table.list td .nm{min-width:150px;max-width:300px}
+table.list .progress{min-width:0}
+@media (max-width:1500px){table.list{font-size:11.5px}table.list th{font-size:11px;padding:8px 4px}table.list td{padding:7px 4px}table.list td .nm{min-width:110px}}
+@media (max-width:860px){table.list{min-width:980px}}
 td .sm{font-size:12px;color:var(--muted)}
 .neg{color:var(--bad)}
 .pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
@@ -556,7 +565,7 @@ function viewList(st){
   const th=cols.map(c=>`<th scope="col" class="${c.num?'num':['start','end'].includes(c.k)?'c':''}" data-sort="${c.k}">${t(c.l)}${S.sort.key===c.k?`<span class="arr">${S.sort.dir>0?'▲':'▼'}</span>`:''}</th>`).join('');
   const cell=(p,c)=>{ switch(c.k){
     case 'order': return `<td class="num">${esc(p.no||'')}</td>`;
-    case 'contract': return `<td><span dir="ltr">${esc(p.contract||'')}</span></td>`;
+    case 'contract': return `<td style="white-space:nowrap"><span dir="ltr">${esc(p.contract||'')}</span></td>`;
     case 'name': return `<td><div class="nm">${esc(loc(p,'name'))}</div></td>`;
     case 'client': return `<td>${esc(loc(p,'client'))}</td>`;
     case 'work': return `<td>${esc(lab('work',p.work))}</td>`;
@@ -572,7 +581,7 @@ function viewList(st){
     case 'rem': { const v=rem(p); return `<td class="num ${v<0?'neg':''}">${money(v)}</td>`; }
     default: return `<td class="num">${money(p[c.k])}</td>`; } };
   const body = rows.slice(0,S.limit).map(p=>`<tr tabindex="0" data-open="${p.id}">${cols.map(c=>cell(p,c)).join('')}</tr>`).join('');
-  html += `<div class="table-wrap"><table><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table>${rows.length?'':`<div class="empty">${all.length?t('noResults'):t('emptyDb')}</div>`}</div>`;
+  html += `<div class="table-wrap"><table class="list"><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table>${rows.length?'':`<div class="empty">${all.length?t('noResults'):t('emptyDb')}</div>`}</div>`;
   if (rows.length>S.limit) html += `<div class="more"><button type="button" class="btn" data-act="more">${t('showMore')} (${rows.length-S.limit})</button></div>`;
   return html;
 }
