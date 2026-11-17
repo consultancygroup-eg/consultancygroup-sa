@@ -315,7 +315,7 @@ const T = {
   exPaidK:'المنصرف (المحصّل)',exBal:'الرصيد غير المحصّل',exSearch:'ابحث باسم المشروع أو العميل أو رقم العقد',exNone:'لسه مافيش مشاريع في حركة المستخلصات. اضغط «+ إضافة مشروع» فوق.',
   exN:'مستخلص',exLast:'آخر مستخلص',exNoRows:'لسه مافيش مستخلصات',exExternal:'من الخارج',
   exAddD:'ضيف مشروع لقايمة المستخلصات، وبعدها ابدأ اكتب مستخلصاته.',exFrom:'اختار المشروع منين.',exSrcCur:'من المشاريع الجارية',exSrcExt:'مشروع من الخارج',
-  exPick:'اختار مشروع من المشاريع الجارية…',exAlready:'(موجود في القايمة)',exPickHint:'البيانات بتتملي لوحدها من المشاريع الجارية. أول ما تضيف أول مستخلص، «المستخلصات المرفوعة» و«المبالغ المحصلة» بتوع المشروع هيتحسبوا من جدول المستخلصات بس.',
+  exPick:'اختار مشروع من المشاريع الجارية…',exAlready:'(موجود في القايمة)',exPickHint:'البيانات بتتملي لوحدها من المشاريع الجارية. أول ما تضيف أول مستخلص، «المستخلصات المرفوعة» و«المبالغ المحصلة» بتوع المشروع هيتحسبوا من جدول المستخلصات بس (الاتنين قبل الضريبة).',
   exSigned:'تاريخ توقيع العقد',exValue:'قيمة العقد بدون الضريبة',exInvNow:'المستخلصات المرفوعة حالياً',exCollNow:'المبالغ المحصلة حالياً',exName:'اسم المشروع',
   exSaveStart:'حفظ وابدأ اكتب المستخلصات ←',exNeedPick:'اختار المشروع من القايمة.',exNeedName:'اكتب اسم المشروع.',
   exBack:'→ رجوع لقايمة المشاريع',exProjD:'كل مستخلص بقيمته والضريبة والمنصرف والرصيد. اضغط على أي مستخلص علشان تعدّله.',exAddRow:'إضافة مستخلص',exEditRow:'تعديل مستخلص',
@@ -324,7 +324,7 @@ const T = {
   exStmt:'البيان',exUp:'تاريخ رفع المستخلص',exPFrom:'الفترة من',exPTo:'إلى',exCollected:'تم التحصيل',exNotColl:'لم يُحصّل',
   exEmpty:'لسه مافيش مستخلصات للمشروع ده. اضغط «+ إضافة مستخلص» وابدأ اكتبها واحد ورا التاني.',
   exType:'النوع',exTypeM:'مستخلص شهري',exTypeOT:'وقت إضافي (أوفر تايم)',exStmtHint:'الرقم بيتكتب لوحده بعد آخر مستخلص، وتقدر تغيّره.',exNo:'مستخلص رقم',
-  exAmtL:'قيمة المستخلص (قبل الضريبة)',exPaidL:'المنصرف (اللي اتحصّل)',exPaidHint:'سيبه فاضي لو لسه ماتحصّلش. بيتجمع على «المبالغ المحصلة».',exCollKeep:'مسجّل حالياً:',exCollKeep2:'سيب التاريخ فاضي علشان يفضل كده.',
+  exAmtL:'قيمة المستخلص (قبل الضريبة)',exPaidL:'المنصرف (بالضريبة)',exPaidHint:'اكتبه بالضريبة زي الإكسل، وسيبه فاضي لو لسه ماتحصّلش. بيتجمع على «المبالغ المحصلة» بعد ما تتشال منه الضريبة.',exCollKeep:'مسجّل حالياً:',exCollKeep2:'سيب التاريخ فاضي علشان يفضل كده.',
   exEffLinked:'اللي هيتغيّر في «المشاريع الجارية»',exEffExt:'إجماليات المشروع',exSaveRow:'حفظ المستخلص',exSaveNext:'حفظ وإضافة التالي',
   exSavedRow:'اتحفظ المستخلص',exDelRow:'حذف المستخلص',exDelRowQ:'حذف المستخلص ده نهائياً؟ الإجماليات هتتحسب من غيره.',exDeletedRow:'اتحذف المستخلص',
   exEditInfo:'تعديل بيانات المشروع',exRemove:'شيل المشروع من حركة المستخلصات',exRemoveQ:'شيل المشروع ده من قايمة حركة المستخلصات؟ مستخلصاته هتتمسح، وأرقام «المشاريع الجارية» هتفضل زي ما هي.',exRemoved:'اتشال المشروع من حركة المستخلصات',
@@ -383,7 +383,7 @@ const T = {
   exStmt:'Description',exUp:'Submitted on',exPFrom:'Period from',exPTo:'To',exCollected:'Collected',exNotColl:'Not collected',
   exEmpty:'No invoices for this project yet. Click “+ Add invoice” and enter them one after another.',
   exType:'Type',exTypeM:'Monthly invoice',exTypeOT:'Overtime',exStmtHint:'The number follows the last invoice automatically; you can change it.',exNo:'Invoice no.',
-  exAmtL:'Invoice amount (before VAT)',exPaidL:'Paid (collected)',exPaidHint:'Leave empty if not collected yet. It is added to “Collected”.',exCollKeep:'Currently recorded:',exCollKeep2:'Leave the date empty to keep it.',
+  exAmtL:'Invoice amount (before VAT)',exPaidL:'Paid (incl. VAT)',exPaidHint:'Enter it incl. VAT as in the Excel; leave empty if not collected yet. It is added to “Collected” without VAT.',exCollKeep:'Currently recorded:',exCollKeep2:'Leave the date empty to keep it.',
   exEffLinked:'What changes in Current Projects',exEffExt:'Project totals',exSaveRow:'Save invoice',exSaveNext:'Save and add next',
   exSavedRow:'Invoice saved',exDelRow:'Delete invoice',exDelRowQ:'Delete this invoice permanently? Totals will be recalculated without it.',exDeletedRow:'Invoice deleted',
   exEditInfo:'Edit project details',exRemove:'Remove project from Progress Invoices',exRemoveQ:'Remove this project from Progress Invoices? Its invoices are deleted; Current Projects figures stay as they are.',exRemoved:'Project removed from Progress Invoices',
@@ -422,12 +422,12 @@ const num = v => (typeof v==='number' && isFinite(v)) ? v : 0;
 const lab = (list,k) => { const it=(S.lists[list]||[]).find(x=>x.k===k); return it ? (it[S.lang]||it.ar||it.en||k) : (k||''); };
 const loc = (p,f) => S.lang==='en' ? (p[f+'_en']||p[f+'_ar']||'') : (p[f+'_ar']||p[f+'_en']||'');
 const noFin = p => p.stage==='finished' && p.invoiced==null && p.collected==null;
-// invoices are entered before VAT, collections come in with VAT: uncollected = invoiced incl. VAT - collected
+// invoiced and collected are both stored before VAT (the accountant's figures); VAT and the total incl. VAT are shown beside them
 const VAT = 0.15;
 const r2 = v => { const x=Math.round(num(v)*100)/100; return x===0 ? 0 : x; }; // no -0
 const vatOf = p => p.invoiced==null ? null : num(p.invoiced)*VAT;
 const grossOf = p => p.invoiced==null ? null : num(p.invoiced)*(1+VAT);
-const unc = p => noFin(p) ? null : num(grossOf(p))-num(p.collected);
+const unc = p => noFin(p) ? null : num(p.invoiced)-num(p.collected);
 // project value including change orders (أمر التغيير)
 const tot = p => (p.value==null && p.change==null) ? null : num(p.value)+num(p.change);
 const rem = p => (noFin(p) || tot(p)==null) ? null : num(tot(p))-num(p.invoiced);
@@ -445,6 +445,7 @@ const exItems = () => [...S.items.values()].filter(p=>!p.deleted && hasEx(p)).so
 const exSum = (rows,f) => rows.reduce((s,r)=>s+num(typeof f==='function'?f(r):r[f]),0);
 const exInv = p => exSum(exRows(p),'amt');
 const exPaidSum = p => exSum(exRows(p),'paid');
+const exCollOf = rows => r2(exSum(rows,'paid')/(1+VAT)); // project «المبالغ المحصلة» = paid without VAT
 const exLocked = p => exRows(p).length>0;
 
 /* ---------- layout chrome ---------- */
@@ -471,7 +472,7 @@ function viewDash(){
   const cur=stageItems('current'), fin=stageItems('finished'), fut=stageItems('future');
   const sum=(a,f)=>a.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
   const V=sum(cur,tot), I=sum(cur,'invoiced'), G=sum(cur,grossOf), C=sum(cur,'collected'), U=sum(cur,unc), R=sum(cur,rem);
-  const rate = G ? Math.round(C/G*100) : 0;
+  const rate = I ? Math.round(C/I*100) : 0;
   let html = head('dash');
   if (!S.items.size && S.sync==='ok') html += `<div class="notice">${t('emptyDb')}</div>`;
   html += `<section class="kpis" aria-label="KPIs">
@@ -479,10 +480,10 @@ function viewDash(){
     <div class="kpi"><span class="l">${t('contractValue')}</span><span class="v">${money0(V)}</span><span class="s">${t('sar')}</span></div>
     <div class="kpi"><span class="l">${t('invoiced')}</span><span class="v">${money0(I)}</span><span class="s">${t('exBeforeVat')}</span></div>
     <div class="kpi"><span class="l">${t('gross')}</span><span class="v">${money0(G)}</span><span class="s">${t('sar')}</span></div>
-    <div class="kpi"><span class="l">${t('collected')}</span><span class="v">${money0(C)}</span><span class="s">${t('sar')}</span></div>
-    <div class="kpi"><span class="l">${t('uncollected')}</span><span class="v">${money0(U)}</span><span class="s">${t('sar')}</span></div>
+    <div class="kpi"><span class="l">${t('collected')}</span><span class="v">${money0(C)}</span><span class="s">${t('exBeforeVat')}</span></div>
+    <div class="kpi"><span class="l">${t('uncollected')}</span><span class="v">${money0(U)}</span><span class="s">${t('exBeforeVat')}</span></div>
     <div class="kpi"><span class="l">${t('remaining')}</span><span class="v">${money0(R)}</span><span class="s">${t('sar')}</span></div>
-    <div class="kpi"><span class="l">${t('collRate')}</span><span class="v" style="color:var(--gold-ink)">${rate}%</span><span class="s">${t('ofGross')}</span></div>
+    <div class="kpi"><span class="l">${t('collRate')}</span><span class="v" style="color:var(--gold-ink)">${rate}%</span><span class="s">${t('ofInvoiced')}</span></div>
   </section>`;
   const stage=(v,arr)=>`<button type="button" class="stage" data-view="${v}"><span class="n">${arr.length}</span><span class="t">${t(v)}</span><span class="d">${money0(sum(arr,tot))} ${t('sar')}</span><span class="go">${t('open')}</span></button>`;
   html += `<section class="stages">${stage('current',cur)}${stage('finished',fin)}${stage('future',fut)}</section>`;
@@ -786,7 +787,7 @@ function exDrawer(L){
   const calc=()=>{ const a=n('x-amt'), pd=n('x-paid');
     X('x-vat').value=nf2.format(a*VAT); X('x-gross').value=nf2.format(a*(1+VAT));
     const set=(o,nw,ov,nv)=>{ X(o).textContent=nf2.format(ov)+' '+arrow(); X(o).hidden=Math.abs(ov-nv)<0.005; X(nw).textContent=nf2.format(nv); };
-    set('x-oi','x-ni',oldI,baseI+a); set('x-oc','x-nc',oldC,baseC+pd); };
+    set('x-oi','x-ni',oldI,baseI+a); set('x-oc','x-nc',oldC,(baseC+pd)/(1+VAT)); };
   X('x-amt').addEventListener('input',calc); X('x-paid').addEventListener('input',calc); calc();
   X('x-type').addEventListener('change',e=>{ const ot=e.target.value==='ot', b=X('x-b');
     b.disabled=ot; b.value=ot?t('exTypeOT'):(b.dataset.def||nd?.b||'');
@@ -796,7 +797,7 @@ function exDrawer(L){
 // a project's invoiced / collected follow its invoices table as soon as it has rows
 async function exWrite(p, rows, hadRows){
   const data={extracts:rows};
-  if (rows.length || hadRows){ data.invoiced=r2(exSum(rows,'amt')); data.collected=r2(exSum(rows,'paid')); }
+  if (rows.length || hadRows){ data.invoiced=r2(exSum(rows,'amt')); data.collected=exCollOf(rows); }
   await writeProject(p.id, data);
 }
 async function exSaveRow(next){
