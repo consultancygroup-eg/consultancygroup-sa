@@ -125,6 +125,7 @@ tfoot td{position:sticky;bottom:0;z-index:1;font-weight:800;background:var(--cre
 table{border-collapse:collapse;width:100%;min-width:980px;font-size:13.5px}
 th{position:sticky;top:0;background:var(--gold);color:#1B1A17;font-weight:700;text-align:start;padding:11px 10px;white-space:nowrap;cursor:pointer;user-select:none;font-size:13px}
 th.num,td.num{text-align:end;font-variant-numeric:tabular-nums}
+th.c,td.c{text-align:center;font-variant-numeric:tabular-nums}
 th .arr{opacity:.55;font-size:11px;margin-inline-start:4px}
 td{padding:10px;border-bottom:1px solid var(--line-2);vertical-align:top}
 tbody tr{cursor:pointer}
@@ -552,7 +553,7 @@ function viewList(st){
   html += `<div class="totals"><div><span>${t('shown')}</span><b>${rows.length} ${t('of')} ${all.length}</b></div><div><span>${t('value')}</span><b>${money0(sum('value'))}</b></div>`
     + (cols.some(c=>c.k==='change')?`<div><span>${t('change')}</span><b>${money0(sum('change'))}</b></div><div><span>${t('totalValue')}</span><b>${money0(sum(tot))}</b></div>`:'')
     + (st!=='finished'?`<div><span>${t('invoiced')}</span><b>${money0(sum('invoiced'))}</b></div><div><span>${t('vat')}</span><b>${money0(sum(vatOf))}</b></div><div><span>${t('gross')}</span><b>${money0(sum(grossOf))}</b></div><div><span>${t('collected')}</span><b>${money0(sum('collected'))}</b></div><div><span>${t('uncollected')}</span><b>${money0(sum(unc))}</b></div><div><span>${t('remaining')}</span><b>${money0(sum(rem))}</b></div>`:'')+`</div>`;
-  const th=cols.map(c=>`<th scope="col" class="${c.num?'num':''}" data-sort="${c.k}">${t(c.l)}${S.sort.key===c.k?`<span class="arr">${S.sort.dir>0?'▲':'▼'}</span>`:''}</th>`).join('');
+  const th=cols.map(c=>`<th scope="col" class="${c.num?'num':['start','end'].includes(c.k)?'c':''}" data-sort="${c.k}">${t(c.l)}${S.sort.key===c.k?`<span class="arr">${S.sort.dir>0?'▲':'▼'}</span>`:''}</th>`).join('');
   const cell=(p,c)=>{ switch(c.k){
     case 'order': return `<td class="num">${esc(p.no||'')}</td>`;
     case 'contract': return `<td><span dir="ltr">${esc(p.contract||'')}</span></td>`;
@@ -562,7 +563,7 @@ function viewList(st){
     case 'sector': return `<td>${esc(lab('sector',p.sector))}</td>`;
     case 'location': return `<td>${esc(lab('location',p.location))}</td>`;
     case 'status': return `<td><span class="pill ${statusClass(p.status)}">${esc(lab('status',p.status))}</span></td>`;
-    case 'start': case 'end': return `<td class="num" dir="ltr">${esc(p[c.k]||'')}</td>`;
+    case 'start': case 'end': return `<td class="c" dir="ltr">${esc(p[c.k]||'')}</td>`;
     case 'total': return `<td class="num">${money(tot(p))}</td>`;
     case 'vat': return `<td class="num">${money(vatOf(p))}</td>`;
     case 'gross': return `<td class="num">${money(grossOf(p))}</td>`;
@@ -716,8 +717,8 @@ function viewExProject(p){
   const tr=(r,k)=>{ const a=num(r.amt), g=a*(1+VAT), bal=r2(g-num(r.paid));
     const st=r.coll?`<span class="pill ok">${isDate(r.coll)?'✓ <span dir="ltr">'+esc(dShow(r.coll))+'</span>':esc(r.coll)}</span>`:(a?`<span class="pill wait">${t('exNotColl')}</span>`:'');
     const dt=v=>v?esc(dShow(v)):(r.ot?'<span style="color:var(--muted)">—</span>':'');
-    return `<tr tabindex="0" data-exrow="${esc(r.id)}" class="${r.id===S.ex.fresh?'fresh':r.ot?'otr':''}"><td class="num">${k+1}</td><td>${r.ot?`<span class="pill ot">${t('exOT')}</span>`:esc(r.b)}</td><td class="num" dir="ltr">${dt(r.up)}</td><td class="num" dir="ltr">${dt(r.from)}</td><td class="num" dir="ltr">${dt(r.to)}</td><td class="num">${money(a)}</td><td class="num">${money(a*VAT)}</td><td class="num">${money(g)}</td><td class="num">${money(num(r.paid))}</td><td class="num">${money(bal)}</td><td>${st}</td></tr>`; };
-  h+=`<div class="table-wrap"><table class="ex"><thead><tr><th class="num">${t('no')}</th><th>${t('exStmt')}</th><th class="num">${t('exUp')}</th><th class="num">${t('exPFrom')}</th><th class="num">${t('exPTo')}</th><th class="num">${t('exAmt')}</th><th class="num">${t('vat')}</th><th class="num">${t('exTotal')}</th><th class="num">${t('exPaid')}</th><th class="num">${t('exBalance')}</th><th>${t('exColl')}</th></tr></thead>
+    return `<tr tabindex="0" data-exrow="${esc(r.id)}" class="${r.id===S.ex.fresh?'fresh':r.ot?'otr':''}"><td class="num">${k+1}</td><td>${r.ot?`<span class="pill ot">${t('exOT')}</span>`:esc(r.b)}</td><td class="c" dir="ltr">${dt(r.up)}</td><td class="c" dir="ltr">${dt(r.from)}</td><td class="c" dir="ltr">${dt(r.to)}</td><td class="num">${money(a)}</td><td class="num">${money(a*VAT)}</td><td class="num">${money(g)}</td><td class="num">${money(num(r.paid))}</td><td class="num">${money(bal)}</td><td class="c">${st}</td></tr>`; };
+  h+=`<div class="table-wrap"><table class="ex"><thead><tr><th class="num">${t('no')}</th><th>${t('exStmt')}</th><th class="c">${t('exUp')}</th><th class="c">${t('exPFrom')}</th><th class="c">${t('exPTo')}</th><th class="num">${t('exAmt')}</th><th class="num">${t('vat')}</th><th class="num">${t('exTotal')}</th><th class="num">${t('exPaid')}</th><th class="num">${t('exBalance')}</th><th class="c">${t('exColl')}</th></tr></thead>
     <tbody>${R.length?R.map(tr).join(''):`<tr><td colspan="11" class="empty" style="white-space:normal">${t('exEmpty')}</td></tr>`}</tbody>
     ${R.length?`<tfoot><tr><td colspan="5">${t('total')} (${R.length} ${t('exN')})</td><td class="num">${money(I)}</td><td class="num">${money(I*VAT)}</td><td class="num">${money(G)}</td><td class="num">${money(C)}</td><td class="num">${money(G-C)}</td><td></td></tr></tfoot>`:''}</table></div>`;
   if (canEdit()){
@@ -997,7 +998,7 @@ function xlSheet(wb,{name,title,desc,rtl,cols,rows,count,period=''}){
   // header row
   const hr=ws.getRow(HR); hr.height=40;
   cols.forEach((c,i)=>{ const x=hr.getCell(i+1); x.value=colHead(c); x.fill=fill('D9AA28'); x.font=F({bold:true,color:{argb:'FF1B1A17'}});
-    x.alignment={vertical:'middle',horizontal:c.num||['start','end','status','contract'].includes(c.k)?'center':undefined,wrapText:true,...rd};
+    x.alignment={vertical:'middle',horizontal:c.num||['start','end','status','contract','up','from','to','coll'].includes(c.k)?'center':undefined,wrapText:true,...rd};
     x.border={bottom:{style:'thin',color:{argb:'FFC99A1E'}}}; });
   // data rows
   rows.forEach((p,ri)=>{ const r=ws.getRow(first+ri);
@@ -1005,6 +1006,7 @@ function xlSheet(wb,{name,title,desc,rtl,cols,rows,count,period=''}){
       if(c.k==='order'){ x.value=(v!==''&&isFinite(+v))?+v:v; al.horizontal='center'; }
       else if(isMoney(c)){ if(v===''||v==null){ x.value=t('none'); al.horizontal='center'; } else { x.value=+v; x.numFmt='#,##0.00'; } }
       else if(c.k==='start'||c.k==='end'){ const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||''); if(m){ x.value=new Date(Date.UTC(+m[1],+m[2]-1,+m[3])); x.numFmt='yyyy/mm/dd'; } else x.value=v||null; al.horizontal='center'; }
+      else if(['up','from','to','coll'].includes(c.k)){ x.value=v===''?null:String(v); al.horizontal='center'; }
       else { x.value=v===''?null:String(v); if(c.k==='contract'){ al.horizontal='center'; al.readingOrder='ltr'; } else al.wrapText=true; }
       x.alignment=al;
       x.font=F(isNeg(p,c)?{color:{argb:'FFB3261E'}}:c.k==='name'?{bold:false}:{});
