@@ -118,7 +118,10 @@ select.f:focus{outline:2px solid var(--gold);outline-offset:0}
 .btn[disabled]{opacity:.5;pointer-events:none}
 .totals{display:flex;flex-wrap:wrap;gap:8px 22px;background:var(--rail);color:var(--rail-ink);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;font-size:13px}
 .totals div{display:flex;flex-direction:column}.totals span{color:var(--rail-muted)}.totals b{color:var(--gold);font-size:16px;font-variant-numeric:tabular-nums}
-.table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+/* the table scrolls inside its own box so the gold header row (and the totals row) stay in view while scrolling down */
+.table-wrap{overflow:auto;max-height:calc(100vh - 170px);max-height:calc(100dvh - 170px);min-height:260px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+th{z-index:2}
+tfoot td{position:sticky;bottom:0;z-index:1;font-weight:800;background:var(--cream);border-top:2px solid var(--gold);font-variant-numeric:tabular-nums;white-space:nowrap}
 table{border-collapse:collapse;width:100%;min-width:980px;font-size:13.5px}
 th{position:sticky;top:0;background:var(--gold);color:#1B1A17;font-weight:700;text-align:start;padding:11px 10px;white-space:nowrap;cursor:pointer;user-select:none;font-size:13px}
 th.num,td.num{text-align:end;font-variant-numeric:tabular-nums}
@@ -190,6 +193,54 @@ dl.kv dt{color:var(--muted);font-size:13px}dl.kv dd{margin:0;font-weight:500;fon
   .bar-row{grid-template-columns:90px 1fr}
 }
 @media (prefers-reduced-motion:no-preference){.drawer{animation:slide .18s ease-out}@keyframes slide{from{opacity:.4;translate:0 8px}to{opacity:1;translate:0 0}}}
+/* حركة المستخلصات (progress invoices) */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:-6px 0 18px;overflow-x:auto}
+.tabs button{all:unset;cursor:pointer;padding:10px 16px;font-weight:700;color:var(--ink-2);border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap;display:inline-flex;gap:8px;align-items:center}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.tabs button:hover{color:var(--gold-ink)}.tabs button:focus-visible{outline:2px solid var(--gold)}
+.tabs .count{background:var(--line-2);color:var(--ink-2)}
+.plist{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.plist button{all:unset;cursor:pointer;display:grid;grid-template-columns:32px minmax(0,1fr) auto 20px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line-2)}
+.plist button:last-child{border-bottom:0}
+.plist button:hover{background:var(--gold-soft)}.plist button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.plist .ix{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;text-align:center}
+.plist .nmw{display:flex;flex-direction:column;min-width:0}.plist .nm{font-weight:700;font-size:15.5px}
+.plist .cl{font-size:12.5px;color:var(--muted)}
+.plist .am{font-weight:800;font-variant-numeric:tabular-nums;text-align:end}.plist .am small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.plist .go{color:var(--gold-ink);font-weight:800}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px}
+.info div{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:10px 14px}
+.info span{font-size:12px;color:var(--muted);display:block}.info b{font-size:17px;font-variant-numeric:tabular-nums}
+.linkbox{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--r);padding:12px 16px;margin-bottom:16px;font-size:14px}
+.linkbox b{font-variant-numeric:tabular-nums}.linkbox svg{width:20px;height:20px;flex:none}
+.btn.link{border:0;background:transparent;padding:6px 0;color:var(--gold-ink);margin-bottom:6px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.seg button{all:unset;cursor:pointer;text-align:center;padding:12px;border:1px solid var(--line);border-radius:9px;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1B1A17}
+.seg button:focus-visible{outline:2px solid var(--gold)}
+.newp{max-width:720px}
+.field input[readonly]{background:var(--line-2);color:var(--ink-2)}
+.field input:disabled{opacity:.55}
+.effect{grid-column:1/-1;background:var(--rail);color:var(--rail-ink);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.effect .t{font-size:12.5px;color:var(--rail-muted)}
+.effect .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.effect .old{color:var(--rail-muted);text-decoration:line-through;font-size:15px}
+.effect .new{color:var(--gold);font-weight:800;font-size:20px}
+.pick{display:flex;flex-direction:column;gap:8px}
+.pick label{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:9px;cursor:pointer;background:var(--paper)}
+.pick label:has(input:checked){border-color:var(--gold);background:var(--gold-soft)}
+.pick input{width:18px;height:18px;accent-color:var(--gold)}
+.pick .sm{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pick .all{background:var(--surface);font-weight:700}
+.opt{display:flex;flex-direction:column;gap:8px;margin-top:16px;font-size:14px}
+.opt label{display:flex;gap:8px;align-items:center}.opt input{accent-color:var(--gold);width:16px;height:16px}
+.sec-t{font-size:13px;font-weight:700;color:var(--ink-2);margin:0 0 8px}
+.pill.ok{background:var(--good-bg);color:var(--good)}.pill.wait{background:var(--warn-bg);color:var(--warn)}.pill.ot{background:var(--rail);color:var(--gold)}
+table.ex{min-width:1000px}
+table.ex td{white-space:nowrap;vertical-align:middle}
+tbody tr.otr{background:var(--cream)}
+tbody tr.fresh{background:var(--gold-soft);box-shadow:inset 3px 0 0 var(--gold)}
+@media (max-width:600px){.plist button{grid-template-columns:24px minmax(0,1fr) auto}.plist .go{display:none}}
 .mode-tag{font-size:11.5px;color:var(--rail-muted);display:flex;align-items:center;gap:6px}
 .mode-tag b{color:var(--gold)}
 </style>
@@ -257,7 +308,29 @@ const T = {
   bkPreview:'النسخة دي محفوظة يوم',bkContains:'وفيها',bkCurrent:'جارية',bkFinished:'منتهية',bkFuture:'مستقبلية',
   bkWarn:'قبل الاسترجاع، البرنامج هيحفظ نسخة من الوضع الحالي الأول، عشان لو غيّرت رأيك ترجع لها. المشاريع اللي اتضافت بعد تاريخ النسخة هتتشال من القوائم (ومش هتتمسح نهائياً).',
   bkDoRestore:'نعم، استرجع النسخة دي',bkRestoring:'جاري الاسترجاع…',bkRestored:'تم استرجاع النسخة',bkRestoreFail:'ما تمّش الاسترجاع. تأكد من النت وحاول تاني.',
-  bkRailNever:'⚠ مافيش نسخة احتياطية على الجهاز',bkRailDue:'⚠ احفظ نسخة اليوم',bkRailOk:'✓ آخر نسخة:'},
+  bkRailNever:'⚠ مافيش نسخة احتياطية على الجهاز',bkRailDue:'⚠ احفظ نسخة اليوم',bkRailOk:'✓ آخر نسخة:',
+  vat:'الضريبة 15%',gross:'الإجمالي بالضريبة',ofGross:'من المستخلصات بالضريبة',
+  extracts:'حركة المستخلصات',extractsD:'اختار المشروع علشان تشوف مستخلصاته وتضيف عليها أو تعدّلها.',
+  exProjects:'المشاريع',exAddProj:'إضافة مشروع',exCountP:'عدد المشاريع',exWithRows:'ليهم مستخلصات',exTotInv:'إجمالي المستخلصات المرفوعة',exBeforeVat:'ريال · قبل الضريبة',
+  exPaidK:'المنصرف (المحصّل)',exBal:'الرصيد غير المحصّل',exSearch:'ابحث باسم المشروع أو العميل أو رقم العقد',exNone:'لسه مافيش مشاريع في حركة المستخلصات. اضغط «+ إضافة مشروع» فوق.',
+  exN:'مستخلص',exLast:'آخر مستخلص',exNoRows:'لسه مافيش مستخلصات',exExternal:'من الخارج',
+  exAddD:'ضيف مشروع لقايمة المستخلصات، وبعدها ابدأ اكتب مستخلصاته.',exFrom:'اختار المشروع منين.',exSrcCur:'من المشاريع الجارية',exSrcExt:'مشروع من الخارج',
+  exPick:'اختار مشروع من المشاريع الجارية…',exAlready:'(موجود في القايمة)',exPickHint:'البيانات بتتملي لوحدها من المشاريع الجارية. أول ما تضيف أول مستخلص، «المستخلصات المرفوعة» و«المبالغ المحصلة» بتوع المشروع هيتحسبوا من جدول المستخلصات بس.',
+  exSigned:'تاريخ توقيع العقد',exValue:'قيمة العقد بدون الضريبة',exInvNow:'المستخلصات المرفوعة حالياً',exCollNow:'المبالغ المحصلة حالياً',exName:'اسم المشروع',
+  exSaveStart:'حفظ وابدأ اكتب المستخلصات ←',exNeedPick:'اختار المشروع من القايمة.',exNeedName:'اكتب اسم المشروع.',
+  exBack:'→ رجوع لقايمة المشاريع',exProjD:'كل مستخلص بقيمته والضريبة والمنصرف والرصيد. اضغط على أي مستخلص علشان تعدّله.',exAddRow:'إضافة مستخلص',exEditRow:'تعديل مستخلص',
+  exCount:'عدد المستخلصات',exLinked:'مربوط بالمشاريع الجارية',exInvThere:'المستخلصات المرفوعة هناك',exCollThere:'المبالغ المحصلة هناك',exExtNote:'مشروع من الخارج · مش مربوط بالمشاريع الجارية',
+  exMonthly:'المستخلصات الشهرية',exOT:'الوقت الإضافي · أوفر تايم',exAmt:'المستخلص',exTotal:'الإجمالي',exPaid:'المنصرف',exBalance:'الرصيد',exColl:'تاريخ التحصيل',
+  exStmt:'البيان',exUp:'تاريخ رفع المستخلص',exPFrom:'الفترة من',exPTo:'إلى',exCollected:'تم التحصيل',exNotColl:'لم يُحصّل',
+  exEmpty:'لسه مافيش مستخلصات للمشروع ده. اضغط «+ إضافة مستخلص» وابدأ اكتبها واحد ورا التاني.',
+  exType:'النوع',exTypeM:'مستخلص شهري',exTypeOT:'وقت إضافي (أوفر تايم)',exStmtHint:'الرقم بيتكتب لوحده بعد آخر مستخلص، وتقدر تغيّره.',exNo:'مستخلص رقم',
+  exAmtL:'قيمة المستخلص (قبل الضريبة)',exPaidL:'المنصرف (اللي اتحصّل)',exPaidHint:'سيبه فاضي لو لسه ماتحصّلش. بيتجمع على «المبالغ المحصلة».',exCollKeep:'مسجّل حالياً:',exCollKeep2:'سيب التاريخ فاضي علشان يفضل كده.',
+  exEffLinked:'اللي هيتغيّر في «المشاريع الجارية»',exEffExt:'إجماليات المشروع',exSaveRow:'حفظ المستخلص',exSaveNext:'حفظ وإضافة التالي',
+  exSavedRow:'اتحفظ المستخلص',exDelRow:'حذف المستخلص',exDelRowQ:'حذف المستخلص ده نهائياً؟ الإجماليات هتتحسب من غيره.',exDeletedRow:'اتحذف المستخلص',
+  exEditInfo:'تعديل بيانات المشروع',exRemove:'شيل المشروع من حركة المستخلصات',exRemoveQ:'شيل المشروع ده من قايمة حركة المستخلصات؟ مستخلصاته هتتمسح، وأرقام «المشاريع الجارية» هتفضل زي ما هي.',exRemoved:'اتشال المشروع من حركة المستخلصات',
+  exFromTable:'بيتحسب لوحده من «حركة المستخلصات»',exLoading:'جاري التحميل…',exExportT:'تصدير مستخلصات',exFmt:'نوع الملف',exChoose:'اختار المشاريع',exAll:'كل المشاريع',exLayout:'الشكل',
+  exLayEachP:'كل مشروع في صفحة لوحده، وفي الأول صفحة ملخص',exLayEachX:'كل مشروع في شيت لوحده، وفي الأول شيت ملخص',exLaySum:'ملخص بس (سطر لكل مشروع بالإجماليات)',
+  exDownload:'تنزيل',exSummary:'ملخص المستخلصات',exSummaryD:'إجماليات المستخلصات لكل مشروع',exProjCount:'مشاريع'},
  en:{dir:'ltr',dash:'Dashboard',dashD:'Overview of the Consultancy Group project portfolio: contract values, invoicing and collections.',
   current:'Current Projects',currentD:'Ongoing projects with contract values, submitted invoices, collected and remaining amounts.',
   finished:'Completed Projects',finishedD:'Completed and stopped projects with location, value, and start and end dates.',
@@ -294,11 +367,34 @@ const T = {
   bkPreview:'This copy was saved on',bkContains:'and contains',bkCurrent:'current',bkFinished:'completed',bkFuture:'future',
   bkWarn:'Before restoring, the program first saves a copy of the current data so you can go back to it. Projects added after the copy’s date are removed from the lists (not permanently deleted).',
   bkDoRestore:'Yes, restore this copy',bkRestoring:'Restoring…',bkRestored:'Backup restored',bkRestoreFail:'Restore failed. Check the connection and try again.',
-  bkRailNever:'⚠ No backup on this computer',bkRailDue:'⚠ Save today’s copy',bkRailOk:'✓ Last copy:'}
+  bkRailNever:'⚠ No backup on this computer',bkRailDue:'⚠ Save today’s copy',bkRailOk:'✓ Last copy:',
+  vat:'VAT 15%',gross:'Invoiced incl. VAT',ofGross:'of invoiced incl. VAT',
+  extracts:'Progress Invoices',extractsD:'Pick a project to see its invoices, add new ones or edit them.',
+  exProjects:'Projects',exAddProj:'Add project',exCountP:'Projects',exWithRows:'with invoices',exTotInv:'Total invoiced',exBeforeVat:'SAR · before VAT',
+  exPaidK:'Paid (collected)',exBal:'Outstanding balance',exSearch:'Search by project, client or contract no.',exNone:'No projects in Progress Invoices yet. Click “+ Add project” above.',
+  exN:'invoices',exLast:'Last invoice',exNoRows:'No invoices yet',exExternal:'External',
+  exAddD:'Add a project to the invoices list, then start entering its invoices.',exFrom:'Where is the project from?',exSrcCur:'From current projects',exSrcExt:'External project',
+  exPick:'Choose a current project…',exAlready:'(already in the list)',exPickHint:'Details fill in from Current Projects. Once you add the first invoice, the project’s “Invoiced” and “Collected” are calculated from the invoices table only.',
+  exSigned:'Contract signing date',exValue:'Contract value before VAT',exInvNow:'Invoiced now',exCollNow:'Collected now',exName:'Project name',
+  exSaveStart:'Save and start entering invoices →',exNeedPick:'Choose the project from the list.',exNeedName:'Enter the project name.',
+  exBack:'← Back to projects',exProjD:'Each invoice with its VAT, paid amount and balance. Click any invoice to edit it.',exAddRow:'Add invoice',exEditRow:'Edit invoice',
+  exCount:'Invoices',exLinked:'Linked to Current Projects',exInvThere:'Invoiced there',exCollThere:'Collected there',exExtNote:'External project · not linked to Current Projects',
+  exMonthly:'Monthly invoices',exOT:'Overtime',exAmt:'Invoice',exTotal:'Total',exPaid:'Paid',exBalance:'Balance',exColl:'Collection date',
+  exStmt:'Description',exUp:'Submitted on',exPFrom:'Period from',exPTo:'To',exCollected:'Collected',exNotColl:'Not collected',
+  exEmpty:'No invoices for this project yet. Click “+ Add invoice” and enter them one after another.',
+  exType:'Type',exTypeM:'Monthly invoice',exTypeOT:'Overtime',exStmtHint:'The number follows the last invoice automatically; you can change it.',exNo:'Invoice no.',
+  exAmtL:'Invoice amount (before VAT)',exPaidL:'Paid (collected)',exPaidHint:'Leave empty if not collected yet. It is added to “Collected”.',exCollKeep:'Currently recorded:',exCollKeep2:'Leave the date empty to keep it.',
+  exEffLinked:'What changes in Current Projects',exEffExt:'Project totals',exSaveRow:'Save invoice',exSaveNext:'Save and add next',
+  exSavedRow:'Invoice saved',exDelRow:'Delete invoice',exDelRowQ:'Delete this invoice permanently? Totals will be recalculated without it.',exDeletedRow:'Invoice deleted',
+  exEditInfo:'Edit project details',exRemove:'Remove project from Progress Invoices',exRemoveQ:'Remove this project from Progress Invoices? Its invoices are deleted; Current Projects figures stay as they are.',exRemoved:'Project removed from Progress Invoices',
+  exFromTable:'Calculated from Progress Invoices',exLoading:'Loading…',exExportT:'Export invoices',exFmt:'File type',exChoose:'Choose projects',exAll:'All projects',exLayout:'Layout',
+  exLayEachP:'Each project on its own page, with a summary page first',exLayEachX:'Each project on its own sheet, with a summary sheet first',exLaySum:'Summary only (one line per project)',
+  exDownload:'Download',exSummary:'Invoices summary',exSummaryD:'Invoice totals per project',exProjCount:'projects'}
 };
 const ICON = {
  dash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
  current:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg>',
+ extracts:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h7M9 17h5"/></svg>',
  finished:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',
  future:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
  settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
@@ -309,23 +405,29 @@ const ICON = {
 const DEFAULT_LISTS = {work:[],status:[{k:'not_started',ar:'فى البداية',en:'Starting'},{k:'ongoing',ar:'جارى',en:'Ongoing'},{k:'completed',ar:'منتهى',en:'Completed',moves:true},{k:'stopped',ar:'متوقف',en:'Stopped',moves:true}],sector:[],location:[]};
 
 const S = { lang:'ar', view:'dash', items:new Map(), bucketOf:new Map(), lists:DEFAULT_LISTS, db:null, user:null, canWrite:true, sync:'wait',
-  q:'', fWork:'', fStatus:'', fSector:'', fLoc:'', fFrom:'', fTo:'', sort:{key:'order',dir:1}, limit:60, drawer:null, names:{} };
+  q:'', fWork:'', fStatus:'', fSector:'', fLoc:'', fFrom:'', fTo:'', sort:{key:'order',dir:1}, limit:60, drawer:null, names:{},
+  ex:{id:null, tab:'list', src:'cur', pick:'', draft:{}, fresh:null} };
 try { const l = localStorage.getItem('cg_lang'); if (l==='en'||l==='ar') S.lang=l; } catch(e) {}
-const VIEWS = ['dash','current','finished','future','settings','backup'];
+const VIEWS = ['dash','current','extracts','finished','future','settings','backup'];
 const h = location.hash.replace('#',''); if (VIEWS.includes(h)) S.view = h;
 
 const t = k => T[S.lang][k] ?? k;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nf0 = new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
 const nf2 = new Intl.NumberFormat('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const money = v => (v===null||v===undefined||v==='') ? t('none') : nf2.format(v);
+const money = v => (v===null||v===undefined||v==='') ? t('none') : nf2.format(Math.abs(v)<0.005?0:v);
 const money0 = v => (v===null||v===undefined) ? t('none') : nf0.format(v);
 const short = v => { const a=Math.abs(v||0); if(a>=1e6) return (v/1e6).toFixed(a>=1e8?0:1)+(S.lang==='ar'?' مليون':'M'); if(a>=1e3) return nf0.format(v/1e3)+(S.lang==='ar'?' ألف':'K'); return nf0.format(v||0); };
 const num = v => (typeof v==='number' && isFinite(v)) ? v : 0;
 const lab = (list,k) => { const it=(S.lists[list]||[]).find(x=>x.k===k); return it ? (it[S.lang]||it.ar||it.en||k) : (k||''); };
 const loc = (p,f) => S.lang==='en' ? (p[f+'_en']||p[f+'_ar']||'') : (p[f+'_ar']||p[f+'_en']||'');
 const noFin = p => p.stage==='finished' && p.invoiced==null && p.collected==null;
-const unc = p => noFin(p) ? null : num(p.invoiced)-num(p.collected);
+// invoices are entered before VAT, collections come in with VAT: uncollected = invoiced incl. VAT - collected
+const VAT = 0.15;
+const r2 = v => { const x=Math.round(num(v)*100)/100; return x===0 ? 0 : x; }; // no -0
+const vatOf = p => p.invoiced==null ? null : num(p.invoiced)*VAT;
+const grossOf = p => p.invoiced==null ? null : num(p.invoiced)*(1+VAT);
+const unc = p => noFin(p) ? null : num(grossOf(p))-num(p.collected);
 // project value including change orders (أمر التغيير)
 const tot = p => (p.value==null && p.change==null) ? null : num(p.value)+num(p.change);
 const rem = p => (noFin(p) || tot(p)==null) ? null : num(tot(p))-num(p.invoiced);
@@ -333,6 +435,17 @@ const hasChange = arr => arr.some(p=>num(p.change)!==0);
 const statusClass = k => ['ongoing','not_started','completed','stopped'].includes(k) ? k : 'other';
 const moves = k => !!(S.lists.status||[]).find(s=>s.k===k && s.moves);
 const stageItems = st => [...S.items.values()].filter(p=>!p.deleted && p.stage===st);
+/* حركة المستخلصات: a project's invoices live in its own document as an `extracts` array.
+   Projects from Current Projects keep their stage; external ones are stored with stage 'external'
+   (so they never show in the three project lists). Once a project has invoices, its `invoiced`
+   (sum before VAT) and `collected` (sum of paid) are calculated from the table. */
+const hasEx = p => Array.isArray(p.extracts);
+const exRows = p => (p && Array.isArray(p.extracts)) ? p.extracts : [];
+const exItems = () => [...S.items.values()].filter(p=>!p.deleted && hasEx(p)).sort((a,b)=>String(a.exAdded||'').localeCompare(String(b.exAdded||''))||num(a.order)-num(b.order));
+const exSum = (rows,f) => rows.reduce((s,r)=>s+num(typeof f==='function'?f(r):r[f]),0);
+const exInv = p => exSum(exRows(p),'amt');
+const exPaidSum = p => exSum(exRows(p),'paid');
+const exLocked = p => exRows(p).length>0;
 
 /* ---------- layout chrome ---------- */
 function chrome(){
@@ -341,14 +454,15 @@ function chrome(){
   document.getElementById('lang-en').setAttribute('aria-pressed', S.lang==='en');
   const c = st => stageItems(st).length;
   const btn = (v,cnt) => `<button type="button" data-view="${v}" ${S.view===v?'aria-current="page"':''}>${ICON[v]}<span>${t(v)}</span>${cnt!==undefined?`<span class="count">${cnt}</span>`:'<span></span>'}</button>`;
-  document.getElementById('nav').innerHTML = `<div class="nav-label">${t('sections')}</div>${btn('dash')}${btn('current',c('current'))}${btn('finished',c('finished'))}${btn('future',c('future'))}<div class="nav-label">${t('manage')}</div>${btn('settings')}${btn('backup')}`;
+  document.getElementById('nav').innerHTML = `<div class="nav-label">${t('sections')}</div>${btn('dash')}${btn('current',c('current'))}${btn('extracts',exItems().length)}${btn('finished',c('finished'))}${btn('future',c('future'))}<div class="nav-label">${t('manage')}</div>${btn('settings')}${btn('backup')}`;
   railBackup();
   const dot=document.getElementById('sync-dot'); dot.className='dot '+(S.sync==='ok'?'ok':S.sync==='err'?'err':'wait');
   document.getElementById('sync-text').textContent = S.sync==='ok'?t('live'):S.sync==='err'?t('offline'):S.sync==='nodb'?t('noDb'):t('connecting');
 }
-function head(v, right=''){
+function head(v, right=''){ return headX(t(v), t(v+'D'), right); }
+function headX(title, desc, right='', eyebrow=''){
   const d=new Date(); const ds=d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
-  return `<div class="page-head"><div><div class="eyebrow">${S.lang==='ar'?'المجموعة الاستشارية':'Consultancy Group'}</div><h1>${t(v)}</h1><p>${t(v+'D')}</p></div><div class="inline">${right}<span class="date">${ds}</span></div></div>`
+  return `<div class="page-head"><div><div class="eyebrow">${esc(eyebrow||(S.lang==='ar'?'المجموعة الاستشارية':'Consultancy Group'))}</div><h1>${esc(title)}</h1>${desc?`<p>${esc(desc)}</p>`:''}</div><div class="inline" style="flex-wrap:wrap">${right}<span class="date">${ds}</span></div></div>`
    + (S.sync==='nodb'?`<div class="notice warn">${t('noDb')}</div>`:'') + (!S.canWrite && S.sync!=='nodb'?`<div class="notice">${t('readOnly')}</div>`:'');
 }
 
@@ -356,18 +470,19 @@ function head(v, right=''){
 function viewDash(){
   const cur=stageItems('current'), fin=stageItems('finished'), fut=stageItems('future');
   const sum=(a,f)=>a.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
-  const V=sum(cur,tot), I=sum(cur,'invoiced'), C=sum(cur,'collected'), U=sum(cur,unc), R=sum(cur,rem);
-  const rate = I ? Math.round(C/I*100) : 0;
+  const V=sum(cur,tot), I=sum(cur,'invoiced'), G=sum(cur,grossOf), C=sum(cur,'collected'), U=sum(cur,unc), R=sum(cur,rem);
+  const rate = G ? Math.round(C/G*100) : 0;
   let html = head('dash');
   if (!S.items.size && S.sync==='ok') html += `<div class="notice">${t('emptyDb')}</div>`;
   html += `<section class="kpis" aria-label="KPIs">
     <div class="kpi dark"><span class="l">${t('activeCount')}</span><span class="v">${cur.length}</span><span class="s">${t('projects')}</span></div>
     <div class="kpi"><span class="l">${t('contractValue')}</span><span class="v">${money0(V)}</span><span class="s">${t('sar')}</span></div>
-    <div class="kpi"><span class="l">${t('invoiced')}</span><span class="v">${money0(I)}</span><span class="s">${t('sar')}</span></div>
+    <div class="kpi"><span class="l">${t('invoiced')}</span><span class="v">${money0(I)}</span><span class="s">${t('exBeforeVat')}</span></div>
+    <div class="kpi"><span class="l">${t('gross')}</span><span class="v">${money0(G)}</span><span class="s">${t('sar')}</span></div>
     <div class="kpi"><span class="l">${t('collected')}</span><span class="v">${money0(C)}</span><span class="s">${t('sar')}</span></div>
     <div class="kpi"><span class="l">${t('uncollected')}</span><span class="v">${money0(U)}</span><span class="s">${t('sar')}</span></div>
     <div class="kpi"><span class="l">${t('remaining')}</span><span class="v">${money0(R)}</span><span class="s">${t('sar')}</span></div>
-    <div class="kpi"><span class="l">${t('collRate')}</span><span class="v" style="color:var(--gold-ink)">${rate}%</span><span class="s">${t('ofInvoiced')}</span></div>
+    <div class="kpi"><span class="l">${t('collRate')}</span><span class="v" style="color:var(--gold-ink)">${rate}%</span><span class="s">${t('ofGross')}</span></div>
   </section>`;
   const stage=(v,arr)=>`<button type="button" class="stage" data-view="${v}"><span class="n">${arr.length}</span><span class="t">${t(v)}</span><span class="d">${money0(sum(arr,tot))} ${t('sar')}</span><span class="go">${t('open')}</span></button>`;
   html += `<section class="stages">${stage('current',cur)}${stage('finished',fin)}${stage('future',fut)}</section>`;
@@ -400,9 +515,9 @@ function columns(st){
   const chg = st==='current' || hasChange(stageItems(st));
   const val=[{k:'value',l:'value',num:true},...(chg?[{k:'change',l:'change',num:true},{k:'total',l:'totalValue',num:true}]:[])];
   if(st==='finished') return [...base,{k:'sector',l:'sector'},{k:'location',l:'location'},...val,{k:'start',l:'start'},{k:'end',l:'end'}];
-  return [...base,{k:'status',l:'status'},{k:'start',l:'start'},...val,{k:'invoiced',l:'invoiced',num:true},{k:'collected',l:'collected',num:true},{k:'unc',l:'uncollected',num:true},{k:'rem',l:'remaining',num:true}];
+  return [...base,{k:'status',l:'status'},{k:'start',l:'start'},...val,{k:'invoiced',l:'invoiced',num:true},{k:'vat',l:'vat',num:true},{k:'gross',l:'gross',num:true},{k:'collected',l:'collected',num:true},{k:'unc',l:'uncollected',num:true},{k:'rem',l:'remaining',num:true}];
 }
-function sortVal(p,k){ if(k==='name'||k==='client') return loc(p,k).toLowerCase(); if(k==='unc') return unc(p)??-Infinity; if(k==='rem') return rem(p)??-Infinity; if(k==='total') return tot(p)??-Infinity;
+function sortVal(p,k){ if(k==='name'||k==='client') return loc(p,k).toLowerCase(); if(k==='unc') return unc(p)??-Infinity; if(k==='rem') return rem(p)??-Infinity; if(k==='total') return tot(p)??-Infinity; if(k==='vat') return vatOf(p)??-Infinity; if(k==='gross') return grossOf(p)??-Infinity;
   if(k==='work') return lab('work',p.work); if(k==='status') return lab('status',p.status); if(k==='sector') return lab('sector',p.sector); if(k==='location') return lab('location',p.location);
   const v=p[k]; return v==null?'':v; }
 // period filter: finished projects by end date, current/future by start date
@@ -435,7 +550,7 @@ function viewList(st){
   if (periodText(st)) html += `<div class="period-note">${esc(periodText(st))}</div>`;
   html += `<div class="totals"><div><span>${t('shown')}</span><b>${rows.length} ${t('of')} ${all.length}</b></div><div><span>${t('value')}</span><b>${money0(sum('value'))}</b></div>`
     + (cols.some(c=>c.k==='change')?`<div><span>${t('change')}</span><b>${money0(sum('change'))}</b></div><div><span>${t('totalValue')}</span><b>${money0(sum(tot))}</b></div>`:'')
-    + (st!=='finished'?`<div><span>${t('invoiced')}</span><b>${money0(sum('invoiced'))}</b></div><div><span>${t('collected')}</span><b>${money0(sum('collected'))}</b></div><div><span>${t('uncollected')}</span><b>${money0(sum(unc))}</b></div><div><span>${t('remaining')}</span><b>${money0(sum(rem))}</b></div>`:'')+`</div>`;
+    + (st!=='finished'?`<div><span>${t('invoiced')}</span><b>${money0(sum('invoiced'))}</b></div><div><span>${t('vat')}</span><b>${money0(sum(vatOf))}</b></div><div><span>${t('gross')}</span><b>${money0(sum(grossOf))}</b></div><div><span>${t('collected')}</span><b>${money0(sum('collected'))}</b></div><div><span>${t('uncollected')}</span><b>${money0(sum(unc))}</b></div><div><span>${t('remaining')}</span><b>${money0(sum(rem))}</b></div>`:'')+`</div>`;
   const th=cols.map(c=>`<th scope="col" class="${c.num?'num':''}" data-sort="${c.k}">${t(c.l)}${S.sort.key===c.k?`<span class="arr">${S.sort.dir>0?'▲':'▼'}</span>`:''}</th>`).join('');
   const cell=(p,c)=>{ switch(c.k){
     case 'order': return `<td class="num">${esc(p.no||'')}</td>`;
@@ -448,6 +563,8 @@ function viewList(st){
     case 'status': return `<td><span class="pill ${statusClass(p.status)}">${esc(lab('status',p.status))}</span></td>`;
     case 'start': case 'end': return `<td class="num" dir="ltr">${esc(p[c.k]||'')}</td>`;
     case 'total': return `<td class="num">${money(tot(p))}</td>`;
+    case 'vat': return `<td class="num">${money(vatOf(p))}</td>`;
+    case 'gross': return `<td class="num">${money(grossOf(p))}</td>`;
     case 'invoiced': { const tv=num(tot(p)); const pc = tv ? Math.min(100,Math.max(0,num(p.invoiced)/tv*100)) : 0; return `<td class="num">${money(p.invoiced)}<div class="progress" title="${Math.round(pc)}%"><i style="width:${pc}%"></i></div></td>`; }
     case 'unc': { const v=unc(p); return `<td class="num ${v<0?'neg':''}">${money(v)}</td>`; }
     case 'rem': { const v=rem(p); return `<td class="num ${v<0?'neg':''}">${money(v)}</td>`; }
@@ -476,7 +593,9 @@ function openDrawer(mode,id){ S.drawer={mode,id,confirmDel:false}; renderDrawer(
 function closeDrawer(){ S.drawer=null; document.getElementById('layer').innerHTML=''; }
 function renderDrawer(){
   const L=document.getElementById('layer'); if(!S.drawer){L.innerHTML='';return;}
-  const {mode,id}=S.drawer; const p = id ? S.items.get(id) : null;
+  const {mode,id}=S.drawer;
+  if (mode==='ex' || mode==='exexp') { exDrawer(L); return; }
+  const p = id ? S.items.get(id) : null;
   if (mode==='view' && !p) { closeDrawer(); return; }
   let title, body, foot;
   if (mode==='view'){
@@ -485,7 +604,7 @@ function renderDrawer(){
     const fin = p.stage!=='finished' || p.invoiced!=null;
     body=`<div class="inline" style="margin-bottom:14px;flex-wrap:wrap"><span class="pill ${statusClass(p.status)}">${esc(lab('status',p.status))}</span><span class="pill other">${t(p.stage)}</span></div>
       <dl class="kv">${row('client',esc(loc(p,'client')))}${row('contract',p.contract?`<span dir="ltr">${esc(p.contract)}</span>`:'')}${row('no',esc(p.no))}${row('work',esc(lab('work',p.work)))}${row('sector',esc(lab('sector',p.sector)))}${p.location?row('location',esc(lab('location',p.location))):''}${row('start',p.start?`<span dir="ltr">${esc(p.start)}</span>`:'')}${p.end?row('end',`<span dir="ltr">${esc(p.end)}</span>`):''}</dl>
-      <div class="money"><div><span>${t('value')}</span><b>${money(p.value)}</b></div>${(p.stage==='current'||num(p.change)!==0)?`<div><span>${t('change')}</span><b>${money(p.change)}</b></div><div><span>${t('totalValue')}</span><b>${money(tot(p))}</b></div>`:''}${fin?`<div><span>${t('invoiced')}</span><b>${money(p.invoiced)}</b></div><div><span>${t('collected')}</span><b>${money(p.collected)}</b></div><div><span>${t('uncollected')}</span><b class="${num(unc(p))<0?'neg':''}">${money(unc(p))}</b></div><div><span>${t('remaining')}</span><b class="${num(rem(p))<0?'neg':''}">${money(rem(p))}</b></div>`:''}</div>
+      <div class="money"><div><span>${t('value')}</span><b>${money(p.value)}</b></div>${(p.stage==='current'||num(p.change)!==0)?`<div><span>${t('change')}</span><b>${money(p.change)}</b></div><div><span>${t('totalValue')}</span><b>${money(tot(p))}</b></div>`:''}${fin?`<div><span>${t('invoiced')}</span><b>${money(p.invoiced)}</b></div><div><span>${t('vat')}</span><b>${money(vatOf(p))}</b></div><div><span>${t('gross')}</span><b>${money(grossOf(p))}</b></div><div><span>${t('collected')}</span><b>${money(p.collected)}</b></div><div><span>${t('uncollected')}</span><b class="${num(unc(p))<0?'neg':''}">${money(unc(p))}</b></div><div><span>${t('remaining')}</span><b class="${num(rem(p))<0?'neg':''}">${money(rem(p))}</b></div>`:''}</div>
       ${loc(p,'notes')?`<dl class="kv">${row('notes',esc(loc(p,'notes')))}</dl>`:''}
       ${p.updatedAt?`<p class="sub" style="margin-top:16px;font-size:12px;color:var(--muted)">${t('lastEdit')}: <span dir="ltr">${esc(new Date(p.updatedAt).toLocaleString('en-GB'))}</span>${p.updatedBy&&S.names[p.updatedBy]?` ${t('by')} ${esc(S.names[p.updatedBy])}`:''}</p>`:''}
       ${S.drawer.confirmDel?`<div class="confirm"><b>${t('delQ')}</b><div class="inline"><button type="button" class="btn danger" data-act="dodel">${t('yesDel')}</button><button type="button" class="btn" data-act="nodel">${t('cancel')}</button></div></div>`:''}`;
@@ -509,7 +628,8 @@ function renderDrawer(){
       ${f('start','start',inp('start','date'))}${f('end','end',inp('end','date'))}
       ${f('value','value',inp('value','number','ltr'))}${f('change','change',inp('change','number','ltr'))}
       <div class="full" style="font-size:12.5px;color:var(--muted);margin-top:-6px">${t('changeHint')} <span id="e-totv"></span></div>
-      ${f('invoiced','invoiced',inp('invoiced','number','ltr'))}${f('collected','collected',inp('collected','number','ltr'))}
+      ${f('invoiced','invoiced',inp('invoiced','number','ltr').replace('<input','<input'+(exLocked(d)?' readonly':'')))}${f('collected','collected',inp('collected','number','ltr').replace('<input','<input'+(exLocked(d)?' readonly':'')))}
+      ${exLocked(d)?`<div class="full" style="font-size:12.5px;color:var(--muted);margin-top:-6px">${t('exFromTable')}</div>`:''}
       ${f('notes_ar','notesAr',`<textarea id="e-notes_ar" name="notes_ar" dir="rtl">${esc(d.notes_ar||'')}</textarea>`)}${f('notes_en','notesEn',`<textarea id="e-notes_en" name="notes_en" dir="ltr">${esc(d.notes_en||'')}</textarea>`)}
     </form>`;
     foot=`<button type="button" class="btn" data-act="${p?'back':'close'}">${t('cancel')}</button><button type="button" class="btn primary" data-act="save">${t('save')}</button>`;
@@ -524,17 +644,259 @@ function renderDrawer(){
   L.querySelector('.x')?.focus();
 }
 
+/* ---------- حركة المستخلصات (progress invoices) ---------- */
+const isDate = v => /^\d{4}-\d{2}-\d{2}$/.test(v||'');
+const dShow = v => isDate(v) ? v.replace(/-/g,'/') : (v||'');
+const exName = p => loc(p,'name') || t('none');
+const canEdit = () => S.canWrite && S.sync!=='nodb';
+const arrow = () => S.lang==='ar' ? '←' : '→';
+const exTabs = () => `<div class="tabs" role="tablist"><button type="button" role="tab" data-extab="list" aria-selected="${S.ex.tab!=='new'}">${t('exProjects')} <span class="count">${exItems().length}</span></button>${canEdit()?`<button type="button" role="tab" data-extab="new" aria-selected="${S.ex.tab==='new'}">${S.ex.editId?t('exEditInfo'):'+ '+t('exAddProj')}</button>`:''}</div>`;
+const exExpBtns = () => `<button type="button" class="btn" data-exexp="xl">⬇ ${t('export')}</button><button type="button" class="btn" data-exexp="pdf">⬇ ${t('exportPdf')}</button>`;
+function viewExtracts(){
+  if (S.ex.id){
+    const p=S.items.get(S.ex.id);
+    if (p && !p.deleted && hasEx(p)) return viewExProject(p);
+    if (S.sync!=='ok' || Date.now()<(S.ex.waitUntil||0)) return headX(t('extracts'),'')+`<div class="notice">${t('exLoading')}</div>`;
+    S.ex.id=null;
+  }
+  return S.ex.tab==='new' ? viewExNew() : viewExList();
+}
+function viewExList(){
+  const all=exItems(), q=S.q.trim().toLowerCase();
+  const list=all.filter(p=>!q||[p.name_ar,p.name_en,p.client_ar,p.client_en,p.contract,p.no].some(x=>String(x||'').toLowerCase().includes(q)));
+  const I=exSum(all,exInv), C=exSum(all,exPaidSum);
+  let h=head('extracts')+exTabs();
+  h+=`<section class="kpis">
+    <div class="kpi dark"><span class="l">${t('exCountP')}</span><span class="v">${all.length}</span><span class="s">${all.filter(exLocked).length} ${t('exWithRows')}</span></div>
+    <div class="kpi"><span class="l">${t('exTotInv')}</span><span class="v">${money0(I)}</span><span class="s">${t('exBeforeVat')}</span></div>
+    <div class="kpi"><span class="l">${t('gross')}</span><span class="v">${money0(I*(1+VAT))}</span><span class="s">${t('sar')}</span></div>
+    <div class="kpi"><span class="l">${t('exPaidK')}</span><span class="v">${money0(C)}</span><span class="s">${t('sar')}</span></div>
+    <div class="kpi"><span class="l">${t('exBal')}</span><span class="v">${money0(I*(1+VAT)-C)}</span><span class="s">${t('sar')}</span></div></section>`;
+  h+=`<div class="toolbar"><label class="search">${ICON.search}<input id="q" type="search" value="${esc(S.q)}" placeholder="${t('exSearch')}" aria-label="${t('exSearch')}"></label>${all.length?exExpBtns():''}</div>`;
+  if (!all.length) return h+`<div class="notice">${t('exNone')}</div>`;
+  h+=`<div class="plist">${list.map((p,k)=>{ const R=exRows(p), last=R[R.length-1];
+    return `<button type="button" data-exopen="${esc(p.id)}"><span class="ix">${k+1}</span><span class="nmw"><span class="nm">${esc(exName(p))}${p.stage==='external'?` <span class="pill other">${t('exExternal')}</span>`:''}</span><span class="cl">${loc(p,'client')?esc(loc(p,'client'))+' · ':''}${R.length} ${t('exN')} · ${last?`${t('exLast')} <span dir="ltr">${esc(dShow(last.up))}</span>`:t('exNoRows')}</span></span><span class="am">${money0(exInv(p))}<small>${t('exBeforeVat')}</small></span><span class="go">${arrow()}</span></button>`; }).join('')}</div>`;
+  if (!list.length) h+=`<div class="empty">${t('noResults')}</div>`;
+  return h;
+}
+function viewExNew(){
+  const d=S.ex.draft, edit=!!S.ex.editId, src=edit?'ext':S.ex.src;
+  let h=head('extracts')+exTabs();
+  h+=`<div class="panel newp"><h2>${edit?t('exEditInfo'):t('exAddProj')}</h2>`;
+  if (!edit) h+=`<p class="sub">${t('exFrom')}</p><div class="seg" role="group" aria-label="${t('exFrom')}"><button type="button" data-exsrc="cur" aria-pressed="${src==='cur'}">${t('exSrcCur')}</button><button type="button" data-exsrc="ext" aria-pressed="${src==='ext'}">${t('exSrcExt')}</button></div>`;
+  if (src==='cur'){
+    const cur=stageItems('current').sort((a,b)=>num(a.order)-num(b.order)); const c=S.ex.pick?S.items.get(S.ex.pick):null;
+    h+=`<div class="form"><div class="field full"><label for="ex-pick">${t('name')}</label><select id="ex-pick"><option value="">${t('exPick')}</option>${cur.map(p=>`<option value="${esc(p.id)}" ${p.id===S.ex.pick?'selected':''} ${hasEx(p)?'disabled':''}>${esc((p.no?p.no+' - ':'')+exName(p))}${hasEx(p)?' '+t('exAlready'):''}</option>`).join('')}</select><span class="hint">${t('exPickHint')}</span></div></div>`;
+    if (c) h+=`<div class="info" style="margin-top:14px"><div><span>${t('client')}</span><b>${esc(loc(c,'client'))||t('none')}</b></div><div><span>${t('contract')}</span><b dir="ltr">${esc(c.contract||'')||t('none')}</b></div><div><span>${t('exSigned')}</span><b dir="ltr">${esc(dShow(c.start))||t('none')}</b></div><div><span>${t('exValue')}</span><b>${money(tot(c))}</b></div><div><span>${t('exInvNow')}</span><b>${money(c.invoiced)}</b></div><div><span>${t('exCollNow')}</span><b>${money(c.collected)}</b></div></div>`;
+  } else {
+    const v=k=>esc(d[k]??'');
+    h+=`<form class="form" id="exnew" novalidate>
+      <div class="field full"><label for="xn-name">${t('exName')}</label><input id="xn-name" value="${v('xn-name')}"></div>
+      <div class="field"><label for="xn-client">${t('client')}</label><input id="xn-client" value="${v('xn-client')}"></div>
+      <div class="field"><label for="xn-contract">${t('contract')}</label><input id="xn-contract" dir="ltr" value="${v('xn-contract')}"></div>
+      <div class="field"><label for="xn-start">${t('exSigned')}</label><input id="xn-start" type="date" value="${v('xn-start')}"></div>
+      <div class="field"><label for="xn-value">${t('exValue')}</label><input id="xn-value" type="number" step="0.01" inputmode="decimal" dir="ltr" value="${v('xn-value')}"></div></form>`;
+  }
+  h+=`<div class="inline" style="justify-content:flex-end;margin-top:16px;flex-wrap:wrap"><button type="button" class="btn" data-act="excancelnew">${t('cancel')}</button><button type="button" class="btn primary" data-act="exsavep">${edit?t('save'):t('exSaveStart')}</button></div></div>`;
+  return h;
+}
+function viewExProject(p){
+  const R=exRows(p), I=exInv(p), G=I*(1+VAT), C=exPaidSum(p), linked=p.stage!=='external';
+  const ot=R.filter(r=>r.ot), otA=exSum(ot,'amt');
+  const right=`${R.length?exExpBtns():''}${canEdit()?`<button type="button" class="btn primary" data-act="exadd">+ ${t('exAddRow')}</button>`:''}`;
+  let h=`<button type="button" class="btn link" data-act="exback">${t('exBack')}</button>`;
+  h+=headX(exName(p), t('exProjD'), right, t('extracts'));
+  h+=`<div class="info"><div><span>${t('client')}</span><b>${esc(loc(p,'client'))||t('none')}</b></div><div><span>${t('contract')}</span><b dir="ltr">${esc(p.contract||'')||t('none')}</b></div><div><span>${t('exSigned')}</span><b dir="ltr">${esc(dShow(p.start))||t('none')}</b></div><div><span>${t('exValue')}</span><b>${money(tot(p))}</b></div><div><span>${t('exCount')}</span><b>${R.length}</b></div></div>`;
+  h+= linked
+    ? `<div class="linkbox">${ICON.current}<span>${t('exLinked')}</span><span>· ${t('exInvThere')}: <b>${money(p.invoiced)}</b></span><span>· ${t('exCollThere')}: <b>${money(p.collected)}</b></span>${R.length?'':`<span style="color:var(--ink-2);flex-basis:100%">${t('exPickHint')}</span>`}</div>`
+    : `<div class="linkbox">${ICON.current}<span>${t('exExtNote')}</span></div>`;
+  h+=`<div class="info"><div><span>${t('exMonthly')} (${R.length-ot.length})</span><b>${money(I-otA)}</b></div><div><span>${t('exOT')} (${ot.length})</span><b>${money(otA)}</b></div><div><span>${t('exBal')}</span><b>${money(G-C)}</b></div></div>`;
+  h+=`<div class="totals"><div><span>${t('exAmt')}</span><b>${money(I)}</b></div><div><span>${t('vat')}</span><b>${money(I*VAT)}</b></div><div><span>${t('exTotal')}</span><b>${money(G)}</b></div><div><span>${t('exPaid')}</span><b>${money(C)}</b></div><div><span>${t('exBalance')}</span><b>${money(G-C)}</b></div></div>`;
+  const tr=(r,k)=>{ const a=num(r.amt), g=a*(1+VAT), bal=r2(g-num(r.paid));
+    const st=r.coll?`<span class="pill ok">${isDate(r.coll)?'✓ <span dir="ltr">'+esc(dShow(r.coll))+'</span>':esc(r.coll)}</span>`:(a?`<span class="pill wait">${t('exNotColl')}</span>`:'');
+    const dt=v=>v?esc(dShow(v)):(r.ot?'<span style="color:var(--muted)">—</span>':'');
+    return `<tr tabindex="0" data-exrow="${esc(r.id)}" class="${r.id===S.ex.fresh?'fresh':r.ot?'otr':''}"><td class="num">${k+1}</td><td>${r.ot?`<span class="pill ot">${t('exOT')}</span>`:esc(r.b)}</td><td class="num" dir="ltr">${dt(r.up)}</td><td class="num" dir="ltr">${dt(r.from)}</td><td class="num" dir="ltr">${dt(r.to)}</td><td class="num">${money(a)}</td><td class="num">${money(a*VAT)}</td><td class="num">${money(g)}</td><td class="num">${money(num(r.paid))}</td><td class="num">${money(bal)}</td><td>${st}</td></tr>`; };
+  h+=`<div class="table-wrap"><table class="ex"><thead><tr><th class="num">${t('no')}</th><th>${t('exStmt')}</th><th class="num">${t('exUp')}</th><th class="num">${t('exPFrom')}</th><th class="num">${t('exPTo')}</th><th class="num">${t('exAmt')}</th><th class="num">${t('vat')}</th><th class="num">${t('exTotal')}</th><th class="num">${t('exPaid')}</th><th class="num">${t('exBalance')}</th><th>${t('exColl')}</th></tr></thead>
+    <tbody>${R.length?R.map(tr).join(''):`<tr><td colspan="11" class="empty" style="white-space:normal">${t('exEmpty')}</td></tr>`}</tbody>
+    ${R.length?`<tfoot><tr><td colspan="5">${t('total')} (${R.length} ${t('exN')})</td><td class="num">${money(I)}</td><td class="num">${money(I*VAT)}</td><td class="num">${money(G)}</td><td class="num">${money(C)}</td><td class="num">${money(G-C)}</td><td></td></tr></tfoot>`:''}</table></div>`;
+  if (canEdit()){
+    h+=`<div class="inline" style="justify-content:flex-end;margin-top:16px;flex-wrap:wrap">${linked?'':`<button type="button" class="btn" data-act="exeditinfo">${t('exEditInfo')}</button>`}<button type="button" class="btn danger" data-act="exaskremove">${t('exRemove')}</button></div>`;
+    if (S.ex.confirmRemove) h+=`<div class="confirm"><b>${t('exRemoveQ')}</b><div class="inline"><button type="button" class="btn danger" data-act="exdoremove">${t('yesDel')}</button><button type="button" class="btn" data-act="exnoremove">${t('cancel')}</button></div></div>`;
+  }
+  return h;
+}
+function exOpen(id){ S.ex.id=id; S.ex.confirmRemove=false; S.ex.fresh=null; render(); window.scrollTo(0,0); }
+// next statement number and the month after the last monthly period
+function exNextDefaults(p){
+  const R=exRows(p);
+  const lastB=[...R].reverse().find(r=>!r.ot && /\d+\s*$/.test(r.b||''));
+  const b = lastB ? lastB.b.replace(/(\d+)\s*$/,m=>String(Number(m)+1)) : `${t('exNo')} ${R.filter(r=>!r.ot).length+1}`;
+  const lm=[...R].reverse().find(r=>!r.ot && isDate(r.to));
+  let from='', to='';
+  if (lm){ let y=+lm.to.slice(0,4), m=+lm.to.slice(5,7)+1; if(m>12){m=1;y++;} const mm=String(m).padStart(2,'0');
+    from=`${y}-${mm}-01`; to=`${y}-${mm}-${String(new Date(y,m,0).getDate()).padStart(2,'0')}`; }
+  return {b,from,to};
+}
+function exDrawer(L){
+  const D=S.drawer;
+  if (D.mode==='exexp'){
+    const all=exItems(), sel=D.sel;
+    const body=`<p class="sec-t">${t('exFmt')}</p><div class="seg"><button type="button" data-exfmt="pdf" aria-pressed="${D.fmt==='pdf'}">⬇ PDF</button><button type="button" data-exfmt="xl" aria-pressed="${D.fmt==='xl'}">⬇ Excel</button></div>
+      <p class="sec-t">${t('exChoose')}</p><div class="pick"><label class="all"><input type="checkbox" id="xx-all" ${all.length&&sel.size===all.length?'checked':''}><span>${t('exAll')} <span class="sm">(${all.length})</span></span></label>
+      ${all.map(p=>`<label><input type="checkbox" data-expick="${esc(p.id)}" ${sel.has(p.id)?'checked':''}><span>${esc(exName(p))}<br><span class="sm">${exRows(p).length} ${t('exN')} · ${money0(exInv(p))}</span></span></label>`).join('')}</div>
+      <div class="opt"><p class="sec-t" style="margin:0">${t('exLayout')}</p><label><input type="radio" name="xlay" data-exlay="each" ${D.lay==='each'?'checked':''}>${D.fmt==='pdf'?t('exLayEachP'):t('exLayEachX')}</label><label><input type="radio" name="xlay" data-exlay="sum" ${D.lay==='sum'?'checked':''}>${t('exLaySum')}</label></div>`;
+    const foot=`<button type="button" class="btn" data-act="close">${t('cancel')}</button><button type="button" class="btn primary" data-act="exdoexp" ${sel.size?'':'disabled'}>⬇ ${t('exDownload')} ${D.fmt==='pdf'?'PDF':'Excel'} (${sel.size})</button>`;
+    L.innerHTML=`<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-modal="true" aria-label="${t('exExportT')}"><header><div><div class="eyebrow">${t('extracts')}</div><h2>${t('exExportT')}</h2></div><button type="button" class="x" data-act="close" aria-label="${t('close')}">${ICON.x}</button></header><div class="body">${body}</div><footer>${foot}</footer></aside>`;
+    return;
+  }
+  const p=S.items.get(D.id);
+  // just saved: wait for the update to arrive before showing the next form
+  if (!p || (D.minRows && exRows(p).length<D.minRows)){ if(Date.now()<(S.ex.waitUntil||0)){ D.pending=true; L.innerHTML=''; return; } closeDrawer(); return; }
+  D.pending=false;
+  const R=exRows(p), r=D.row?R.find(x=>x.id===D.row):null;
+  if (D.row && !r){ closeDrawer(); return; }
+  const nd=r?null:exNextDefaults(p);
+  const d=r||{ot:false,b:nd.b,up:todayStr(),from:nd.from,to:nd.to,amt:'',paid:'',coll:''};
+  const collKeep = r && r.coll && !isDate(r.coll) ? r.coll : '';
+  const linked=p.stage!=='external';
+  const numV=v=>(v===''||v==null)?'':esc(v);
+  const body=`<form class="form" id="exf" novalidate>
+    <div class="field full"><label for="x-type">${t('exType')}</label><select id="x-type"><option value="m" ${d.ot?'':'selected'}>${t('exTypeM')}</option><option value="ot" ${d.ot?'selected':''}>${t('exTypeOT')}</option></select></div>
+    <div class="field full"><label for="x-b">${t('exStmt')}</label><input id="x-b" value="${esc(d.ot?t('exTypeOT'):(d.b||''))}" data-def="${esc(d.ot?(nd?nd.b:''):(d.b||''))}" ${d.ot?'disabled':''}>${r?'':`<span class="hint">${t('exStmtHint')}</span>`}</div>
+    <div class="field full"><label for="x-up">${t('exUp')}</label><input id="x-up" type="date" value="${isDate(d.up)?d.up:''}"></div>
+    <div class="field"><label for="x-from">${t('exPFrom')}</label><input id="x-from" type="date" value="${isDate(d.from)?d.from:''}" ${d.ot?'disabled':''}></div>
+    <div class="field"><label for="x-to">${t('exPTo')}</label><input id="x-to" type="date" value="${isDate(d.to)?d.to:''}" ${d.ot?'disabled':''}></div>
+    <div class="field full"><label for="x-amt">${t('exAmtL')}</label><input id="x-amt" type="number" step="0.01" inputmode="decimal" dir="ltr" value="${numV(d.amt)}"></div>
+    <div class="field"><label for="x-vat">${t('vat')}</label><input id="x-vat" readonly dir="ltr" tabindex="-1"></div>
+    <div class="field"><label for="x-gross">${t('exTotal')}</label><input id="x-gross" readonly dir="ltr" tabindex="-1"></div>
+    <div class="field"><label for="x-paid">${t('exPaidL')}</label><input id="x-paid" type="number" step="0.01" inputmode="decimal" dir="ltr" value="${numV(d.paid)}"><span class="hint">${t('exPaidHint')}</span></div>
+    <div class="field"><label for="x-coll">${t('exColl')}</label><input id="x-coll" type="date" value="${isDate(d.coll)?d.coll:''}">${collKeep?`<span class="hint">${t('exCollKeep')} «${esc(collKeep)}». ${t('exCollKeep2')}</span>`:''}</div>
+    <div class="effect" aria-live="polite"><span class="t">${esc(linked?t('exEffLinked')+' '+arrow()+' '+exName(p):t('exEffExt'))}</span>
+      <div class="row"><span>${t('invoiced')}:</span><span class="old" id="x-oi"></span><span class="new" id="x-ni"></span></div>
+      <div class="row"><span>${t('collected')}:</span><span class="old" id="x-oc"></span><span class="new" id="x-nc"></span></div></div>
+    ${D.confirmDel?`<div class="confirm full"><b>${t('exDelRowQ')}</b><div class="inline"><button type="button" class="btn danger" data-act="exdodelrow">${t('yesDel')}</button><button type="button" class="btn" data-act="exnodelrow">${t('cancel')}</button></div></div>`:''}
+  </form>`;
+  const foot=`${r?`<button type="button" class="btn danger" data-act="exaskdelrow">${t('exDelRow')}</button>`:''}<button type="button" class="btn" data-act="close">${t('cancel')}</button>${r?'':`<button type="button" class="btn" data-act="exsavenext">${t('exSaveNext')}</button>`}<button type="button" class="btn primary" data-act="exsaverow">${t('exSaveRow')}</button>`;
+  L.innerHTML=`<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-modal="true" aria-label="${r?t('exEditRow'):t('exAddRow')}"><header><div><div class="eyebrow">${esc(exName(p))}</div><h2>${r?t('exEditRow'):t('exAddRow')}${r?` · ${esc(r.ot?t('exOT'):r.b)}`:''}</h2></div><button type="button" class="x" data-act="close" aria-label="${t('close')}">${ICON.x}</button></header><div class="body">${body}</div><footer>${foot}</footer></aside>`;
+  // live VAT / total and what the project totals become
+  const X=id=>document.getElementById(id);
+  const others=R.filter(x=>!r||x.id!==r.id), baseI=exSum(others,'amt'), baseC=exSum(others,'paid');
+  const oldI=num(p.invoiced), oldC=num(p.collected);
+  const n=id=>{ const v=Number(String(X(id).value).replace(/,/g,'')); return isFinite(v)?v:0; };
+  const calc=()=>{ const a=n('x-amt'), pd=n('x-paid');
+    X('x-vat').value=nf2.format(a*VAT); X('x-gross').value=nf2.format(a*(1+VAT));
+    const set=(o,nw,ov,nv)=>{ X(o).textContent=nf2.format(ov)+' '+arrow(); X(o).hidden=Math.abs(ov-nv)<0.005; X(nw).textContent=nf2.format(nv); };
+    set('x-oi','x-ni',oldI,baseI+a); set('x-oc','x-nc',oldC,baseC+pd); };
+  X('x-amt').addEventListener('input',calc); X('x-paid').addEventListener('input',calc); calc();
+  X('x-type').addEventListener('change',e=>{ const ot=e.target.value==='ot', b=X('x-b');
+    b.disabled=ot; b.value=ot?t('exTypeOT'):(b.dataset.def||nd?.b||'');
+    ['x-from','x-to'].forEach(id=>{ X(id).disabled=ot; if(ot) X(id).value=''; else if(nd && !X(id).value) X(id).value=id==='x-from'?nd.from:nd.to; }); });
+  (D.confirmDel ? L.querySelector('[data-act="exdodelrow"]') : X('x-amt'))?.focus();
+}
+// a project's invoiced / collected follow its invoices table as soon as it has rows
+async function exWrite(p, rows, hadRows){
+  const data={extracts:rows};
+  if (rows.length || hadRows){ data.invoiced=r2(exSum(rows,'amt')); data.collected=r2(exSum(rows,'paid')); }
+  await writeProject(p.id, data);
+}
+async function exSaveRow(next){
+  const D=S.drawer, p=S.items.get(D.id); if(!p) return;
+  const g=k=>(document.getElementById(k)?.value||'').trim();
+  const n=k=>{ const v=g(k); if(v==='') return 0; const x=Number(v.replace(/,/g,'')); return isFinite(x)?x:NaN; };
+  const ot=g('x-type')==='ot', amt=n('x-amt'), paid=n('x-paid');
+  if (!isFinite(amt) || !isFinite(paid)) { toast(t('saveFail')); return; }
+  const R=exRows(p), old=D.row?R.find(x=>x.id===D.row):null;
+  const coll=g('x-coll') || (old && old.coll && !isDate(old.coll) ? old.coll : '');
+  const rec={...(old||{}), id:old?old.id:'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), ot,
+    b: ot?'':g('x-b'), up:g('x-up'), from:ot?'':g('x-from'), to:ot?'':g('x-to'), amt:r2(amt), paid:r2(paid), coll};
+  const rows=[...R]; if(old) rows[rows.findIndex(x=>x.id===old.id)]=rec; else rows.push(rec);
+  const btns=[...document.querySelectorAll('.drawer footer .btn')]; btns.forEach(b=>b.disabled=true);
+  try{
+    await exWrite(p, rows, R.length>0);
+    S.ex.fresh=rec.id; toast(t('exSavedRow'));
+    if (next){ S.ex.waitUntil=Date.now()+8000; S.drawer={mode:'ex',id:p.id,row:null,minRows:rows.length}; renderDrawer(); } else closeDrawer();
+    render();
+  }catch(e){ btns.forEach(b=>b.disabled=false); toast(e && e.code==='invalid_argument' ? t('noWrite') : t('saveFail')); }
+}
+async function exDelRow(){
+  const D=S.drawer, p=S.items.get(D.id); if(!p) return;
+  const R=exRows(p); try{ await exWrite(p, R.filter(x=>x.id!==D.row), R.length>0); closeDrawer(); toast(t('exDeletedRow')); render(); }catch(e){ toast(t('saveFail')); }
+}
+async function exSaveProject(){
+  const now=new Date().toISOString(); const d=S.ex.draft; let id;
+  const extData=()=>{ const v=k=>String(document.getElementById(k)?.value ?? d[k] ?? '').trim();
+    const val=v('xn-value'), x=Number(val.replace(/,/g,''));
+    return {name:v('xn-name'), data:{name_ar:v('xn-name'), client_ar:v('xn-client'), contract:v('xn-contract'), start:v('xn-start'), value: val===''||!isFinite(x) ? null : x}}; };
+  const btn=document.querySelector('[data-act="exsavep"]'); if(btn) btn.disabled=true;
+  try{
+    if (S.ex.editId){
+      const e=extData(); if(!e.name){ toast(t('exNeedName')); if(btn) btn.disabled=false; return; }
+      id=S.ex.editId; await writeProject(id, e.data); toast(t('saved'));
+      S.ex={...S.ex, id, tab:'list', editId:null, draft:{}}; render(); return;
+    }
+    if (S.ex.src==='cur'){
+      const c=S.items.get(S.ex.pick); if(!c){ toast(t('exNeedPick')); document.getElementById('ex-pick')?.focus(); if(btn) btn.disabled=false; return; }
+      id=c.id; await writeProject(id,{extracts:exRows(c), exAdded:now});
+    } else {
+      const e=extData(); if(!e.name){ toast(t('exNeedName')); document.getElementById('xn-name')?.focus(); if(btn) btn.disabled=false; return; }
+      id='e'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      await writeProject(id,{...e.data, stage:'external', name_en:'', client_en:'', extracts:[], exAdded:now});
+    }
+    S.ex={...S.ex, id, tab:'list', src:'cur', pick:'', draft:{}, editId:null, fresh:null, confirmRemove:false, waitUntil:Date.now()+8000};
+    render(); window.scrollTo(0,0);
+    S.drawer={mode:'ex', id, row:null}; renderDrawer();
+  }catch(e){ if(btn) btn.disabled=false; toast(e && e.code==='invalid_argument' ? t('noWrite') : t('saveFail')); }
+}
+async function exRemove(){
+  const p=S.items.get(S.ex.id); if(!p) return;
+  try{
+    if (p.stage==='external') await writeProject(p.id,{deleted:true});
+    else await writeProject(p.id,{extracts:firebase.firestore.FieldValue.delete(), exAdded:firebase.firestore.FieldValue.delete()});
+    S.ex.id=null; S.ex.confirmRemove=false; toast(t('exRemoved')); render(); window.scrollTo(0,0);
+  }catch(e){ toast(t('saveFail')); }
+}
+/* exports: summary of the chosen projects, and/or one page (PDF) or sheet (Excel) per project */
+const EX_COLS = () => [{k:'order',l:'no',num:true},{k:'b',l:'exStmt'},{k:'up',l:'exUp'},{k:'from',l:'exPFrom'},{k:'to',l:'exPTo'},{k:'amt',l:'exAmt',num:true},{k:'vat',l:'vat',num:true},{k:'gross',l:'exTotal',num:true},{k:'paid',l:'exPaid',num:true},{k:'bal',l:'exBalance',num:true},{k:'coll',l:'exColl'}];
+const EXS_COLS = () => [{k:'order',l:'no',num:true},{k:'name',l:'name'},{k:'client',l:'client'},{k:'contract',l:'contract'},{k:'cv',l:'exValue',num:true},{k:'n',l:'exCount'},{k:'amt',l:'exAmt',num:true},{k:'vat',l:'vat',num:true},{k:'gross',l:'exTotal',num:true},{k:'paid',l:'exPaid',num:true},{k:'bal',l:'exBalance',num:true}];
+// `invoiced` is set to the amount so the shared VAT / total helpers work on these rows too
+const exRowObjs = p => exRows(p).map((r,k)=>{ const a=num(r.amt), pd=num(r.paid);
+  return {no:k+1, b:r.ot?t('exOT'):(r.b||''), up:dShow(r.up), from:dShow(r.from), to:dShow(r.to), amt:a, invoiced:a, paid:pd, bal:r2(a*(1+VAT)-pd), coll:dShow(r.coll)}; });
+const exSumRows = ps => ps.map((p,k)=>{ const a=exInv(p), pd=exPaidSum(p);
+  return {no:k+1, name_ar:p.name_ar, name_en:p.name_en, client_ar:p.client_ar, client_en:p.client_en, contract:p.contract||'', cv:tot(p), n:String(exRows(p).length), amt:a, invoiced:a, paid:pd, bal:r2(a*(1+VAT)-pd)}; });
+const exDesc = p => [loc(p,'client'), p.contract, `${t('exValue')}: ${money(tot(p))}`].filter(Boolean).join(' · ');
+const exFile = (ps,ext) => `${(ps.length===1?`${t('extracts')} - ${exName(ps[0])}`:t('extracts')).replace(/[\\/:*?"<>|]/g,' ').slice(0,120)} ${todayStr()}.${ext}`;
+function exSections(ps,lay){
+  const out=[];
+  if (lay==='sum' || ps.length>1) out.push({title:t('exSummary'), desc:t('exSummaryD'), cols:EXS_COLS(), rows:exSumRows(ps), count:`${ps.length} ${t('exProjCount')}`});
+  if (lay!=='sum') ps.forEach(p=>out.push({title:exName(p), desc:exDesc(p), cols:EX_COLS(), rows:exRowObjs(p), count:`${exRows(p).length} ${t('exN')}`}));
+  return out;
+}
+async function exExport(){
+  const {fmt,sel,lay}=S.drawer; const ps=exItems().filter(p=>sel.has(p.id)); if(!ps.length) return;
+  closeDrawer();
+  const secs=exSections(ps,lay);
+  if (fmt==='pdf') return pdfRender(secs, exFile(ps,'pdf'));
+  if (xlBusy) return; xlBusy=true; const note=busyNote(t('xlBuilding'));
+  try{
+    await loadScript(LIB_XL); const wb=xlBook();
+    secs.forEach((x,i)=>xlSheet(wb,{name:(secs.length>1?`${i+1} `:'')+x.title,title:x.title,desc:x.desc,rtl:S.lang==='ar',cols:x.cols,rows:x.rows,count:x.count}));
+    const buf=await wb.xlsx.writeBuffer();
+    saveBlob(new Blob([buf],{type:XLSX_MIME}), exFile(ps,'xlsx')); toast(t('exported'));
+  }catch(e){ console.error('excel export',e); toast(t('exportFail')); }
+  finally{ note.remove(); xlBusy=false; }
+}
+
 /* ---------- render ---------- */
 function render(){
   chrome();
   if (S.view==='settings' && draftLists) syncDraft();
   const m=document.getElementById('main');
-  const active=document.activeElement?.id; const pos = active==='q' ? document.getElementById('q').selectionStart : null;
-  m.innerHTML = S.view==='dash' ? viewDash() : S.view==='settings' ? viewSettings() : S.view==='backup' ? viewBackup() : viewList(S.view);
-  if (active==='q'){ const q=document.getElementById('q'); if(q){ q.focus(); try{q.setSelectionRange(pos,pos);}catch(e){} } }
+  const ae=document.activeElement, active=(ae && m.contains(ae)) ? ae.id : ''; let pos=null; try{ pos=ae.selectionStart; }catch(e){}
+  m.innerHTML = S.view==='dash' ? viewDash() : S.view==='settings' ? viewSettings() : S.view==='backup' ? viewBackup() : S.view==='extracts' ? viewExtracts() : viewList(S.view);
+  if (active){ const q=document.getElementById(active); if(q){ q.focus(); if(pos!=null) try{q.setSelectionRange(pos,pos);}catch(e){} } }
 }
 function toast(msg){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=msg; document.body.appendChild(el); setTimeout(()=>el.remove(),2600); }
-function go(v){ if(!VIEWS.includes(v)) return; S.view=v; S.q=''; S.fWork=S.fStatus=S.fSector=S.fLoc=S.fFrom=S.fTo=''; S.sort={key:'order',dir:1}; S.limit=60; if(v!=='settings') draftLists=null; try{ if(location.hash!=='#'+v) location.hash=v; }catch(e){} render(); window.scrollTo(0,0); }
+function go(v){ if(!VIEWS.includes(v)) return; S.view=v; S.q=''; S.fWork=S.fStatus=S.fSector=S.fLoc=S.fFrom=S.fTo=''; S.sort={key:'order',dir:1}; S.limit=60; if(v!=='settings') draftLists=null; S.ex={id:null, tab:'list', src:'cur', pick:'', draft:{}, fresh:null}; try{ if(location.hash!=='#'+v) location.hash=v; }catch(e){} render(); window.scrollTo(0,0); }
 
 /* ---------- data writes ---------- */
 async function writeProject(id, data){
@@ -555,6 +917,7 @@ function readForm(){
 async function save(){
   const d=readForm(); if(!d.name_ar && !d.name_en){ toast(t('needName')); return; }
   let movedNow=false; if (moves(d.status) && d.stage!=='finished'){ d.stage='finished'; movedNow=true; }
+  const prev = S.drawer.id ? S.items.get(S.drawer.id) : null; if (prev && exLocked(prev)) { delete d.invoiced; delete d.collected; }
   const isNew = S.drawer.mode==='new'; const id = isNew ? 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6) : S.drawer.id;
   if (isNew){ const max=Math.max(0,...[...S.items.values()].map(p=>num(p.order))); d.order=max+1; }
   const btn=document.querySelector('[data-act="save"]'); if(btn) btn.disabled=true;
@@ -590,8 +953,8 @@ const slashDate = () => todayStr().replace(/-/g,'/');
 function busyNote(txt){ const n=document.createElement('div'); n.className='toast'; n.setAttribute('role','status'); n.textContent=txt; document.body.appendChild(n); return n; }
 function cellText(p,c){ switch(c.k){ case 'order':return p.no||''; case 'name':return loc(p,'name'); case 'client':return loc(p,'client'); case 'work':return lab('work',p.work); case 'status':return lab('status',p.status);
   case 'sector':return lab('sector',p.sector); case 'location':return lab('location',p.location); case 'notes':return loc(p,'notes');
-  case 'unc':{const v=unc(p);return v==null?'':v;} case 'rem':{const v=rem(p);return v==null?'':v;} case 'total':{const v=tot(p);return v==null?'':v;} default: return p[c.k]??''; } }
-const colVal = (p,c) => c.k==='unc'?unc(p):c.k==='rem'?rem(p):c.k==='total'?tot(p):p[c.k];
+  case 'unc':{const v=unc(p);return v==null?'':v;} case 'rem':{const v=rem(p);return v==null?'':v;} case 'total':{const v=tot(p);return v==null?'':v;} case 'vat':{const v=vatOf(p);return v==null?'':v;} case 'gross':{const v=grossOf(p);return v==null?'':v;} default: return p[c.k]??''; } }
+const colVal = (p,c) => c.k==='unc'?unc(p):c.k==='rem'?rem(p):c.k==='total'?tot(p):c.k==='vat'?vatOf(p):c.k==='gross'?grossOf(p):p[c.k];
 const isNeg = (p,c) => (c.k==='unc'&&num(unc(p))<0)||(c.k==='rem'&&num(rem(p))<0);
 const colHead = c => c.h || t(c.l);
 const isMoney = c => c.num && c.k!=='order';
@@ -599,7 +962,7 @@ const isMoney = c => c.num && c.k!=='order';
 /* One worksheet that looks like the list in the program: logo and title, totals strip,
    gold header row, striped rows, status colours, totals row with live SUM formulas. */
 const XL_STATUS={ongoing:['E6EDF6','3D5A80'],not_started:['FFF1D6','B26A00'],completed:['E5F3EA','2E7D4F'],stopped:['FBE4E2','B3261E'],other:['F1EBDB','55524B']};
-const XL_W={order:6,contract:15,name:46,client:30,work:17,status:13,sector:16,location:14,start:13,end:13,notes:40,notes_ar:40,notes_en:40,name_en:40,client_en:28};
+const XL_W={b:28,up:14,from:13,to:13,coll:15,n:13,cv:17,order:6,contract:15,name:46,client:30,work:17,status:13,sector:16,location:14,start:13,end:13,notes:40,notes_ar:40,notes_en:40,name_en:40,client_en:28};
 function xlSheet(wb,{name,title,desc,rtl,cols,rows,count,period=''}){
   const n=cols.length, HR=8, first=HR+1, last=HR+rows.length;
   const ws=wb.addWorksheet(name.replace(/[\[\]:*?\/\\]/g,' ').slice(0,31),{
@@ -689,14 +1052,17 @@ async function bkXlsx(){
 /* ---------- PDF report (A4 landscape), drawn page by page inside a separate
    clean frame so the program's own styles can't break it ---------- */
 let pdfBusy=false;
-async function exportPdf(){
+function exportPdf(){ const st=S.view, rows=filtered(st);
+  return pdfRender([{title:t(st),desc:t(st+'D'),period:periodText(st),cols:columns(st),rows,count:`${rows.length} ${t('of')} ${stageItems(st).length}`}], `${stageFile(st)}${fileRange()} ${todayStr()}.pdf`); }
+// sections: [{title, desc, period, cols, rows, count}], each starts on a new page; one PDF file
+async function pdfRender(sections, filename){
   if (pdfBusy) return; pdfBusy=true;
-  const st=S.view, rows=filtered(st), cols=columns(st), rtl=S.lang==='ar';
+  const rtl=S.lang==='ar';
   const note=busyNote(t('pdfBuilding')+' …');
   const fr=document.createElement('iframe'); let pStyle=null, pRoot=null;
   try{
     await loadScript(LIB_PDF);
-    const W=1123, H=794, PAD=28, many=cols.length>12, fs=many?9.5:10.5;
+    const W=1123, H=794, PAD=28, many=sections.some(x=>x.cols.length>12), fs=many?9.5:10.5;
     const css=`*{box-sizing:border-box}html,body{margin:0;background:#fff}
       body{font-family:Tajawal,"Segoe UI",Tahoma,Arial,sans-serif;color:#252525;font-size:${fs}px;line-height:1.45}
       .pg{width:${W}px;height:${H}px;padding:${PAD}px;display:flex;flex-direction:column;background:#fff;overflow:hidden}
@@ -741,48 +1107,53 @@ async function exportPdf(){
       try{ await document.fonts.ready; }catch(e){}
     }
     const logo=document.getElementById('logo').src;
-    // brand guide (p.12, 52): logo at the top on the reading-start side (right in Arabic), title beside it, date on the far side
-    const hdr=`<div class="hd"><div class="l"><img src="${logo}" alt=""><div class="tt"><h1>${esc(t(st))}</h1><p>${esc(t(st+'D'))}</p></div></div><div class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span>${periodText(st)?`<div class="pd">${esc(periodText(st))}</div>`:''}</div></div>`;
-    const sumF=f=>rows.reduce((s,p)=>s+num(typeof f==='function'?f(p):p[f]),0);
-    const sumC=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
-    const summary=`<div class="sum"><div>${t('shown')}<b>${rows.length} ${t('of')} ${stageItems(st).length}</b></div>`
-      + cols.filter(isMoney).map(c=>`<div>${esc(t(c.l))}<b dir="ltr">${money0(sumC(c))}</b></div>`).join('') + `</div>`;
-    const thead=`<thead><tr>${cols.map(c=>`<th class="${isMoney(c)?'n':['order','start','end','status'].includes(c.k)?'c':''}">${esc(t(c.l))}</th>`).join('')}</tr></thead>`;
-    const td=p=>cols.map(c=>{ const v=cellText(p,c);
-      switch(c.k){
-        case 'order': return `<td class="c">${esc(v)}</td>`;
-        case 'name': return `<td style="min-width:${many?170:230}px"><div class="pn" dir="auto">${esc(v)}</div></td>`;
-        case 'client': return `<td style="min-width:${many?105:130}px"><div dir="auto">${esc(v)}</div></td>`;
-        case 'contract': return `<td style="white-space:nowrap"><span dir="ltr">${esc(v)}</span></td>`;
-        case 'status': return `<td class="c">${v?`<span class="pill ${statusClass(p.status)}">${esc(v)}</span>`:''}</td>`;
-        case 'start': case 'end': return `<td class="c" dir="ltr" style="white-space:nowrap">${esc(v)}</td>`;
-        case 'invoiced': { const tv=num(tot(p)); const pc=tv?Math.min(100,Math.max(0,num(p.invoiced)/tv*100)):0; return `<td class="n">${money(p.invoiced)}${p.invoiced!=null?`<div class="pr"><i style="width:${pc}%"></i></div>`:''}</td>`; }
-        default: return isMoney(c) ? `<td class="n ${isNeg(p,c)?'neg':''}">${v===''?t('none'):`<span dir="ltr">${nf2.format(v)}</span>`}</td>` : `<td class="${['work','sector','location'].includes(c.k)?'nw':''}"><div dir="auto">${esc(v)}</div></td>`; } }).join('');
-    const lead=Math.max(1,cols.findIndex(isMoney)); // label spans the text columns before the first amount
-    const totRow=`<tr class="tot">${cols.map((c,i)=> i===0?`<td colspan="${lead}" style="white-space:nowrap">${t('total')}</td>` : i<lead ? '' : isMoney(c)?`<td class="n ${sumC(c)<0?'neg':''}"><span dir="ltr">${nf2.format(sumC(c))}</span></td>`:'<td></td>').join('')}</tr>`;
-    // lay the full table out once, then freeze those column widths for every page
-    // (so all pages line up) and measure row heights to split into pages
-    root.innerHTML=`<div class="pg" style="height:auto">${hdr}${summary}<table>${thead}<tbody>${rows.map(p=>`<tr>${td(p)}</tr>`).join('')}${totRow}</tbody></table></div>`;
-    const cw=[...root.querySelectorAll('thead th')].map(th=>th.getBoundingClientRect().width), cwT=cw.reduce((a,b)=>a+b,0)||1;
-    const colg=`<colgroup>${cw.map(w=>`<col style="width:${(w/cwT*100).toFixed(3)}%">`).join('')}</colgroup>`;
-    root.querySelector('table').className='fx'; root.querySelector('table').insertAdjacentHTML('afterbegin',colg);
-    const hs=[...root.querySelectorAll('tbody tr')].map(r=>r.getBoundingClientRect().height);
-    const thH=root.querySelector('thead').getBoundingClientRect().height, hdH=root.querySelector('.hd').getBoundingClientRect().height+12, smH=root.querySelector('.sum').getBoundingClientRect().height+10;
-    const avail1=H-2*PAD-hdH-smH-thH-30, availN=H-2*PAD-hdH-thH-30;
-    const pages=[]; let cur=[], used=0, cap=avail1;
-    hs.forEach((h,i)=>{ if(cur.length && used+h>cap){ pages.push(cur); cur=[]; used=0; cap=availN; } cur.push(i); used+=h; });
-    if(cur.length) pages.push(cur); if(!pages.length) pages.push([]);
-    const { jsPDF } = window.jspdf; const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
     const company = rtl ? 'المجموعة الاستشارية | Consultancy Group' : 'Consultancy Group | المجموعة الاستشارية';
-    for(let pi=0; pi<pages.length; pi++){
-      note.textContent=`${t('pdfBuilding')} ${pi+1} / ${pages.length}`;
-      const body=pages[pi].map(i=> i<rows.length ? `<tr>${td(rows[i])}</tr>` : totRow).join('');
-      root.innerHTML=`<div class="pg">${hdr}${pi===0?summary:''}<table class="fx">${colg}${thead}<tbody>${body}</tbody></table><div class="ft"><span>${company}</span><span>${t('page')} ${pi+1} / ${pages.length}</span></div></div>`;
+    // lay every section out first (column widths + page breaks), so the page count is known before drawing
+    const plan=[];
+    for (const sec of sections){
+      const {cols,rows}=sec;
+      // brand guide (p.12, 52): logo at the top on the reading-start side (right in Arabic), title beside it, date on the far side
+      const hdr=`<div class="hd"><div class="l"><img src="${logo}" alt=""><div class="tt"><h1>${esc(sec.title)}</h1><p>${esc(sec.desc||'')}</p></div></div><div class="dt">${t('reportDate')}: <span dir="ltr">${slashDate()}</span>${sec.period?`<div class="pd">${esc(sec.period)}</div>`:''}</div></div>`;
+      const sumC=c=>rows.reduce((s,p)=>s+num(colVal(p,c)),0);
+      const summary=`<div class="sum"><div>${t('shown')}<b>${esc(sec.count)}</b></div>`
+        + cols.filter(isMoney).map(c=>`<div>${esc(colHead(c))}<b dir="ltr">${money0(sumC(c))}</b></div>`).join('') + `</div>`;
+      const thead=`<thead><tr>${cols.map(c=>`<th class="${isMoney(c)?'n':['order','start','end','status','up','from','to','coll'].includes(c.k)?'c':''}">${esc(colHead(c))}</th>`).join('')}</tr></thead>`;
+      const td=p=>cols.map(c=>{ const v=cellText(p,c);
+        switch(c.k){
+          case 'order': return `<td class="c">${esc(v)}</td>`;
+          case 'name': return `<td style="min-width:${many?170:230}px"><div class="pn" dir="auto">${esc(v)}</div></td>`;
+          case 'client': return `<td style="min-width:${many?105:130}px"><div dir="auto">${esc(v)}</div></td>`;
+          case 'contract': return `<td style="white-space:nowrap"><span dir="ltr">${esc(v)}</span></td>`;
+          case 'status': return `<td class="c">${v?`<span class="pill ${statusClass(p.status)}">${esc(v)}</span>`:''}</td>`;
+          case 'start': case 'end': case 'up': case 'from': case 'to': case 'coll': return `<td class="c" dir="${/^[\d\/-]+$/.test(v)?'ltr':'auto'}" style="white-space:nowrap">${esc(v)}</td>`;
+          case 'invoiced': { const tv=num(tot(p)); const pc=tv?Math.min(100,Math.max(0,num(p.invoiced)/tv*100)):0; return `<td class="n">${money(p.invoiced)}${p.invoiced!=null?`<div class="pr"><i style="width:${pc}%"></i></div>`:''}</td>`; }
+          default: return isMoney(c) ? `<td class="n ${isNeg(p,c)?'neg':''}">${v===''?t('none'):`<span dir="ltr">${money(v)}</span>`}</td>` : `<td class="${['work','sector','location','b','n'].includes(c.k)?'nw':''}"><div dir="auto">${esc(v)}</div></td>`; } }).join('');
+      const lead=Math.max(1,cols.findIndex(isMoney)); // label spans the text columns before the first amount
+      const totRow=`<tr class="tot">${cols.map((c,i)=> i===0?`<td colspan="${lead}" style="white-space:nowrap">${t('total')}</td>` : i<lead ? '' : isMoney(c)?`<td class="n ${sumC(c)<0?'neg':''}"><span dir="ltr">${nf2.format(sumC(c))}</span></td>`:'<td></td>').join('')}</tr>`;
+      // lay the full table out once, then freeze those column widths for every page
+      // (so all pages line up) and measure row heights to split into pages
+      root.innerHTML=`<div class="pg" style="height:auto">${hdr}${summary}<table>${thead}<tbody>${rows.map(p=>`<tr>${td(p)}</tr>`).join('')}${totRow}</tbody></table></div>`;
+      const cw=[...root.querySelectorAll('thead th')].map(th=>th.getBoundingClientRect().width), cwT=cw.reduce((a,b)=>a+b,0)||1;
+      const colg=`<colgroup>${cw.map(w=>`<col style="width:${(w/cwT*100).toFixed(3)}%">`).join('')}</colgroup>`;
+      root.querySelector('table').className='fx'; root.querySelector('table').insertAdjacentHTML('afterbegin',colg);
+      const hs=[...root.querySelectorAll('tbody tr')].map(r=>r.getBoundingClientRect().height);
+      const thH=root.querySelector('thead').getBoundingClientRect().height, hdH=root.querySelector('.hd').getBoundingClientRect().height+12, smH=root.querySelector('.sum').getBoundingClientRect().height+10;
+      const avail1=H-2*PAD-hdH-smH-thH-30, availN=H-2*PAD-hdH-thH-30;
+      const pages=[]; let cur=[], used=0, cap=avail1;
+      hs.forEach((h,i)=>{ if(cur.length && used+h>cap){ pages.push(cur); cur=[]; used=0; cap=availN; } cur.push(i); used+=h; });
+      if(cur.length) pages.push(cur); if(!pages.length) pages.push([]);
+      pages.forEach((idx,pi)=>plan.push({hdr,summary:pi===0?summary:'',thead,colg,body:idx.map(i=> i<rows.length ? `<tr>${td(rows[i])}</tr>` : totRow).join('')}));
+    }
+    const { jsPDF } = window.jspdf; const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
+    for(let pi=0; pi<plan.length; pi++){
+      note.textContent=`${t('pdfBuilding')} ${pi+1} / ${plan.length}`;
+      const g=plan[pi];
+      root.innerHTML=`<div class="pg">${g.hdr}${g.summary}<table class="fx">${g.colg}${g.thead}<tbody>${g.body}</tbody></table><div class="ft"><span>${company}</span><span>${t('page')} ${pi+1} / ${plan.length}</span></div></div>`;
       const canvas=await fw.html2canvas(root.firstElementChild,{scale:2,backgroundColor:'#ffffff',logging:false,width:W,height:H,windowWidth:W,windowHeight:H,scrollX:0,scrollY:0});
       if(pi>0) pdf.addPage('a4','landscape');
       pdf.addImage(canvas.toDataURL('image/jpeg',0.86),'JPEG',0,0,297,210,undefined,'FAST');
     }
-    saveBlob(pdf.output('blob'), `${stageFile(st)}${fileRange()} ${todayStr()}.pdf`);
+    saveBlob(pdf.output('blob'), filename);
     toast(t('exported'));
   }catch(e){ console.error('pdf export',e); toast(t('pdfFail')); }
   finally{ fr.remove(); pStyle?.remove(); pRoot?.remove(); note.remove(); pdfBusy=false; }
@@ -827,12 +1198,12 @@ function bkData(){
 }
 function bkCsv(data){
   const L=(list,k)=>{ const it=(data.lists[list]||[]).find(x=>x.k===k); return it ? (it.ar||it.en||k) : (k||''); };
-  const stage={current:'جارية',finished:'منتهية',future:'مستقبلية'};
+  const stage={current:'جارية',finished:'منتهية',future:'مستقبلية',external:'مستخلصات (من الخارج)'};
   const cols=[['القسم',p=>stage[p.stage]||p.stage],['م',p=>p.no],['رقم العقد',p=>p.contract],['اسم المشروع',p=>p.name_ar],['Project',p=>p.name_en],['العميل',p=>p.client_ar],['Client',p=>p.client_en],
     ['نوع العمل',p=>L('work',p.work)],['الحالة',p=>L('status',p.status)],['القطاع',p=>L('sector',p.sector)],['المدينة',p=>L('location',p.location)],['تاريخ البداية',p=>p.start],['تاريخ النهاية',p=>p.end],
-    ['قيمة المشروع',p=>p.value],['أمر التغيير',p=>p.change],['القيمة بعد أمر التغيير',p=>tot(p)],['المستخلصات المرفوعة',p=>p.invoiced],['المبالغ المحصلة',p=>p.collected],['غير المحصل',p=>unc(p)],['الباقي',p=>rem(p)],['ملاحظات',p=>p.notes_ar],['Notes',p=>p.notes_en]];
+    ['قيمة المشروع',p=>p.value],['أمر التغيير',p=>p.change],['القيمة بعد أمر التغيير',p=>tot(p)],['المستخلصات المرفوعة',p=>p.invoiced],['الضريبة 15%',p=>vatOf(p)],['الإجمالي بالضريبة',p=>grossOf(p)],['المبالغ المحصلة',p=>p.collected],['غير المحصل',p=>unc(p)],['الباقي',p=>rem(p)],['ملاحظات',p=>p.notes_ar],['Notes',p=>p.notes_en]];
   const q=v=>{ const s=String(v??''); return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
-  const order={current:0,future:1,finished:2};
+  const order={current:0,future:1,finished:2,external:3};
   const rows=data.projects.filter(p=>!p.deleted).sort((a,b)=>(order[a.stage]??9)-(order[b.stage]??9)||num(a.order)-num(b.order));
   return '﻿'+[cols.map(c=>q(c[0])).join(','),...rows.map(p=>cols.map(c=>q(c[1](p))).join(','))].join('\r\n');
 }
@@ -952,6 +1323,12 @@ async function bkDoRestore(){
 document.addEventListener('click', e=>{
   const v=e.target.closest('[data-view]'); if(v){ go(v.dataset.view); return; }
   const o=e.target.closest('[data-open]'); if(o){ openDrawer('view',o.dataset.open); return; }
+  const xo=e.target.closest('[data-exopen]'); if(xo){ exOpen(xo.dataset.exopen); return; }
+  const xr=e.target.closest('tr[data-exrow]'); if(xr){ if(canEdit()){ S.drawer={mode:'ex',id:S.ex.id,row:xr.dataset.exrow}; renderDrawer(); } return; }
+  const xt=e.target.closest('[data-extab]'); if(xt){ S.ex.tab=xt.dataset.extab; if(S.ex.tab==='list'){ S.ex.editId=null; S.ex.draft={}; } S.ex.id=null; render(); window.scrollTo(0,0); return; }
+  const xs=e.target.closest('[data-exsrc]'); if(xs){ S.ex.src=xs.dataset.exsrc; render(); return; }
+  const xe=e.target.closest('[data-exexp]'); if(xe){ S.drawer={mode:'exexp', fmt:xe.dataset.exexp, sel:new Set(S.ex.id?[S.ex.id]:exItems().map(p=>p.id)), lay:'each'}; renderDrawer(); return; }
+  const xf=e.target.closest('[data-exfmt]'); if(xf && S.drawer){ S.drawer.fmt=xf.dataset.exfmt; renderDrawer(); return; }
   const s=e.target.closest('th[data-sort]'); if(s){ const k=s.dataset.sort; S.sort = S.sort.key===k ? {key:k,dir:-S.sort.dir} : {key:k,dir:1}; render(); return; }
   const ln=e.target.closest('[data-lang]'); if(ln){ S.lang=ln.dataset.lang; try{localStorage.setItem('cg_lang',S.lang);}catch(err){} draftLists=null; render(); renderDrawer(); return; }
   const rm=e.target.closest('[data-rm]'); if(rm){ syncDraft(); const [k,i]=rm.dataset.rm.split(':'); draftLists[k].splice(+i,1); render(); return; }
@@ -962,20 +1339,36 @@ document.addEventListener('click', e=>{
      export:exportXlsx, pdf:exportPdf, clrdate:()=>{S.fFrom=S.fTo='';S.limit=60;render();}, more:()=>{S.limit+=100;render();}, savelists:saveLists,
      bknow:()=>bkSave({interactive:true}), bkpick:async()=>{ if(await bkPickDir()) await bkSave({interactive:true}); render(); },
      bkauto:()=>{ lsSet('cg_bk_auto', bkAutoOn()?'0':'1'); render(); }, bkchoose:()=>document.getElementById('bk-file')?.click(),
-     bkcancel:()=>{ BK.restore=null; render(); }, bkdorestore:bkDoRestore }[a.dataset.act]||(()=>{}))();
+     bkcancel:()=>{ BK.restore=null; render(); }, bkdorestore:bkDoRestore,
+     exback:()=>{ S.ex.id=null; S.ex.confirmRemove=false; render(); window.scrollTo(0,0); },
+     exadd:()=>{ S.drawer={mode:'ex',id:S.ex.id,row:null}; renderDrawer(); },
+     exsaverow:()=>exSaveRow(false), exsavenext:()=>exSaveRow(true),
+     exaskdelrow:()=>{ S.drawer.confirmDel=true; renderDrawer(); }, exnodelrow:()=>{ S.drawer.confirmDel=false; renderDrawer(); }, exdodelrow:exDelRow,
+     exsavep:exSaveProject, excancelnew:()=>{ const back=S.ex.editId; S.ex={...S.ex, tab:'list', editId:null, draft:{}, id:back||null}; render(); },
+     exeditinfo:()=>{ const p=S.items.get(S.ex.id); if(!p) return; S.ex={...S.ex, editId:p.id, tab:'new', id:null, draft:{'xn-name':loc(p,'name'),'xn-client':loc(p,'client'),'xn-contract':p.contract||'','xn-start':p.start||'','xn-value':p.value??''}}; render(); window.scrollTo(0,0); },
+     exaskremove:()=>{ S.ex.confirmRemove=true; render(); }, exnoremove:()=>{ S.ex.confirmRemove=false; render(); }, exdoremove:exRemove,
+     exdoexp:exExport }[a.dataset.act]||(()=>{}))();
 });
 function syncDraft(){ document.querySelectorAll('[data-l]').forEach(el=>{ const o=draftLists[el.dataset.l][+el.dataset.i]; if(!o) return; if(el.dataset.f==='moves') o.moves=el.checked; else o[el.dataset.f]=el.value; }); }
 document.addEventListener('keydown', e=>{
   if(e.key==='Escape' && S.drawer){ closeDrawer(); return; }
   if(e.key==='Enter' && e.target.matches('tr[data-open]')) openDrawer('view',e.target.dataset.open);
+  if(e.key==='Enter' && e.target.matches('tr[data-exrow]') && canEdit()){ S.drawer={mode:'ex',id:S.ex.id,row:e.target.dataset.exrow}; renderDrawer(); }
 });
 let qTimer; document.addEventListener('input', e=>{
+  if(e.target.closest('#exnew')) S.ex.draft[e.target.id]=e.target.value;
   if(e.target.id==='q'){ clearTimeout(qTimer); qTimer=setTimeout(()=>{ S.q=e.target.value; S.limit=60; render(); },180); }
 });
 document.addEventListener('change', e=>{
   const id=e.target.id; if(['fWork','fStatus','fSector','fLoc'].includes(id)){ S[id]=e.target.value; S.limit=60; render(); }
   if(id==='fFrom'||id==='fTo'){ S[id]=ymd(e.target.value); if(S.fFrom&&S.fTo&&S.fFrom>S.fTo){ const x=S.fFrom; S.fFrom=S.fTo; S.fTo=x; } S.limit=60; render(); }
   if(id==='bk-file' && e.target.files && e.target.files[0]) bkReadFile(e.target.files[0]);
+  if(id==='ex-pick'){ S.ex.pick=e.target.value; render(); }
+  if(S.drawer && S.drawer.mode==='exexp'){
+    if(id==='xx-all'){ S.drawer.sel=new Set(e.target.checked?exItems().map(p=>p.id):[]); renderDrawer(); }
+    else if(e.target.dataset.expick){ const k=e.target.dataset.expick; e.target.checked?S.drawer.sel.add(k):S.drawer.sel.delete(k); renderDrawer(); }
+    else if(e.target.dataset.exlay){ S.drawer.lay=e.target.dataset.exlay; }
+  }
 });
 window.addEventListener('hashchange',()=>{ const v=location.hash.replace('#',''); if(VIEWS.includes(v) && v!==S.view) go(v); });
 
@@ -989,7 +1382,7 @@ document.getElementById('mode-tag').innerHTML = ADMIN ? '<b>●</b> '+(S.lang===
   if(!db){ S.sync='err'; render(); return; }
   S.db=db;
   let timer=setTimeout(()=>{ if(S.sync!=='ok'){ S.sync='err'; chrome(); } },12000);
-  let pending=false; const schedule=()=>{ if(pending) return; pending=true; requestAnimationFrame(()=>{ pending=false; render(); if(S.drawer && S.drawer.mode==='view') renderDrawer(); }); };
+  let pending=false; const schedule=()=>{ if(pending) return; pending=true; requestAnimationFrame(()=>{ pending=false; render(); if(S.drawer && (S.drawer.mode==='view' || S.drawer.pending)) renderDrawer(); }); };
   db.collection(COL_PROJECTS).onSnapshot({includeMetadataChanges:true}, snap=>{
     const items=new Map();
     snap.docs.forEach(d=>{ const p=d.data(); if(p) items.set(d.id,{...p,id:d.id}); });
